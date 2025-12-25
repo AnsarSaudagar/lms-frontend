@@ -4,5 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class Common {
-  
+
+  test(){
+    console.log("Testing shared filed");
+    
+  }
 }

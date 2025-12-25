@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Common } from './services/common';
 
 @Component({
   selector: 'lib-shared',
@@ -9,6 +10,7 @@ import { Component } from '@angular/core';
     </p>
   `,
   styles: ``,
+  providers: [Common]
 })
 export class Shared {
 
