@@ -11,15 +11,9 @@ import { Common } from 'shared';
 
 @Component({
   selector: 'app-root',
-  imports: [ Card, Button,IconField, FormsModule, FloatLabel, InputIcon],
+  imports: [],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('admin');
-  value1 = ""
-
-  constructor(private common: Common){
-    common.test()
-  }
 }
