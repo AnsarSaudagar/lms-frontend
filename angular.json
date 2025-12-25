@@ -3,26 +3,28 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "lms-frontend": {
+    
+    "admin": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
-      "sourceRoot": "src",
+      "root": "projects/admin",
+      "sourceRoot": "projects/admin/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
+            "browser": "projects/admin/src/main.ts",
+            "tsConfig": "projects/admin/tsconfig.app.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/admin/public"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/primeicons/primeicons.css",
+              "projects/admin/src/styles.css"
             ]
           },
           "configurations": {
@@ -53,10 +55,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "lms-frontend:build:production"
+              "buildTarget": "admin:build:production"
             },
             "development": {
-              "buildTarget": "lms-frontend:build:development"
+              "buildTarget": "admin:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -67,15 +69,15 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
+            "tsConfig": "projects/admin/tsconfig.spec.json",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "projects/admin/public"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "projects/admin/src/styles.css"
             ]
           }
         }
