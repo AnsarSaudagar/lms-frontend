@@ -4,5 +4,5 @@ import { Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  isLoggedIn = signal(false);
+  isLoggedIn = signal(true);
 }

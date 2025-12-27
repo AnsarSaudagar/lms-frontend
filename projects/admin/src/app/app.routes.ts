@@ -4,6 +4,6 @@ import { mainRoutes } from './routes/main';
 import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
-  { path: 'auth', children: [...authRoutes] },
-  { path: '', children: [...mainRoutes] , canMatch: [authGuard]},
+  { path: 'auth', children: [...authRoutes], canMatch: [authGuard] },
+  { path: '', children: [...mainRoutes], canMatch: [authGuard] },
 ];
