@@ -5,5 +5,5 @@ import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   { path: 'auth', children: [...authRoutes] },
-  { path: '', children: [...mainRoutes] , canActivate: [authGuard]},
+  { path: '', children: [...mainRoutes] , canMatch: [authGuard]},
 ];
