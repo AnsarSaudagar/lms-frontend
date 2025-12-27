@@ -31,13 +31,16 @@ export class AuthService {
 
   private logoutTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
-  login(email: string, password: string) {
+  loginAndRedirect(email: string, password: string, returnUrl = '/') {
     return this.http
       .post<AuthResponse>(this.API_URL + '/login-admin', { email, password })
       .subscribe({
-        next: (res: AuthResponse) => this.handleAuth(res.accessToken),
+        next: (res: AuthResponse) => {
+          this.handleAuth(res.accessToken);
+          this.router.navigateByUrl(returnUrl);
+        },
         error: () => this.logout(),
       });
   }
