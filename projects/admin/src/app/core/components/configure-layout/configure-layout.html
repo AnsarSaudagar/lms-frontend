@@ -1,10 +1,10 @@
 @switch (layout) {
-    @case ("auth") {
+    @case (layoutKeys.AUTH) {
         <app-auth>
             <router-outlet></router-outlet>
         </app-auth>
     }
-    @case ("main") {
+    @case (layoutKeys.MAIN) {
         <app-main>
             <router-outlet></router-outlet>
         </app-main>

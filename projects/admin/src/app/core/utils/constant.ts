@@ -1,4 +1,4 @@
-export const layout = {
+export const LAYOUT = {
     AUTH: 'auth',
     MAIN: 'main'
 }

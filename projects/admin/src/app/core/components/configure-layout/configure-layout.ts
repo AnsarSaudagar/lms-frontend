@@ -4,6 +4,7 @@ import { Auth } from '../../../layout/auth/auth';
 import { RouterOutlet } from '@angular/router';
 import { Main } from '../../../layout/main/main';
 import { LayoutService } from '../../../services/layout.service';
+import { LAYOUT } from '../../utils/constant';
 
 @Component({
   selector: 'app-configure-layout',
@@ -13,11 +14,10 @@ import { LayoutService } from '../../../services/layout.service';
 })
 export class ConfigureLayout {
   layout: string = '';
+  layoutKeys = LAYOUT;
   constructor(private layoutService: LayoutService) {
-    effect(() => {
-      
+    effect(() => {      
       this.layout = layoutService.selectedSignal();
-      console.log(this.layout);
-    })
+    });
   }
 }
