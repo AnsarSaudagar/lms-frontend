@@ -2,15 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-
-interface AuthResponse {
-  accessToken: string;
-}
-
-interface StoredAuthData {
-  token: string;
-  expiresAt: number;
-}
+import { AuthResponse, StoredAuthData } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
