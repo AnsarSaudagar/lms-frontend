@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { Layout } from '../../../services/layout.service';
+import { Component, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../../layout/auth/auth';
 import { RouterOutlet } from '@angular/router';
 import { Main } from '../../../layout/main/main';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-configure-layout',
@@ -13,7 +13,11 @@ import { Main } from '../../../layout/main/main';
 })
 export class ConfigureLayout {
   layout: string = '';
-  constructor(private layoutService: Layout) {
-    this.layout = layoutService.selectedSignal();
+  constructor(private layoutService: LayoutService) {
+    effect(() => {
+      
+      this.layout = layoutService.selectedSignal();
+      console.log(this.layout);
+    })
   }
 }
