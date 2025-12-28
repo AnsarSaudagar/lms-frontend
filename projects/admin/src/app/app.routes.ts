@@ -2,18 +2,22 @@ import { Routes } from '@angular/router';
 import { authRoutes } from './routes/auth';
 import { mainRoutes } from './routes/main';
 import { authGuard } from './core/guards/auth-guard';
-import { layoutResolver } from './core/resolvers/layout.resolver';
+import { layoutResolver, authLayoutResolver } from './core/resolvers/layout.resolver';
+import { RouteWrapper } from './core/components/route-wrapper/route-wrapper';
 
 export const routes: Routes = [
   {
     path: 'auth',
-    children: [...authRoutes],
+    component: RouteWrapper,
     canMatch: [authGuard],
+    resolve: { layout: authLayoutResolver },
+    children: [...authRoutes]
   },
   {
     path: '',
-    children: [...mainRoutes],
+    component: RouteWrapper,
     canMatch: [authGuard],
-    resolve: { layout: layoutResolver }
+    resolve: { layout: layoutResolver },
+    children: [...mainRoutes]
   },
 ];
