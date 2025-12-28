@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { Auth } from '../../layout/auth/auth';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,7 +7,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [Auth, ButtonModule, CommonModule, ReactiveFormsModule],
+  imports: [ButtonModule, CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
