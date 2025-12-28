@@ -15,8 +15,8 @@
 }
 
 .p-button.p-button-primary {
-  /* background-color: var(--p-primary-color); */
-  /* color: var(--p-primary-color-text); */
+  background-color: var(--p-primary-color);
+  color: var(--p-primary-color-text);
 }
 
 .p-button.p-button-primary:hover {
