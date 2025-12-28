@@ -3,12 +3,13 @@ import { computed, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AuthResponse, StoredAuthData } from '../models/auth.model';
+import { Common } from 'shared';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly TOKEN_KEY = 'token';
+  private readonly TOKEN_KEY = 'token_data';
   private readonly API_URL = environment.API_URL + '/auth';
 
   private tokenSignal = signal<string | null>(null);
@@ -23,7 +24,7 @@ export class AuthService {
 
   private logoutTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private commonService: Common) { }
 
   loginAndRedirect(email: string, password: string, returnUrl = '/') {
     return this.http
@@ -38,7 +39,7 @@ export class AuthService {
   }
 
   autoLogin() {
-    const tokenData = localStorage.getItem(this.TOKEN_KEY);
+    const tokenData = this.commonService.getLocalStore(this.TOKEN_KEY);
 
     if (!tokenData) return;
 
@@ -73,7 +74,7 @@ export class AuthService {
     this.tokenSignal.set(token);
     this.expiresAtSignal.set(expiresAt);
 
-    localStorage.setItem(this.TOKEN_KEY, JSON.stringify({ token, expiresAt }));
+    this.commonService.setLocalStore(this.TOKEN_KEY, JSON.stringify({ token, expiresAt }));
 
     this.startLogoutTimer(expiresAt);
   }
