@@ -10,14 +10,14 @@ export const routes: Routes = [
     path: 'auth',
     component: RouteWrapper,
     canMatch: [authGuard],
-    resolve: { layout: authLayoutResolver },
-    children: [...authRoutes]
+    children: [...authRoutes],
+    data: { layout: 'auth' },
   },
   {
     path: '',
     component: RouteWrapper,
     canMatch: [authGuard],
-    resolve: { layout: layoutResolver },
-    children: [...mainRoutes]
+    children: [...mainRoutes],
+    data: { layout: 'main' },
   },
 ];
