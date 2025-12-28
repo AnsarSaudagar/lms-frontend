@@ -6,10 +6,12 @@ import { Main } from '../../../layout/main/main';
 import { LayoutService } from '../../../services/layout.service';
 import { LAYOUT } from '../../utils/constant';
 import { filter } from 'rxjs/operators';
+import { Test } from '../../../pages/test/test';
+import { TestLayout } from '../../../layout/test-layout/test-layout';
 
 @Component({
   selector: 'app-configure-layout',
-  imports: [CommonModule, Auth, RouterOutlet, Main],
+  imports: [CommonModule, Auth, RouterOutlet, Main, TestLayout],
   templateUrl: './configure-layout.html',
   styleUrl: './configure-layout.css',
 })
@@ -25,11 +27,11 @@ export class ConfigureLayout {
     this.updateLayoutFromRoute();
     
     // Update layout when navigation ends
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.updateLayoutFromRoute();
-      });
+    // this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe(() => {
+    //     this.updateLayoutFromRoute();
+    //   });
   }
   
   private updateLayoutFromRoute(): void {

@@ -14,3 +14,9 @@ export const authLayoutResolver: ResolveFn<string> = () => {
     layoutService.selectedSignal.set(LAYOUT.AUTH);
     return LAYOUT.AUTH;
 };
+
+export const testLayoutResolver: ResolveFn<string> = () => {
+    const layoutService = inject(LayoutService);
+    layoutService.selectedSignal.set(LAYOUT.TEST);
+    return LAYOUT.TEST;
+};

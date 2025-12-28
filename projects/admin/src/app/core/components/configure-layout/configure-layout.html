@@ -9,6 +9,11 @@
     <router-outlet></router-outlet>
 </app-main>
 }
+@case (layoutKeys.TEST) {
+<app-test-layout>
+    <router-outlet></router-outlet>
+</app-test-layout>
+}
 @default {
 <router-outlet></router-outlet>
 }
