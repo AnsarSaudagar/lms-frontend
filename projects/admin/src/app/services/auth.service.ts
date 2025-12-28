@@ -88,13 +88,20 @@ export class AuthService {
 
   private extractExpiration(token: string): number {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.exp * 100;
+    console.log(payload);
+    if (!payload.exp) {
+      throw new Error('JWT does not contain exp claim');
+    }
+
+    return payload.exp * 1000;
   }
 
   private startLogoutTimer(expiresAt: number) {
     this.clearTimer();
 
     const duration = expiresAt - Date.now();
+    console.log("Duration = " + duration / 1000 / 60);
+
     this.logoutTimer = setTimeout(() => this.logout(), duration);
   }
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -10,4 +11,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css',
 })
 export class App {
+  constructor(private authService: AuthService){
+    authService.autoLogin();
+  }
 }
