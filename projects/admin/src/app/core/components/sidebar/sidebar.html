@@ -1,0 +1,112 @@
+<aside class="w-64 h-screen bg-white border-r border-gray-200 px-4 py-6">
+
+  <!-- Top Menu -->
+  <ul class="space-y-1">
+
+    <li>
+      <button
+        (click)="setActive('dashboard')"
+        class="sidebar-item"
+        [ngClass]="{ 'sidebar-active': activeItem === 'dashboard' }">
+        <i class="pi pi-chart-line"></i>
+        <span>Dashboard</span>
+      </button>
+    </li>
+
+    <li>
+      <button
+        (click)="setActive('courses')"
+        class="sidebar-item"
+        [ngClass]="{ 'sidebar-active': activeItem === 'courses' }">
+        <i class="pi pi-book"></i>
+        <span>Courses</span>
+      </button>
+    </li>
+
+    <li>
+      <button
+        (click)="setActive('learners')"
+        class="sidebar-item"
+        [ngClass]="{ 'sidebar-active': activeItem === 'learners' }">
+        <i class="pi pi-users"></i>
+        <span>Learners</span>
+      </button>
+    </li>
+
+    <li>
+      <button
+        (click)="setActive('admins')"
+        class="sidebar-item"
+        [ngClass]="{ 'sidebar-active': activeItem === 'admins' }">
+        <i class="pi pi-user"></i>
+        <span>Admin Users</span>
+      </button>
+    </li>
+
+  </ul>
+
+  <!-- CONTENT -->
+  <div class="mt-6">
+    <p class="sidebar-section">CONTENT</p>
+
+    <ul class="space-y-1 mt-2">
+      <li>
+        <button
+          (click)="setActive('categories')"
+          class="sidebar-item"
+          [ngClass]="{ 'sidebar-active': activeItem === 'categories' }">
+          <i class="pi pi-folder"></i>
+          <span>Categories</span>
+        </button>
+      </li>
+
+      <li>
+        <button
+          (click)="setActive('assessments')"
+          class="sidebar-item"
+          [ngClass]="{ 'sidebar-active': activeItem === 'assessments' }">
+          <i class="pi pi-check-square"></i>
+          <span>Assessments</span>
+        </button>
+      </li>
+
+      <li>
+        <button
+          (click)="setActive('certificates')"
+          class="sidebar-item"
+          [ngClass]="{ 'sidebar-active': activeItem === 'certificates' }">
+          <i class="pi pi-cog"></i>
+          <span>Certificates</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <!-- REPORTS -->
+  <div class="mt-6">
+    <p class="sidebar-section">REPORTS</p>
+
+    <ul class="space-y-1 mt-2">
+      <li>
+        <button
+          (click)="setActive('analytics')"
+          class="sidebar-item"
+          [ngClass]="{ 'sidebar-active': activeItem === 'analytics' }">
+          <i class="pi pi-chart-pie"></i>
+          <span>Analytics</span>
+        </button>
+      </li>
+
+      <li>
+        <button
+          (click)="setActive('reports')"
+          class="sidebar-item"
+          [ngClass]="{ 'sidebar-active': activeItem === 'reports' }">
+          <i class="pi pi-file"></i>
+          <span>Reports</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+</aside>
