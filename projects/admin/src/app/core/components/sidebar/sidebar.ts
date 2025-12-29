@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SIDEBAR_ITEMS } from '../../utils/constants/sidebar.constant';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,8 +11,14 @@ import { Component } from '@angular/core';
 })
 export class Sidebar {
   activeItem = 'courses';
+  sidebarItems = SIDEBAR_ITEMS;
+  router = inject(Router);
 
-  setActive(item: string) {
+  setActive(item: string, route: any) {
     this.activeItem = item;
+
+    if(route){
+      this.router.navigate([route]);
+    }
   }
 }
