@@ -1,0 +1,61 @@
+<nav class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+
+  <!-- Left: Logo -->
+  <div class="flex items-center space-x-3">
+    <div class="bg-purple-600 text-white p-2 rounded-lg">
+      <i class="pi pi-graduation-cap text-lg"></i>
+    </div>
+    <span class="text-lg font-semibold text-gray-800">
+      LearnHub Admin
+    </span>
+  </div>
+
+  <!-- Center: Search -->
+  <div class="flex-1 mx-8">
+    <div class="relative max-w-md">
+      <i
+        class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+      </i>
+      <input
+        type="text"
+        placeholder="Search..."
+        class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg
+               focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+    </div>
+  </div>
+
+  <!-- Right: Notifications & User -->
+  <div class="flex items-center space-x-6">
+
+    <!-- Notification -->
+    <div class="relative cursor-pointer">
+      <i class="pi pi-bell text-xl text-gray-600"></i>
+      <span
+        *ngIf="notifications > 0"
+        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs
+               w-5 h-5 flex items-center justify-center rounded-full">
+        {{ notifications }}
+      </span>
+    </div>
+
+    <!-- User Info -->
+    <div class="flex items-center space-x-3">
+      <div class="text-right">
+        <p class="text-sm font-semibold text-gray-800">
+          Super Admin
+        </p>
+        <p class="text-xs text-gray-500">
+          admin@learnhub.com
+        </p>
+      </div>
+
+      <img
+        src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg"
+        alt="User Avatar"
+        class="w-10 h-10 rounded-full object-cover"
+      />
+    </div>
+
+  </div>
+</nav>
