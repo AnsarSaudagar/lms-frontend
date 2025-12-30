@@ -1,5 +1,6 @@
 export const LAYOUT = {
     AUTH: 'auth',
     MAIN: 'main',
-    TEST: 'test'
+    TEST: 'test',
+    EMPTY: 'empty'
 }
