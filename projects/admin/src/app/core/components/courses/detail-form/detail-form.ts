@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-detail-form',
-  imports: [EditorModule],
+  imports: [EditorModule, ReactiveFormsModule],
   templateUrl: './detail-form.html',
   styleUrl: './detail-form.css',
 })
 export class DetailForm {
-  text = '';
+  courseForm: FormGroup;
+
+  constructor() {
+    this.courseForm = new FormGroup({
+      'title': new FormControl('', [Validators.required]),
+      'description': new FormControl('', [Validators.required])
+    })
+  }
 }
