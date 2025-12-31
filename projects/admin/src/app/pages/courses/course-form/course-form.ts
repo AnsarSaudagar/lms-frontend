@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import {  ButtonModule } from "primeng/button";
+import { Navbar } from '../../../core/components/courses/navbar/navbar';
+import { PreviewCard } from '../../../core/components/courses/preview-card/preview-card';
+import { DetailForm } from '../../../core/components/courses/detail-form/detail-form';
 
 @Component({
   selector: 'app-course-form',
-  imports: [ButtonModule],
+  imports: [Navbar, PreviewCard, DetailForm],
   templateUrl: './course-form.html',
   styleUrl: './course-form.css',
 })
