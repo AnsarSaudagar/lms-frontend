@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
+import { CourseService } from '../../../../services/course.service';
 
 @Component({
   selector: 'app-detail-form',
@@ -11,10 +12,26 @@ import { EditorModule } from 'primeng/editor';
 export class DetailForm {
   courseForm: FormGroup;
 
-  constructor() {
+  constructor(private courseService: CourseService) {
     this.courseForm = new FormGroup({
       'title': new FormControl('', [Validators.required]),
       'description': new FormControl('', [Validators.required])
-    })
+    });
+
+    // When form submit is clicked this will be trigger
+    courseService.mainFormSubmit$.subscribe({
+      next: () => {
+        this.onSubmit();
+      }
+    });
+  }
+
+  onSubmit() {
+    if (this.courseForm.invalid) {
+      this.courseForm.markAllAsTouched();
+      return;
+    }
+
+    this.courseForm.reset();
   }
 }
