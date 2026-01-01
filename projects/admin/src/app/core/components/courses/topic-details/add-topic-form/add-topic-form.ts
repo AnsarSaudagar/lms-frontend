@@ -23,6 +23,7 @@ export class AddTopicForm {
       alert('Invalid JSON')
     }
   }
+  
 
   onClickTopicSave() {
     try {
