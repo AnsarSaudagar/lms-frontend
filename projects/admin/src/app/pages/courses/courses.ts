@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  ButtonModule } from "primeng/button";
 import { RouterLink } from "@angular/router";
 import { CourseService } from '../../services/course.service';
+import { Course } from '../../models/course.model';
 
 @Component({
   selector: 'app-courses',
@@ -15,7 +16,7 @@ export class Courses implements OnInit {
 
   ngOnInit(): void {
     this.courseService.getCourses().subscribe({
-      next: (courses) => {
+      next: (courses : Course[]) => {
         console.log(courses);
       }
     })
