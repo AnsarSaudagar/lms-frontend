@@ -1,5 +1,5 @@
 <!-- <div> -->
-    <p-table class="bg-white w-full min-h-36 border border-gray-200 rounded mt-5" [value]="(courses$ | async) ?? []" [tableStyle]="{  }">
+    <p-table class="bg-white w-full min-h-36 border border-gray-200 rounded-lg mt-5 overflow-hidden" [value]="(courses$ | async) ?? []" [tableStyle]="{  }">
         <ng-template #header>
             <tr>
                 <th [width]="'40%'">Course</th>
@@ -7,17 +7,17 @@
                 <th>Enrolled</th>
                 <th>Duration</th>
                 <th>Status</th>
-                <th>Actions</th>
+                <th [width]="'15%'">Actions</th>
             </tr>
         </ng-template>
         <ng-template #body let-course>
             <tr>
                 <td class="font-medium text-lg">{{ course.title }}</td>
-                <td>{{ course.name }}</td>
-                <td>{{ course.category }}</td>
-                <td>{{ course.quantity }}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>0</td>
                 <td>{{ course.status }}</td>
-                <td>{{ course.quantity }}</td>
+                <td>-</td>
             </tr>
         </ng-template>
     </p-table>
