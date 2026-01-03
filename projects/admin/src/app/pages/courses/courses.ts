@@ -11,16 +11,7 @@ import { CourseList } from '../../core/components/courses/course-list/course-lis
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
-export class Courses implements OnInit {
+export class Courses  {
 
-  constructor(private courseService: CourseService){}
-
-  ngOnInit(): void {
-    this.courseService.getCourses().subscribe({
-      next: (courses : Course[]) => {
-        console.log(courses);
-      }
-    })
-  }
 
 }
