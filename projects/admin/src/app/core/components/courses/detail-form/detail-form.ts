@@ -32,6 +32,10 @@ export class DetailForm {
       return;
     }
 
+    const { title, description } = this.courseForm.value;
+
+    this.courseService.addCourse({ title, description }).subscribe();
+
     this.courseForm.reset();
   }
 }
