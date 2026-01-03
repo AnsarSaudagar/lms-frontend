@@ -18,4 +18,8 @@ export class CourseList {
   ngOnInit(): void {
     this.courses$ = this.courseService.getCourses();
   }
+
+  onClickDelete(id : string){
+    this.courseService.deleteCourse(id).subscribe();
+  }
 }

@@ -27,4 +27,8 @@ export class CourseService {
   addCourse(payload: NewCoursePayload) {
     return this.http.post<Course>(this.COURSE_API_URL, payload);
   }
+
+  deleteCourse(courseId: string){
+    return this.http.delete(this.COURSE_API_URL + '/' + courseId);
+  }
 }
