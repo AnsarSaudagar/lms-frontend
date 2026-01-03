@@ -14,10 +14,14 @@ interface NewCoursePayload{
 export class CourseService {
 
     private COURSE_API_URL = environment.API_URL + '/courses';
-
+    
     mainFormSubmit$ = new Subject<void>();
 
     constructor(private http: HttpClient){}
+
+    getCourses(){
+      return this.http.get(this.COURSE_API_URL);
+    }
 
     addCourse(payload: NewCoursePayload){
         return this.http.post(this.COURSE_API_URL, payload);
