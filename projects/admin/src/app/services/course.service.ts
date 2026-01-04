@@ -32,6 +32,10 @@ export class CourseService {
     return this.http.post<Course>(this.COURSE_API_URL, payload);
   }
 
+  updateCourse(id: string, payload: Partial<Course>){
+    return this.http.put<Course>(this.COURSE_API_URL + "/" + id, payload);
+  }
+
   deleteCourse(courseId: string) {
     return this.http.delete(this.COURSE_API_URL + '/' + courseId);
   }
