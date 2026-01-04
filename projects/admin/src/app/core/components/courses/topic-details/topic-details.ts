@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { CourseService } from '../../../../services/course.service';
 
 @Component({
   selector: 'app-topic-details',
@@ -9,5 +10,12 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './topic-details.css',
 })
 export class TopicDetails {
+  
+  topics = computed(() => {
+    const course = this.courseService.selectedCourse();
+    return course?.topics;
+  });
 
+  constructor(private courseService: CourseService){}
+  
 }
