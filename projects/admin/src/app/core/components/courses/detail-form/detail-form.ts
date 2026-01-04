@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DetailForm {
   courseForm: FormGroup;
-  courseData : Course | null = null;
+  courseData: Course | null = null;
 
   constructor(private courseService: CourseService) {
     this.courseForm = new FormGroup({
@@ -30,9 +30,9 @@ export class DetailForm {
 
     // Populating data in form
     effect(() => {
-      const signalCourseData = this.courseService.selectedCourse(); 
+      const signalCourseData = this.courseService.selectedCourse();
 
-      if(!signalCourseData) return;
+      if (!signalCourseData) return;
       this.courseData = signalCourseData;
       this.courseForm.patchValue({
         'title': this.courseData.title,
@@ -49,8 +49,25 @@ export class DetailForm {
 
     const { title, description } = this.courseForm.value;
 
-    this.courseService.addCourse({ title, description }).subscribe();
+    // For updating course
+    if (this.courseData) {
+      this.courseService
+        .updateCourse(this.courseData._id, { title, description })
+        .subscribe({
+          next: () => {
+            // this.courseForm.reset();
+            this.courseService.selectedCourse.set(null);
+          }
+        });
+      return;
+    }
 
-    this.courseForm.reset();
+    // For creating new course
+    this.courseService
+      .addCourse({ title, description })
+      .subscribe(() => {
+        this.courseForm.reset();
+      });
   }
+
 }
