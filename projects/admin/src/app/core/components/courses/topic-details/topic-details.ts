@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, computed } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../../../services/course.service';
+import {DurationPipe} from 'shared';
 
 @Component({
   selector: 'app-topic-details',
-  imports: [CommonModule, ButtonModule],
+  imports: [CommonModule, ButtonModule, DurationPipe],
   templateUrl: './topic-details.html',
   styleUrl: './topic-details.css',
 })

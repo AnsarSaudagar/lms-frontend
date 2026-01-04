@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Common } from './services/common';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @Component({
   selector: 'lib-shared',
@@ -10,7 +11,7 @@ import { Common } from './services/common';
     </p>
   `,
   styles: ``,
-  providers: [Common]
+  providers: [Common, DurationPipe]
 })
 export class Shared {
 
