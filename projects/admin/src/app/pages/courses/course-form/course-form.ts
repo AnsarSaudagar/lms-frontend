@@ -5,10 +5,11 @@ import { DetailForm } from '../../../core/components/courses/detail-form/detail-
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../../models/course.model';
 import { CourseService } from '../../../services/course.service';
+import { TopicDetails } from '../../../core/components/courses/topic-details/topic-details';
 
 @Component({
   selector: 'app-course-form',
-  imports: [Navbar, PreviewCard, DetailForm],
+  imports: [Navbar, PreviewCard, DetailForm, TopicDetails],
   templateUrl: './course-form.html',
   styleUrl: './course-form.css',
 })
