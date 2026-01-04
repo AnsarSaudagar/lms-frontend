@@ -17,7 +17,7 @@ export class CourseService {
   private COURSE_API_URL = environment.API_URL + '/courses';
 
   mainFormSubmit$ = new Subject<void>();
-
+  selectedCourse = signal<Course | null>(null);
   constructor(private http: HttpClient) { }
 
   getCourses(): Observable<Course[]> {

@@ -26,6 +26,7 @@ export class CourseForm {
       this.courseService.getCourseById(courseId).subscribe({
         next: (course: Course) => {
           this.courseData = course;
+          this.courseService.selectedCourse.set(course);
         }
       });
     }
