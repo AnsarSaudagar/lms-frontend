@@ -15,6 +15,11 @@ export const mainRoutes: Routes = [
                 path: 'create',
                 component: CourseForm,
                 data: { layout: LAYOUT.EMPTY }
+            },
+            {
+                path: 'update/:id',
+                component: CourseForm,
+                data: { layout: LAYOUT.EMPTY }
             }
         ]
     },

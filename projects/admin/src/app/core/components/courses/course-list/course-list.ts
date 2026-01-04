@@ -4,10 +4,11 @@ import { CourseService } from '../../../../services/course.service';
 import { Course } from '../../../../models/course.model';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-course-list',
-  imports: [TableModule, AsyncPipe],
+  imports: [TableModule, AsyncPipe, RouterLink],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })

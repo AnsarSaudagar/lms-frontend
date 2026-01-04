@@ -18,7 +18,7 @@
             <td>0</td>
             <td>{{ course.status }}</td>
             <td class="flex gap-3">
-                <i class="pi pi-pen-to-square" style="font-size: 1rem"></i>
+                <a [routerLink]="['update', course._id]"><i class="pi pi-pen-to-square" style="font-size: 1rem"></i></a>
                 <i (click)="onClickDelete(course._id)" class="pi pi-trash text-red-600" style="font-size: 1rem"></i>
             </td>
         </tr>
