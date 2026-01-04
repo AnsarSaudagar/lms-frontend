@@ -29,6 +29,8 @@ export class CourseForm {
           this.courseService.selectedCourse.set(course);
         }
       });
+    } else {
+      this.courseService.selectedCourse.set(null);
     }
   }
 }

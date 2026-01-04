@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class DetailForm {
   courseForm: FormGroup;
-  courseData : any = null;
+  courseData : Course | null = null;
 
   constructor(private courseService: CourseService) {
     this.courseForm = new FormGroup({
@@ -28,7 +28,17 @@ export class DetailForm {
       }
     });
 
-    this.courseData = computed(() => this.courseService.selectedCourse());     
+    // Populating data in form
+    effect(() => {
+      const signalCourseData = this.courseService.selectedCourse(); 
+
+      if(!signalCourseData) return;
+      this.courseData = signalCourseData;
+      this.courseForm.patchValue({
+        'title': this.courseData.title,
+        'description': this.courseData.description,
+      });
+    });
   }
 
   onSubmit() {
