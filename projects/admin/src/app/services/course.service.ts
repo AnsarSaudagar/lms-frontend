@@ -24,11 +24,15 @@ export class CourseService {
     return this.http.get<Course[]>(this.COURSE_API_URL);
   }
 
+  getCourseById(courseId: string) {
+    return this.http.get<Course>(this.COURSE_API_URL + '/' + courseId)
+  }
+
   addCourse(payload: NewCoursePayload) {
     return this.http.post<Course>(this.COURSE_API_URL, payload);
   }
 
-  deleteCourse(courseId: string){
+  deleteCourse(courseId: string) {
     return this.http.delete(this.COURSE_API_URL + '/' + courseId);
   }
 }
