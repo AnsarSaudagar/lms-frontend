@@ -1,4 +1,4 @@
-import { Component, effect } from '@angular/core';
+import { Component, computed, effect } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../../../services/course.service';
 import { RouterLink } from "@angular/router";
@@ -11,16 +11,11 @@ import { RouterLink } from "@angular/router";
 })
 export class Navbar {
 
-  title : string = 'Create New Course';
-
-  constructor(private courseService: CourseService){
-    effect(() => {
-      const signalCourseData = this.courseService.selectedCourse();
-
-      if (!signalCourseData) return;
-      this.title = signalCourseData.title;
-    });
-  }
+  title = computed(() => {
+    const course = this.courseService.selectedCourse();
+    return course ? course.title : 'Create New Course';
+  });
+  constructor(private courseService: CourseService) {}
 
   onSaveCourse() {
     this.courseService.mainFormSubmit$.next();
