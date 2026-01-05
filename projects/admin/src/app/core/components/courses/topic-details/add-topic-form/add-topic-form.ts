@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TextareaModule } from 'primeng/textarea';
+import { TopicService } from '../../../../../services/topic.service';
+import { CourseService } from '../../../../../services/course.service';
 
 @Component({
   selector: 'app-add-topic-form',
@@ -11,9 +13,11 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './add-topic-form.css',
 })
 export class AddTopicForm {
-  visible = false;
+  visible : boolean = false;
 
-  topics: any = "";
+  topics: string = "";
+
+  constructor(private topicService: TopicService, private courseService: CourseService){}
 
   onClickFormat() {
     try {
@@ -27,8 +31,15 @@ export class AddTopicForm {
 
   onClickTopicSave() {
     try {
+      const currCourse = this.courseService.selectedCourse();
+      if(!currCourse) return;
+      
       const topicsObj = JSON.parse(this.topics);
-    } catch (error) {
+      
+      const topicPayload = Array.isArray(topicsObj) ? topicsObj : [topicsObj];
+           
+      this.topicService.addTopicInCourse(currCourse._id, topicPayload).subscribe();
+    } catch (error) {      
       alert('Invalid JSON')
     }
 
