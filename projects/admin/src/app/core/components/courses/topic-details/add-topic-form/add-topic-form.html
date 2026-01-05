@@ -9,11 +9,11 @@
                 Add Topics
             </p>
         </ng-template>
-        <textarea rows="10" cols="30" pTextarea style="resize: none" [autoResize]="true" fluid></textarea>
+        <textarea [(ngModel)]="topics" rows="10" cols="30" pTextarea style="resize: none" [autoResize]="true" fluid></textarea>
         <ng-template #footer>
-            <button style="background-color: white !important; color: black; border: 1px solid gray !important;"
+            <button (click)="onClickFormat()" style="background-color: white !important; color: black; border: 1px solid gray !important;"
                 pButton>Format</button>
-            <button pButton>Save topics</button>
+            <button (click)="onClickTopicSave()" pButton>Save topics</button>
         </ng-template>
     </p-dialog>
 
