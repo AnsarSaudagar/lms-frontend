@@ -38,7 +38,9 @@ export class AddTopicForm {
       
       const topicPayload = Array.isArray(topicsObj) ? topicsObj : [topicsObj];
            
-      this.topicService.addTopicInCourse(currCourse._id, topicPayload).subscribe();
+      this.topicService.addTopicInCourse(currCourse._id, topicPayload).subscribe({
+        complete: () => this.visible = false
+      });
     } catch (error) {      
       alert('Invalid JSON')
     }
