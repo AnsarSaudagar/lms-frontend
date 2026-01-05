@@ -1,18 +1,18 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoaderService {
-    private _loading = signal(false);
+  private counter = signal(0);
 
-    loading = this._loading.asReadonly();
+  loading = computed(() => this.counter() > 0);
 
-    show(){
-      this._loading.set(true);
-    }
+  show() {
+    this.counter.update(c => c + 1);
+  }
 
-    hide(){
-      this._loading.set(false);
-    }
+  hide() {
+    this.counter.update(c => Math.max(0, c - 1));
+  }
 }
