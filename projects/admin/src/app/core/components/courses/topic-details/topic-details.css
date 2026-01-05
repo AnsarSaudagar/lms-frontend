@@ -1,3 +1,7 @@
 .action > i {
   cursor: pointer;
 }
+
+:host ::ng-deep .p-dialog-close-button{
+  color: white !important;
+}
