@@ -4,11 +4,13 @@ import { AuthService } from './services/auth.service';
 import { ConfigureLayout } from './core/components/configure-layout/configure-layout';
 import { GlobalLoader } from './core/components/global-loader/global-loader';
 import { LoaderService } from './services/loader.service';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  imports: [ CommonModule, ConfigureLayout, GlobalLoader],
+  imports: [ CommonModule, ConfigureLayout, GlobalLoader, ToastModule],
+  providers: [MessageService],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
