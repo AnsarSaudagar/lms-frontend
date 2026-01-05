@@ -1,0 +1,21 @@
+<div class="flex gap-2">
+    <button pButton (click)="visible = true">
+        <i class="pi pi-plus" pButtonIcon></i>
+        <span pButtonLabel>Add Topic</span>
+    </button>
+    <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '35rem', height: 'fit-content' }">
+        <ng-template #header>
+            <p class="font-medium text-xl">
+                Add Topics
+            </p>
+        </ng-template>
+        <textarea rows="10" cols="30" pTextarea style="resize: none" [autoResize]="true" fluid></textarea>
+        <ng-template #footer>
+            <button style="background-color: white !important; color: black; border: 1px solid gray !important;"
+                pButton>Format</button>
+            <button pButton>Save topics</button>
+        </ng-template>
+    </p-dialog>
+
+
+</div>
