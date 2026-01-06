@@ -38,6 +38,7 @@ export class NewFormModal {
       .addCourse({ title, description })
       .subscribe(() => {
         this.courseForm.reset();
+        this.visible = false;
       });
   }
 }
