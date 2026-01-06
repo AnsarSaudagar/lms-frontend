@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { EditorModule } from 'primeng/editor';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-form-modal',
@@ -17,7 +18,7 @@ export class NewFormModal {
   courseForm!: FormGroup;
   visible = false;
 
-  constructor(private courseService: CourseService){
+  constructor(private courseService: CourseService, private messageService: MessageService) {
     this.courseForm = new FormGroup({
       'title': new FormControl('', [Validators.required]),
       'description': new FormControl('', [Validators.required])
@@ -25,7 +26,7 @@ export class NewFormModal {
   }
 
   onSubmit() {
-    
+
     if (this.courseForm.invalid) {
       this.courseForm.markAllAsTouched();
       return;
@@ -39,6 +40,12 @@ export class NewFormModal {
       .subscribe(() => {
         this.courseForm.reset();
         this.visible = false;
+        this.messageService.add(
+          {
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Course successfully Added'
+          });
       });
   }
 }
