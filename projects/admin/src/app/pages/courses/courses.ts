@@ -7,7 +7,7 @@ import { CourseList } from '../../core/components/courses/course-list/course-lis
 
 @Component({
   selector: 'app-courses',
-  imports: [ButtonModule, RouterLink, CourseList],
+  imports: [ButtonModule, CourseList],
   templateUrl: './courses.html',
   styleUrl: './courses.css',
 })
