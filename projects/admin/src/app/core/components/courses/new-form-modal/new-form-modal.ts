@@ -4,10 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CourseService } from '../../../../services/course.service';
 import { DialogModule } from 'primeng/dialog';
 import { RouterModule } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-new-form-modal',
-  imports: [CommonModule, ReactiveFormsModule, DialogModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, DialogModule, RouterModule, ButtonModule, EditorModule],
   templateUrl: './new-form-modal.html',
   styleUrl: './new-form-modal.css',
 })
@@ -23,6 +25,7 @@ export class NewFormModal {
   }
 
   onSubmit() {
+    
     if (this.courseForm.invalid) {
       this.courseForm.markAllAsTouched();
       return;
