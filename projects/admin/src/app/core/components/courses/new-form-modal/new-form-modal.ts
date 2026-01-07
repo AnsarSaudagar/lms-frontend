@@ -38,6 +38,7 @@ export class NewFormModal {
     this.courseService
       .addCourse({ title, description })
       .subscribe(() => {
+        this.courseService.getCourses();
         this.courseForm.reset();
         this.visible = false;
         this.messageService.add(
