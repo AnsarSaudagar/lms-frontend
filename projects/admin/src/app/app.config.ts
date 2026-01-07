@@ -11,6 +11,7 @@ import { providePrimeNG } from 'primeng/config';
 import { customPreset } from './customPreset';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loaderInterceptor } from './core/interceptors/loader-interceptor';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([loaderInterceptor])
+      withInterceptors([loaderInterceptor, authInterceptor])
     ),
     provideAnimationsAsync(),
     providePrimeNG({
