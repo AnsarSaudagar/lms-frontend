@@ -1,26 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CourseService } from '../../../../services/course.service';
 import { Course } from '../../../../models/course.model';
-import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-course-list',
-  imports: [TableModule, AsyncPipe, RouterLink],
+  imports: [TableModule, RouterLink],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
 export class CourseList {
-  courses$ !: Observable<Course[]>;
   constructor(private courseService: CourseService) { }
-
+   courses = computed(() => {
+      return this.courseService.coursesData();
+    });
   ngOnInit(): void {
-    this.courses$ = this.courseService.getCourses();
+    this.courseService.getCourses()
   }
 
-  onClickDelete(id : string){
+  onClickDelete(id: string) {
     this.courseService.deleteCourse(id).subscribe();
   }
 }

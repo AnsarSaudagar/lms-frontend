@@ -1,5 +1,5 @@
 <p-table class="bg-white w-full min-h-36 border border-gray-200 rounded-lg mt-5 overflow-hidden"
-    [value]="(courses$ | async) ?? []" [tableStyle]="{  }">
+    [value]="courses()" [tableStyle]="{  }">
     <ng-template #header>
         <tr>
             <th [width]="'40%'">Course</th>

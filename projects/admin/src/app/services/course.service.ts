@@ -15,13 +15,18 @@ interface NewCoursePayload {
 export class CourseService {
 
   private COURSE_API_URL = environment.API_URL + '/courses';
-
+  
   mainFormSubmit$ = new Subject<void>();
   selectedCourse = signal<Course | null>(null);
+  coursesData = signal<Course[]>([]);
   constructor(private http: HttpClient) { }
 
-  getCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.COURSE_API_URL);
+  getCourses(): void {
+    this.http.get<Course[]>(this.COURSE_API_URL).subscribe({
+      next: (courses: Course[]) => {
+        this.coursesData.set(courses);
+      }
+    });
   }
 
   getCourseById(courseId: string) {
