@@ -20,6 +20,10 @@ export class CourseList {
   }
 
   onClickDelete(id: string) {
-    this.courseService.deleteCourse(id).subscribe();
+    this.courseService.deleteCourse(id).subscribe({
+      next: ()=> {
+        this.courseService.getCourses();
+      }
+    });
   }
 }
