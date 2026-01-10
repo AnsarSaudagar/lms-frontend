@@ -1,10 +1,11 @@
 import { Component, computed } from '@angular/core';
 import { CourseService } from '../../../../services/course.service';
 import { DurationPipe } from 'shared';
+import { CourseSettings } from './course-settings/course-settings';
 
 @Component({
   selector: 'app-preview-card',
-  imports: [DurationPipe],
+  imports: [DurationPipe, CourseSettings],
   templateUrl: './preview-card.html',
   styleUrl: './preview-card.css',
 })
