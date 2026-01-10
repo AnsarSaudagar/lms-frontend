@@ -17,7 +17,6 @@ import { JsonPipe } from '@angular/common';
     ButtonModule,
     SelectModule,
     ToggleSwitchModule,
-    JsonPipe
   ],
   templateUrl: './course-settings.html',
   styleUrl: './course-settings.css',
