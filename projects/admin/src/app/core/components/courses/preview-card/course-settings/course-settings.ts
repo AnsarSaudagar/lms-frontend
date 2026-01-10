@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SelectModule } from 'primeng/select'; // PrimeNG renamed Dropdown to Select in v19+
+import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
@@ -7,8 +7,9 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-course-settings',
-  imports: [FormsModule, 
-    InputTextModule, 
+  imports: [
+    FormsModule,
+    InputTextModule,
     SelectModule,
     ButtonModule,
     SelectModule,
@@ -18,7 +19,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
   styleUrl: './course-settings.css',
 })
 export class CourseSettings {
-  
+
   levels = [
     { label: 'Beginner', value: 'beginner' },
     { label: 'Intermediate', value: 'intermediate' },
@@ -31,7 +32,7 @@ export class CourseSettings {
     { label: 'Marketing', value: 'marketing' }
   ];
 
-  
+
   selectedLevel: string = 'beginner';
   selectedCategory: string = 'tech';
   isDraft: boolean = true;
