@@ -12,7 +12,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
     SelectModule,
     ButtonModule,
     SelectModule,
-    ToggleSwitchModule
+    ToggleSwitchModule,
   ],
   templateUrl: './course-settings.html',
   styleUrl: './course-settings.css',
@@ -36,4 +36,5 @@ export class CourseSettings {
   selectedCategory: string = 'tech';
   isDraft: boolean = true;
   allowEnrollment: boolean = false;
+  price = 0;
 }

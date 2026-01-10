@@ -143,3 +143,8 @@ input:focus {
 *, *::before, *::after {
   box-sizing: border-box;
 }
+
+.p-inputnumber .p-inputtext:enabled:focus {
+  border-color: #3E20FA !important;
+  box-shadow: none !important;
+}
