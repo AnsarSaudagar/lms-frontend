@@ -1,4 +1,56 @@
 <div>
     <hr class="my-2">
     <h4 class="font-medium text-md">Course Settings</h4>
+    <section class="space-y-4">
+        <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-gray-700">Difficulty Level</label>
+            <p-select [options]="levels" [(ngModel)]="selectedLevel" placeholder="Select Difficulty"
+                styleClass="w-full border-gray-300">
+            </p-select>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-gray-700">Category</label>
+            <p-select [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select Category"
+                styleClass="w-full border-gray-300">
+            </p-select>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+            <label class="text-sm font-medium text-gray-700">Price</label>
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                <input type="text" pInputText class="w-full pl-7 border-gray-300 text-gray-500 bg-gray-50/30"
+                    placeholder="0.00" />
+            </div>
+        </div>
+    </section>
+
+    <hr class="border-gray-100" />
+
+    <section class="space-y-5">
+        <h3 class="text-lg font-bold text-gray-900">Publish Settings</h3>
+
+        <div class="flex justify-between items-start">
+            <div class="flex flex-col">
+                <span class="text-sm font-medium text-gray-800">Draft Mode</span>
+                <span class="text-xs text-gray-500">Course is not visible to students</span>
+            </div>
+            <p-toggle [(ngModel)]="isDraft"></p-toggle>
+        </div>
+
+        <div class="flex justify-between items-start">
+            <div class="flex flex-col">
+                <span class="text-sm font-medium text-gray-800">Enrollment</span>
+                <span class="text-xs text-gray-500">Allow new enrollments</span>
+            </div>
+            <p-inputSwitch [(ngModel)]="allowEnrollment"></p-inputSwitch>
+        </div>
+    </section>
+
+    <button pButton type="button"
+        class="my-2 w-full p-button-success bg-[#10a34b] hover:bg-[#0e8f41] border-none py-3 flex justify-center gap-2 rounded-lg font-semibold">
+        <i class="pi pi-eye"></i>
+        <span>Preview Course</span>
+    </button>
 </div>
