@@ -4,6 +4,7 @@ import { EditorModule } from 'primeng/editor';
 import { CourseService } from '../../../../services/course.service';
 import { Course } from '../../../../models/course.model';
 import { CommonModule } from '@angular/common';
+import { CourseFormService } from '../../../../services/course-form.service';
 
 @Component({
   selector: 'app-detail-form',
@@ -15,11 +16,8 @@ export class DetailForm {
   courseForm: FormGroup;
   courseData: Course | null = null;
 
-  constructor(private courseService: CourseService) {
-    this.courseForm = new FormGroup({
-      'title': new FormControl('', [Validators.required]),
-      'description': new FormControl('', [Validators.required])
-    });
+  constructor(private courseService: CourseService, private courseFormService: CourseFormService) {
+    this.courseForm = this.courseFormService.form;
 
     // When form submit is clicked this will be trigger
     courseService.mainFormSubmit$.subscribe({

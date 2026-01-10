@@ -11,7 +11,7 @@ export class CourseFormService {
     this.form = this.fb.group({
       details: this.fb.group({
         title: ['', Validators.required],
-        descriptions: ['', Validators.required],
+        description: ['', Validators.required],
       }),
       settings: this.fb.group({
         difficultyLevel : ['', Validators.required],
