@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Course } from '../models/course.model';
 import { CourseDetails } from '../models/course-details.model';
+import { Category } from '../models/category.model';
 
 interface NewCoursePayload {
   title: string;
@@ -20,6 +21,8 @@ export class CourseService {
   mainFormSubmit$ = new Subject<void>();
   selectedCourse = signal<Course | null>(null);
   coursesData = signal<Course[]>([]);
+  categories = signal<Category[]>([]);
+  
   constructor(private http: HttpClient) { }
 
   getCourses(): void {

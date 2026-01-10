@@ -11,7 +11,7 @@
 
         <div class="flex flex-col gap-1.5">
             <label class="text-sm font-medium text-gray-700">Category</label>
-            <p-select [options]="categories" [(ngModel)]="selectedCategory" placeholder="Select Category"
+            <p-select [options]="categories()" [(ngModel)]="selectedCategory" placeholder="Select Category"
                 styleClass="w-full border-gray-300">
             </p-select>
         </div>

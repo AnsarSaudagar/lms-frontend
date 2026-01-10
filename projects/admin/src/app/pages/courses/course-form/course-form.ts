@@ -29,6 +29,7 @@ export class CourseForm {
         next: (response: CourseDetails) => {          
           this.courseData = response.course;
           this.courseService.selectedCourse.set(response.course);
+          this.courseService.categories.set(response.categories);
         }
       });
     } else {
