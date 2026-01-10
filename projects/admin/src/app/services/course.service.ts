@@ -30,7 +30,7 @@ export class CourseService {
   }
 
   getCourseById(courseId: string) {
-    return this.http.get<Course>(this.COURSE_API_URL + '/' + courseId)
+    return this.http.get<any>(this.COURSE_API_URL + '/' + courseId)
   }
 
   addCourse(payload: NewCoursePayload) {

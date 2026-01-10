@@ -25,9 +25,9 @@ export class CourseForm {
 
     if (courseId) {
       this.courseService.getCourseById(courseId).subscribe({
-        next: (course: Course) => {
-          this.courseData = course;
-          this.courseService.selectedCourse.set(course);
+        next: (response: any) => {
+          this.courseData = response.course;
+          this.courseService.selectedCourse.set(response.course);
         }
       });
     } else {
