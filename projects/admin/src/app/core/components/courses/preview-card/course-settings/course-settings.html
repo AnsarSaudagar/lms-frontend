@@ -4,7 +4,7 @@
     <section class="space-y-4">
         <div class="flex flex-col gap-1.5">
             <label class="text-sm font-medium text-gray-700">Difficulty Level</label>
-            <p-select [options]="levels" [(ngModel)]="selectedLevel" placeholder="Select Difficulty"
+            <p-select [options]="levels()" [(ngModel)]="selectedLevel" placeholder="Select Difficulty"
                 styleClass="w-full border-gray-300">
             </p-select>
         </div>

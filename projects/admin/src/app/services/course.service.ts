@@ -21,8 +21,9 @@ export class CourseService {
   mainFormSubmit$ = new Subject<void>();
   selectedCourse = signal<Course | null>(null);
   coursesData = signal<Course[]>([]);
+  difficultyLevel = signal<any>([]);
   categories = signal<Category[]>([]);
-  
+
   constructor(private http: HttpClient) { }
 
   getCourses(): void {

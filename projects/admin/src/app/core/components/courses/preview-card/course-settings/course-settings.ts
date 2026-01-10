@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { CourseService } from '../../../../../services/course.service';
 import { Category } from '../../../../../models/category.model';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-course-settings',
@@ -16,17 +17,12 @@ import { Category } from '../../../../../models/category.model';
     ButtonModule,
     SelectModule,
     ToggleSwitchModule,
+    JsonPipe
   ],
   templateUrl: './course-settings.html',
   styleUrl: './course-settings.css',
 })
 export class CourseSettings {
-
-  levels = [
-    { label: 'Beginner', value: 'beginner' },
-    { label: 'Intermediate', value: 'intermediate' },
-    { label: 'Advanced', value: 'advanced' }
-  ];
 
   selectedLevel: string = 'beginner';
   selectedCategory: string = 'tech';
@@ -34,16 +30,8 @@ export class CourseSettings {
   allowEnrollment: boolean = false;
   price = 0;
 
-  // categories = [
-  //   { label: 'Technology', value: 'tech' },
-  //   { label: 'Design', value: 'design' },
-  //   { label: 'Marketing', value: 'marketing' }
-  // ];
-  
   categories = computed(() => {
     const categories = this.courseService.categories();
-
-
     const formatedCategories = categories.map((category: Category) => {
       return {
         label: category.name,
@@ -52,7 +40,21 @@ export class CourseSettings {
     });
 
     return formatedCategories;
+  });
+
+  levels = computed(() => {
+    const levelObj = this.courseService.difficultyLevel();
+    const levelArr = Object.keys(this.courseService.difficultyLevel());
+
+    const formattedLevels = levelArr.map((level) => {
+      return {
+        value: levelObj[level],
+        label: levelObj[level]
+      }
+    });
+    return formattedLevels;
   })
+
 
   constructor(private courseService: CourseService) { }
 

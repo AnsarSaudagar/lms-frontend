@@ -30,6 +30,7 @@ export class CourseForm {
           this.courseData = response.course;
           this.courseService.selectedCourse.set(response.course);
           this.courseService.categories.set(response.categories);
+          this.courseService.difficultyLevel.set(response.difficultyLevel);
         }
       });
     } else {
