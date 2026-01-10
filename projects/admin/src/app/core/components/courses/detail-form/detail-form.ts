@@ -33,8 +33,10 @@ export class DetailForm {
       if (!signalCourseData) return;
       this.courseData = signalCourseData;
       this.courseForm.patchValue({
-        'title': this.courseData.title,
-        'description': this.courseData.description,
+        details: {
+          'title': this.courseData.title,
+          'description': this.courseData.description,
+        }
       });
     });
   }
