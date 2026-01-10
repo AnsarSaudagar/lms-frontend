@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../../models/course.model';
 import { CourseService } from '../../../services/course.service';
 import { TopicDetails } from '../../../core/components/courses/topic-details/topic-details';
+import { CourseDetails } from '../../../models/course-details.model';
 
 @Component({
   selector: 'app-course-form',
@@ -25,7 +26,7 @@ export class CourseForm {
 
     if (courseId) {
       this.courseService.getCourseById(courseId).subscribe({
-        next: (response: any) => {
+        next: (response: CourseDetails) => {          
           this.courseData = response.course;
           this.courseService.selectedCourse.set(response.course);
         }

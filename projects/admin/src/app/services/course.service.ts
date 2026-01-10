@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Course } from '../models/course.model';
+import { CourseDetails } from '../models/course-details.model';
 
 interface NewCoursePayload {
   title: string;
@@ -30,7 +31,7 @@ export class CourseService {
   }
 
   getCourseById(courseId: string) {
-    return this.http.get<any>(this.COURSE_API_URL + '/' + courseId)
+    return this.http.get<CourseDetails>(this.COURSE_API_URL + '/' + courseId)
   }
 
   addCourse(payload: NewCoursePayload) {
