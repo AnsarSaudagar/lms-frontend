@@ -16,7 +16,8 @@ export class CourseFormService {
       settings: this.fb.group({
         difficultyLevel : ['', Validators.required],
         category: ['', Validators.required],
-        price: [0, Validators.required]
+        price: [0, Validators.required],
+        // draft: [true, Validators.required]
       })
     })
   }

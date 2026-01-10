@@ -2,11 +2,12 @@ import { Component, computed } from '@angular/core';
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { CourseService } from '../../../../../services/course.service';
 import { Category } from '../../../../../models/category.model';
 import { JsonPipe } from '@angular/common';
+import { CourseFormService } from '../../../../../services/course-form.service';
 
 @Component({
   selector: 'app-course-settings',
@@ -17,12 +18,14 @@ import { JsonPipe } from '@angular/common';
     ButtonModule,
     SelectModule,
     ToggleSwitchModule,
+    ReactiveFormsModule
   ],
   templateUrl: './course-settings.html',
   styleUrl: './course-settings.css',
 })
 export class CourseSettings {
 
+  courseSettingsForm: FormGroup;
   selectedLevel: string = 'beginner';
   selectedCategory: string = 'tech';
   isDraft: boolean = true;
@@ -55,7 +58,9 @@ export class CourseSettings {
   })
 
 
-  constructor(private courseService: CourseService) { }
+  constructor(private courseService: CourseService, private courseFormService: CourseFormService) { 
+    this.courseSettingsForm = this.courseFormService.form;
+  }
 
 
 

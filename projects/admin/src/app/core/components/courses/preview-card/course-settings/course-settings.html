@@ -1,49 +1,53 @@
-<div>
-    <hr class="my-2">
-    <h4 class="font-medium text-md">Course Settings</h4>
-    <section class="space-y-4">
-        <div class="flex flex-col gap-1.5">
-            <label class="text-sm font-medium text-gray-700">Difficulty Level</label>
-            <p-select [options]="levels()" [(ngModel)]="selectedLevel" placeholder="Select Difficulty"
-                styleClass="w-full border-gray-300">
-            </p-select>
-        </div>
+<div [formGroup]="courseSettingsForm">
+    <div formGroupName="settings">
 
-        <div class="flex flex-col gap-1.5">
-            <label class="text-sm font-medium text-gray-700">Category</label>
-            <p-select [options]="categories()" [(ngModel)]="selectedCategory" placeholder="Select Category"
-                styleClass="w-full border-gray-300">
-            </p-select>
-        </div>
-
-        <div class="flex flex-col gap-1.5">
-            <label for="price" class="text-sm font-medium text-gray-700">Price</label>
-            <input type="decimal" pInputText id="price" />
-        </div>
-    </section>
-    <hr class="my-3">
-    <section>
-        <h4 class="font-medium text-md my-2">Publish Settings</h4>
-        <div class="flex justify-between items-start">
-            <div class="flex flex-col">
-                <span class="text-sm font-medium text-gray-800">Draft Mode</span>
-                <span class="text-xs text-gray-500">Course is not visible to students</span>
+        <hr class="my-2">
+        <h4 class="font-medium text-md">Course Settings</h4>
+        <section class="space-y-4">
+            <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-medium text-gray-700">Difficulty Level</label>
+                <p-select formControlName="difficultyLevel" [options]="levels()" 
+                    placeholder="Select Difficulty" styleClass="w-full border-gray-300">
+                </p-select>
             </div>
-            <p-toggleswitch [(ngModel)]="isDraft"></p-toggleswitch>
-        </div>
 
-        <!-- <div class="flex justify-between items-start">
+            <div class="flex flex-col gap-1.5">
+                <label class="text-sm font-medium text-gray-700">Category</label>
+                <p-select formControlName="category" [options]="categories()" 
+                    placeholder="Select Category" styleClass="w-full border-gray-300">
+                </p-select>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+                <label for="price" class="text-sm font-medium text-gray-700">Price</label>
+                <input formControlName="price" type="decimal" pInputText id="price" />
+            </div>
+        </section>
+        <hr class="my-3">
+        <section>
+            <h4 class="font-medium text-md my-2">Publish Settings</h4>
+            <div class="flex justify-between items-start">
+                <div class="flex flex-col">
+                    <span class="text-sm font-medium text-gray-800">Draft Mode</span>
+                    <span class="text-xs text-gray-500">Course is not visible to students</span>
+                </div>
+                <!-- <p-toggleswitch formControlName="draft"></p-toggleswitch> -->
+            </div>
+
+            <!-- <div class="flex justify-between items-start">
             <div class="flex flex-col">
                 <span class="text-sm font-medium text-gray-800">Enrollment</span>
                 <span class="text-xs text-gray-500">Allow new enrollments</span>
             </div>
             <p-toggleswitch [(ngModel)]="allowEnrollment"></p-toggleswitch>
         </div> -->
-    </section>
+        </section>
 
-    <button pButton type="button"
-        class="my-2 w-full p-button-success bg-[#10a34b] hover:bg-[#0e8f41] border-none py-3 flex justify-center gap-2 rounded-lg font-semibold">
-        <i class="pi pi-eye"></i>
-        <span>Preview Course</span>
-    </button>
+        <button pButton type="button"
+            class="my-2 w-full p-button-success bg-[#10a34b] hover:bg-[#0e8f41] border-none py-3 flex justify-center gap-2 rounded-lg font-semibold">
+            <i class="pi pi-eye"></i>
+            <span>Preview Course</span>
+        </button>
+    </div>
+
 </div>
