@@ -7,30 +7,31 @@
         </svg>
     </div>
     <div class="mt-2">
-        <h4 class="font-medium text-md mb-2">{{courseData()?.title}}</h4>
-        <hr>
-        <div>
-            <div class="flex justify-between ">
-                <p class="text-sm flex items-center ">
-                    <i class="pi pi-list text-[#3E20FA]"></i>
-                     <span class="text-gray-500">Topics</span>
-                </p>
-                <p>{{courseData()?.topics?.length}}</p>
+        <h4 class="font-medium text-md">{{courseData()?.title}}</h4>
+        <hr class="my-2">
+        <div class="space-y-3 w-full max-w-xs">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2"> <i class="pi pi-list text-[#3E20FA]"></i>
+                    <span class="text-sm text-gray-500">Topics</span>
+                </div>
+                <p class="text-sm font-medium">{{courseData()?.topics?.length}}</p>
             </div>
-            <div class="flex justify-between ">
-                <p class="text-sm flex items-center ">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
                     <i class="pi pi-video text-[#3E20FA]"></i>
-                     <span class="text-gray-500">Videos</span>
-                </p>
-                <p>0</p>
+                    <span class="text-sm text-gray-500">Videos</span>
+                </div>
+                <p class="text-sm font-medium">0</p>
             </div>
-            <div class="flex justify-between ">
-                <p class="text-sm flex items-center ">
+
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
                     <i class="pi pi-clock text-[#3E20FA]"></i>
-                    <span class="text-gray-500">Duration</span>
-                </p>
-                <p>{{courseDuration() | duration}}</p>
+                    <span class="text-sm text-gray-500">Duration</span>
+                </div>
+                <p class="text-sm font-medium">{{courseDuration() | duration}}</p>
             </div>
+
         </div>
 
     </div>
