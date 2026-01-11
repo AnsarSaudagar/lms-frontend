@@ -5,7 +5,7 @@ export interface Course{
     title: string;
     description: string;
     status: string;
-    topics: Topic[];
+    topics?: Topic[];
     createdAt: Date;
     updatedAt: Date;
     price: number;

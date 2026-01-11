@@ -19,6 +19,9 @@ export class PreviewCard {
     if (!course) return 0;
 
     let duration = 0;
+
+    if(!course.topics) return 0;
+    
     course.topics.forEach(topic => {
       duration += topic.duration;
     });
