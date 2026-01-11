@@ -1,26 +1,73 @@
-<p-table class="bg-white w-full min-h-36 border border-gray-200 rounded-lg mt-5 overflow-hidden"
-    [value]="courses()" [tableStyle]="{  }">
-    <ng-template #header>
-        <tr>
-            <th [width]="'40%'">Course</th>
-            <th>Category</th>
-            <th>Enrolled</th>
-            <th>Duration</th>
-            <th>Status</th>
-            <th [width]="'15%'">Actions</th>
+<p-table class="bg-white w-full border border-gray-200 rounded-lg mt-5 overflow-hidden" [value]="courses()">
+    <ng-template pTemplate="header">
+        <tr class="text-left text-sm text-gray-500">
+            <th class="w-[40%]">COURSE</th>
+            <th>CATEGORY</th>
+            <th>ENROLLED</th>
+            <th>DURATION</th>
+            <th>STATUS</th>
+            <th class="w-[15%] text-center">ACTIONS</th>
         </tr>
     </ng-template>
-    <ng-template #body let-course>
-        <tr>
-            <td class="font-medium text-lg">{{ course.title }}</td>
-            <td>-</td>
-            <td>-</td>
-            <td>0</td>
-            <td>{{ course.status }}</td>
-            <td class="flex gap-3">
-                <a [routerLink]="['update', course._id]"><i class="pi pi-pen-to-square" style="font-size: 1rem"></i></a>
-                <i (click)="onClickDelete(course._id)" class="pi pi-trash text-red-600" style="font-size: 1rem"></i>
+
+    <ng-template pTemplate="body" let-course>
+        <tr class="border-t border-gray-100 hover:bg-gray-50">
+            <td class="py-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 flex items-center justify-center rounded-lg text-white">
+                        <i class="pi pi-book"></i>
+                    </div>
+
+                    <div>
+                        <p class="font-semibold text-gray-900">
+                            {{ course.title }}
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            Created {{ course.createdAt | date:'mediumDate' }}
+                        </p>
+                    </div>
+                </div>
             </td>
+
+            <td class="text-gray-700">
+                {{ course.category || '-' }}
+            </td>
+
+            <td class="text-gray-700">
+                {{ course.enrolled || 0 | number }}
+            </td>
+
+            <td class="text-gray-700">
+                {{ course.duration || '0h 0m' }}
+            </td>
+
+            <td>
+                <span class="px-3 py-1 rounded-full text-xs font-medium" [ngClass]="{
+            'bg-green-100 text-green-700': course.status === 'Published',
+            'bg-yellow-100 text-yellow-700': course.status === 'Draft'
+          }">
+                    {{ course.status }}
+                </span>
+            </td>
+
+            <td class="text-center">
+                <div class="flex justify-center gap-4 text-gray-500">
+
+                    <a [routerLink]="['update', course._id]" class="hover:text-blue-600">
+                        <i class="pi pi-pen-to-square"></i>
+                    </a>
+
+                    <button class="hover:text-gray-700">
+                        <i class="pi pi-eye"></i>
+                    </button>
+
+                    <button (click)="onClickDelete(course._id)" class="hover:text-red-600">
+                        <i class="pi pi-trash"></i>
+                    </button>
+
+                </div>
+            </td>
+
         </tr>
     </ng-template>
 </p-table>

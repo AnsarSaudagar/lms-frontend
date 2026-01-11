@@ -2,10 +2,11 @@ import { Component, computed } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CourseService } from '../../../../services/course.service';
 import { RouterLink } from "@angular/router";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-course-list',
-  imports: [TableModule, RouterLink],
+  imports: [TableModule, RouterLink, CommonModule],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
