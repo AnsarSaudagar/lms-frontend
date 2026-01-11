@@ -49,8 +49,9 @@ export class CourseSettings {
     const levelArr = Object.keys(this.courseService.difficultyLevel());
 
     const formattedLevels = levelArr.map((level) => {
+      
       return {
-        value: levelObj[level],
+        value: level,
         label: levelObj[level]
       }
     });
