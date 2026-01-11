@@ -1,6 +1,4 @@
 import { Routes } from "@angular/router";
-import { Courses } from "../pages/courses/courses";
-import { CourseForm } from "../pages/courses/course-form/course-form";
 import { LAYOUT } from "../core/utils/constant";
 
 export const courseRoutes: Routes = [
