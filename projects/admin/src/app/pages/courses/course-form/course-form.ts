@@ -50,7 +50,8 @@ export class CourseForm {
       },
       settings: {
         price: course.price,
-        difficultyLevel: course.difficultyLevel
+        difficultyLevel: course.difficultyLevel,
+        category: course.category
       }
     });
   }
