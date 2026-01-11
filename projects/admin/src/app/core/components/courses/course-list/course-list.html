@@ -3,7 +3,7 @@
         <tr class="text-left text-sm text-gray-500">
             <th class="w-[40%]">COURSE</th>
             <th>CATEGORY</th>
-            <th>ENROLLED</th>
+            <th>TOPICS</th>
             <th>DURATION</th>
             <th>STATUS</th>
             <th class="w-[15%] text-center">ACTIONS</th>
@@ -34,11 +34,11 @@
             </td>
 
             <td class="text-gray-700">
-                {{ course.enrolled || 0 | number }}
+                {{ course.topicsCount || 0 | number }}
             </td>
 
             <td class="text-gray-700">
-                {{ course.duration || '0h 0m' }}
+                {{ course.duration || '0h 0m' | duration }}
             </td>
 
             <td>

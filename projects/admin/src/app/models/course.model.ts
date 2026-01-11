@@ -11,4 +11,6 @@ export interface Course{
     price: number;
     difficultyLevel: string;
     category?: string;
+    duration?: number;
+    topicsCount ?: number;
 }

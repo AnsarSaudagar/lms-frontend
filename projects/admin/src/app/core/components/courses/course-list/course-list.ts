@@ -3,25 +3,26 @@ import { TableModule } from 'primeng/table';
 import { CourseService } from '../../../../services/course.service';
 import { RouterLink } from "@angular/router";
 import { CommonModule } from '@angular/common';
+import { DurationPipe } from 'shared';
 
 @Component({
   selector: 'app-course-list',
-  imports: [TableModule, RouterLink, CommonModule],
+  imports: [TableModule, RouterLink, CommonModule, DurationPipe],
   templateUrl: './course-list.html',
   styleUrl: './course-list.css',
 })
 export class CourseList {
   constructor(private courseService: CourseService) { }
-   courses = computed(() => {
-      return this.courseService.coursesData();
-    });
+  courses = computed(() => {
+    return this.courseService.coursesData();
+  });
   ngOnInit(): void {
     this.courseService.getCourses()
   }
 
   onClickDelete(id: string) {
     this.courseService.deleteCourse(id).subscribe({
-      next: ()=> {
+      next: () => {
         this.courseService.getCourses();
       }
     });
