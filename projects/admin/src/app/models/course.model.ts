@@ -8,4 +8,7 @@ export interface Course{
     topics: Topic[];
     createdAt: Date;
     updatedAt: Date;
+    price: number;
+    difficultyLevel: string;
+    category?: string;
 }
