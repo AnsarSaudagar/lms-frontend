@@ -21,7 +21,7 @@ export class PreviewCard {
     let duration = 0;
     course.topics.forEach(topic => {
       duration += topic.duration;
-    })
+    });
 
     return duration;
   });

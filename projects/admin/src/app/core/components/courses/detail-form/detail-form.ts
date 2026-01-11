@@ -16,58 +16,7 @@ export class DetailForm {
   courseForm: FormGroup;
   courseData: Course | null = null;
 
-  constructor(private courseService: CourseService, private courseFormService: CourseFormService) {
+  constructor(private courseFormService: CourseFormService) {
     this.courseForm = this.courseFormService.form;
-
-    // When form submit is clicked this will be trigger
-    courseService.mainFormSubmit$.subscribe({
-      next: () => {
-        this.onSubmit();
-      }
-    });
-
-    // Populating data in form
-    effect(() => {
-      const signalCourseData = this.courseService.selectedCourse();
-
-      if (!signalCourseData) return;
-      this.courseData = signalCourseData;
-      this.courseForm.patchValue({
-        details: {
-          'title': this.courseData.title,
-          'description': this.courseData.description,
-        }
-      });
-    });
   }
-
-  onSubmit() {
-    if (this.courseForm.invalid) {
-      this.courseForm.markAllAsTouched();
-      return;
-    }
-
-    const { title, description } = this.courseForm.value;
-
-    // For updating course
-    if (this.courseData) {
-      this.courseService
-        .updateCourse(this.courseData._id, { title, description })
-        .subscribe({
-          next: () => {
-            // this.courseForm.reset();
-            this.courseService.selectedCourse.set(null);
-          }
-        });
-      return;
-    }
-
-    // For creating new course
-    this.courseService
-      .addCourse({ title, description })
-      .subscribe(() => {
-        this.courseForm.reset();
-      });
-  }
-
 }

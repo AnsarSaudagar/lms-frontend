@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from './course.service';
+import { Course } from '../models/course.model';
 
 @Injectable({
   providedIn: 'root',
@@ -35,9 +36,8 @@ export class CourseFormService {
     this.courseService
       .updateCourse(course_id, {...details, ...settings})
       .subscribe({
-        next: () => {
-          // this.form.reset();
-          this.courseService.selectedCourse.set(null);
+        next: (course: Course) => {
+          this.courseService.selectedCourse.set(course);
         }
       });
     return;

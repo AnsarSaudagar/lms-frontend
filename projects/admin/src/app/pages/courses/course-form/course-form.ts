@@ -7,6 +7,7 @@ import { Course } from '../../../models/course.model';
 import { CourseService } from '../../../services/course.service';
 import { TopicDetails } from '../../../core/components/courses/topic-details/topic-details';
 import { CourseDetails } from '../../../models/course-details.model';
+import { CourseFormService } from '../../../services/course-form.service';
 
 @Component({
   selector: 'app-course-form',
@@ -19,7 +20,8 @@ export class CourseForm {
 
   constructor(
     private route: ActivatedRoute,
-    private courseService: CourseService) { }
+    private courseService: CourseService,
+    private courseFormService: CourseFormService) { }
 
   ngOnInit() {
     const courseId: string | null = this.route.snapshot.paramMap.get('id');
@@ -31,10 +33,25 @@ export class CourseForm {
           this.courseService.selectedCourse.set(response.course);
           this.courseService.categories.set(response.categories);
           this.courseService.difficultyLevel.set(response.difficultyLevel);
+          // Patching form values
+          this.patchFormValues(this.courseData);
         }
       });
     } else {
       this.courseService.selectedCourse.set(null);
     }
+  }
+
+  private patchFormValues(course: Course) {
+    this.courseFormService.form.patchValue({
+      details: {
+        title: course.title,
+        description: course.description,
+      },
+      settings: {
+        price: course.price,
+        difficultyLevel: course.difficultyLevel
+      }
+    });
   }
 }
