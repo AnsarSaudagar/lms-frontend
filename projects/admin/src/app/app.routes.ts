@@ -11,14 +11,16 @@ export const routes: Routes = [
     path: 'auth',
     component: RouteWrapper,
     canMatch: [authGuard],
-    children: [...authRoutes],
     data: { layout: LAYOUT.AUTH },
+    loadChildren: () => 
+      import('./routes/auth').then(m => m.authRoutes)
   },
   {
     path: '',
     component: RouteWrapper,
     canMatch: [authGuard],
-    children: [...mainRoutes],
     data: { layout: LAYOUT.MAIN },
+    loadChildren: () => 
+      import('./routes/main').then(m => m.mainRoutes)
   },
 ];
