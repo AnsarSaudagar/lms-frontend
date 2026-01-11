@@ -6,7 +6,6 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { CourseService } from '../../../../../services/course.service';
 import { Category } from '../../../../../models/category.model';
-import { JsonPipe } from '@angular/common';
 import { CourseFormService } from '../../../../../services/course-form.service';
 
 @Component({

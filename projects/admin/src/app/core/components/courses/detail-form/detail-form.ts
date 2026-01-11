@@ -1,7 +1,6 @@
-import { Component, computed, effect } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditorModule } from 'primeng/editor';
-import { CourseService } from '../../../../services/course.service';
 import { Course } from '../../../../models/course.model';
 import { CommonModule } from '@angular/common';
 import { CourseFormService } from '../../../../services/course-form.service';

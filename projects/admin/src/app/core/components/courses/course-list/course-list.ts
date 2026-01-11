@@ -1,7 +1,6 @@
 import { Component, computed } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CourseService } from '../../../../services/course.service';
-import { Course } from '../../../../models/course.model';
 import { RouterLink } from "@angular/router";
 
 @Component({

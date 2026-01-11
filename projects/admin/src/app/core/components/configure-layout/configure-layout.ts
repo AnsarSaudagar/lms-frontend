@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Auth } from '../../../layout/auth/auth';
-import { RouterOutlet, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { RouterOutlet, ActivatedRoute } from '@angular/router';
 import { Main } from '../../../layout/main/main';
 import { LAYOUT } from '../../utils/constant';
 import { TestLayout } from '../../../layout/test-layout/test-layout';
@@ -36,6 +36,6 @@ export class ConfigureLayout {
       current = current.parent;
     }
 
-    return 'main'; // fallback
+    return 'main'; 
   }
 }

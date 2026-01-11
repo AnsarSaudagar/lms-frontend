@@ -1,4 +1,4 @@
-import { Component, computed, effect } from '@angular/core';
+import { Component, computed } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CourseService } from '../../../../services/course.service';
 import { ActivatedRoute, RouterLink } from "@angular/router";

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Navbar } from '../../../core/components/courses/navbar/navbar';
 import { PreviewCard } from '../../../core/components/courses/preview-card/preview-card';
 import { DetailForm } from '../../../core/components/courses/detail-form/detail-form';
