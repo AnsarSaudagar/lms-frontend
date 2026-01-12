@@ -1,1 +1,77 @@
-<p>error-logger works!</p>
+<div class="p-6 bg-[#F9FAFB] min-h-screen">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Error Logs</h1>
+            <p class="text-sm text-gray-500">Tracking all database-stored exceptions.</p>
+        </div>
+        <div class="flex gap-2">
+            <p-button label="Export" icon="pi pi-download" [outlined]="true" severity="secondary" size="small"></p-button>
+            <p-button label="Clear Logs" icon="pi pi-trash" severity="danger" size="small"></p-button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-12 lg:col-span-4 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+                <span class="font-bold text-sm text-gray-700">Recent Exceptions</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-red-100 text-red-600 rounded-full">LIVE</span>
+            </div>
+            
+            <div class="divide-y divide-gray-100 max-h-[700px] overflow-y-auto">
+                <div *ngFor="let err of errorLogs" 
+                     (click)="selectedError = err"
+                     class="p-4 hover:bg-gray-50 cursor-pointer transition-all border-l-4"
+                     [ngClass]="selectedError?.id === err.id ? 'bg-indigo-50/50 border-[#3E20FA]' : 'border-transparent'">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-sm font-bold text-gray-900 truncate w-40">{{err.type}}</span>
+                        <p-tag [value]="err.severity" [severity]="getSeverity(err.severity)"></p-tag>
+                    </div>
+                    <p class="text-xs text-gray-500 truncate mb-2">{{err.message}}</p>
+                    <div class="flex items-center text-[10px] text-gray-400 gap-3">
+                        <span><i class="pi pi-clock mr-1"></i>{{err.timestamp}}</span>
+                        <span><i class="pi pi-user mr-1"></i>{{err.userId}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-8">
+            <div *ngIf="selectedError; else emptyState" class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate-fade-in">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h2 class="text-xl font-bold text-gray-900">{{selectedError.type}}</h2>
+                            <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">ID: {{selectedError.id}}</span>
+                        </div>
+                        <p class="text-red-500 font-mono text-sm">{{selectedError.message}}</p>
+                    </div>
+                    <p-button label="Resolve" severity="success" icon="pi pi-check" size="small" (onClick)="markResolved()"></p-button>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4 mb-6">
+                    <div class="p-3 bg-gray-50 rounded-lg border border-gray-100" *ngFor="let meta of getMeta(selectedError)">
+                        <p class="text-[10px] uppercase font-bold text-gray-400">{{meta.label}}</p>
+                        <p class="text-sm font-medium text-gray-800">{{meta.value}}</p>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-bold text-gray-700">Stack Trace</span>
+                        <p-button icon="pi pi-copy" [text]="true" severity="secondary" size="small"></p-button>
+                    </div>
+                    <div class="bg-[#1e1e1e] rounded-lg p-5 font-mono text-xs text-blue-300 leading-relaxed overflow-x-auto shadow-inner">
+                        <code>{{selectedError.stack}}</code>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #emptyState>
+                <div class="h-full min-h-[400px] flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-xl p-12 text-gray-400 bg-white">
+                    <i class="pi pi-bolt text-5xl mb-4 text-gray-200"></i>
+                    <p class="font-medium">Select an error to inspect the data</p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>
