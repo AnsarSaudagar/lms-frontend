@@ -54,7 +54,7 @@ export const SIDEBAR_ITEMS = [
             },
             {
                 label: 'Error Reports',
-                icon: 'pi pi-file',
+                icon: 'pi pi-exclamation-triangle',
                 route: '/error-logger'
             },
         ]
