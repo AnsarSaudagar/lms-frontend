@@ -53,9 +53,9 @@ export const SIDEBAR_ITEMS = [
                 // route: '/'
             },
             {
-                label: 'Reports',
+                label: 'Error Reports',
                 icon: 'pi pi-file',
-                // route: '/courses'
+                route: '/error-logger'
             },
         ]
     },

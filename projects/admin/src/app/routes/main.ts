@@ -9,5 +9,10 @@ export const mainRoutes: Routes = [
         loadChildren: () => 
             import('./course').then(m => m.courseRoutes)
     },
+    {
+        path: 'error-logger',
+        loadComponent: () => 
+            import('../pages/error-logger/error-logger').then(m => m.ErrorLogger)
+    },
     { path: 'test', component: Test },
 ];
