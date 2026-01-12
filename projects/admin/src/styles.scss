@@ -11,12 +11,12 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s;
-  background-color: #3E20FA !important;
+  
 }
 
 .p-button.p-button-primary {
-  background-color: var(--p-primary-color);
-  color: var(--p-primary-color-text);
+  background-color: #3E20FA !important;
+  border: 1px solid #3E20FA !important;
 }
 
 .p-button.p-button-primary:hover {

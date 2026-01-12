@@ -1,4 +1,4 @@
-<button (click)="visible = true" pButton>
+<button severity="primary" (click)="visible = true" pButton>
     <i class="pi pi-plus" pButtonIcon></i>
     <span pButtonLabel>Create Course</span>
 </button>
@@ -14,7 +14,7 @@
             <p-editor formControlName="description" [style]="{ height: '220px' }" />
         </div>
         <div class="mt-2 float-right">
-            <button type="submit" pButton>Save Course</button>
+            <button severity="danger" type="submit" pButton>Save Course</button>
         </div>
     </form>
 </p-dialog>
