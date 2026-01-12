@@ -59,7 +59,7 @@ export class ErrorLogger {
 
   getMeta(err: any) {
     return [
-      { label: 'Timestamp', value: err.timestamp },
+      { label: 'Timestamp', value: err.createdAt },
       { label: 'User ID', value: err.userId },
       { label: 'IP Address', value: err.ip },
       { label: 'Browser', value: err.browser }
