@@ -13,4 +13,5 @@ export interface Course{
     category?: string;
     duration?: number;
     topicsCount ?: number;
+    imageUrl?:string;
 }
