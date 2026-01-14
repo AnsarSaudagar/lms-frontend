@@ -1,7 +1,7 @@
-<form [formGroup]="courseForm" >
+<form [formGroup]="courseForm">
     <div class="bg-[#FEFEFF] border border-[#E5E6EA] h-full rounded-lg p-4">
         <h1 class="font-bold text-2xl">Course Details</h1>
-        <div class="mt-3" formGroupName="details" >
+        <div class="mt-3" formGroupName="details">
             <div class="flex flex-col gap-2">
                 <label for="title">Title</label>
                 <input formControlName="title" pInputText id="title" />
@@ -10,6 +10,9 @@
                 <label for="">Description</label>
                 <p-editor formControlName="description" [style]="{ height: '220px' }" />
             </div>
+            <p-fileupload [customUpload]="true" #fu mode="basic" chooseLabel="Choose" chooseIcon="pi pi-upload"
+                name="demo[]" accept="image/*" maxFileSize="1000000" (uploadHandler)="onUpload($event)" />
+            <p-button label="Upload" (onClick)="fu.upload()" severity="secondary" />
         </div>
     </div>
 </form>

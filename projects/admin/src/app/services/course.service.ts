@@ -49,4 +49,8 @@ export class CourseService {
   deleteCourse(courseId: string) {
     return this.http.delete(this.COURSE_API_URL + '/' + courseId);
   }
+
+  uploadCourseImage(formData : FormData, id :string){
+    return this.http.post(this.COURSE_API_URL + '/image/' + id, formData);
+  }
 }
