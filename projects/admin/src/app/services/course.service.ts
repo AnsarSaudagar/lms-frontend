@@ -16,7 +16,7 @@ interface NewCoursePayload {
 })
 export class CourseService {
 
-  private COURSE_API_URL = environment.API_URL + '/admin-courses';
+  private COURSE_API_URL = environment.API_URL + '/admin/courses';
   
   mainFormSubmit$ = new Subject<void>();
   selectedCourse = signal<Course | null>(null);
