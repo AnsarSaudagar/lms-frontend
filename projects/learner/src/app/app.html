@@ -17,11 +17,12 @@
       </aside>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <div *ngFor="let course of courses" 
+        @for (course of courses; track $index) {
+          <div 
              class="bg-white border border-gray-200 hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
           
           <div class="relative">
-            <img [src]="course.thumbnail" [alt]="course.title" class="w-full h-40 object-cover">
+            <img [src]="course.imageUrl" [alt]="course.title" class="w-full h-40 object-cover">
             <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors"></div>
           </div>
 
@@ -31,22 +32,21 @@
             </h2>
             <p class="text-xs text-gray-500 mb-1">{{ course.instructor }}</p>
             
-            <div class="flex items-center gap-1 mb-1">
+            <!-- <div class="flex items-center gap-1 mb-1">
               <span class="text-sm font-bold text-orange-700">{{ course.rating }}</span>
               <p-rating [(ngModel)]="course.rating" [readonly]="true" [stars]="5"  class="text-xs"></p-rating>
               <span class="text-xs text-gray-400">({{ course.reviews | number }})</span>
-            </div>
+            </div> -->
 
             <div class="flex items-center gap-2">
               <span class="text-lg font-bold">${{ course.price }}</span>
-              <span class="text-sm text-gray-400 line-through">${{ course.originalPrice }}</span>
+              <!-- <span class="text-sm text-gray-400 line-through">${{ course.originalPrice }}</span> -->
             </div>
 
-            <div class="mt-2" *ngIf="course.badge">
-              <p-tag [value]="course.badge" severity="warn" [rounded]="false" styleClass="text-[10px] px-2 py-0"></p-tag>
-            </div>
           </div>
         </div>
+        }
+        
       </div>
     </div>
   </div>
