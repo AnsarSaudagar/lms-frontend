@@ -1,13 +1,32 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
+import { RatingModule } from 'primeng/rating';
+import { TagModule } from 'primeng/tag';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonModule],
+  imports: [ ButtonModule, FormsModule, TagModule, CommonModule, RatingModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected readonly title = signal('learner');
+
+  courses: any[] = [
+    {
+      id: 1,
+      title: 'The Complete Angular Masterclass 2026',
+      instructor: 'Dr. Sarah Smith',
+      thumbnail: 'https://placehold.co/600x400/png',
+      rating: 4.8,
+      reviews: 12540,
+      price: 12.99,
+      originalPrice: 84.99,
+      badge: 'Bestseller'
+    },
+    // Add more mock objects here...
+  ];
+
 }
