@@ -1,4 +1,112 @@
-/* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg:                oklch(0.10 0.015 255);
+  --bg-secondary:      oklch(0.12 0.015 255);
+  --bg-code:           oklch(0.13 0.015 255);
+  --bg-button:         oklch(0.14 0.015 255);
+  --surface:           oklch(0.15 0.015 255);
+  --surface-terminal:  oklch(0.16 0.015 255);
+  --surface2:          oklch(0.18 0.015 255);
+
+  --border-subtle:     oklch(0.20 0.015 255);
+  --border:            oklch(0.22 0.015 255);
+  --border-alt:        oklch(0.24 0.015 255);
+  --border-input:      oklch(0.25 0.015 255);
+  --border-modal:      oklch(0.26 0.015 255);
+  --border-scrollbar:  oklch(0.28 0.015 255);
+  --border-hover:      oklch(0.30 0.015 255);
+  --border-card-hover: oklch(0.32 0.015 255);
+
+  --state-ghost-hover: oklch(0.35 0.02 255);
+  --state-disabled:    oklch(0.38 0.02 255);
+
+  --text:              oklch(0.93 0.01 255);
+  --text-primary:      oklch(0.85 0.01 255);
+  --text-continue:     oklch(0.88 0.01 255);
+  --text-input:        oklch(0.80 0.01 255);
+  --text-button:       oklch(0.70 0.02 255);
+  --text-feature:      oklch(0.72 0.02 255);
+  --text-desc:         oklch(0.72 0.015 255);
+  --text-loading:      oklch(0.75 0.02 255);
+  --text-label:        oklch(0.65 0.02 255);
+  --text-section:      oklch(0.55 0.02 255);
+  --text-muted:        oklch(0.52 0.02 255);
+  --muted:             oklch(0.50 0.02 255);
+  --text-tag:          oklch(0.60 0.02 255);
+  --text-footer:       oklch(0.42 0.02 255);
+  --text-comment:      oklch(0.40 0.02 255);
+  --text-disabled:     oklch(0.38 0.02 255);
+
+  --accent:            oklch(0.75 0.17 145);
+  --accent-6:          oklch(0.75 0.17 145 / 0.06);
+  --accent-7:          oklch(0.75 0.17 145 / 0.07);
+  --accent-10:         oklch(0.75 0.17 145 / 0.10);
+  --accent-12:         oklch(0.75 0.17 145 / 0.12);
+  --accent-25:         oklch(0.75 0.17 145 / 0.25);
+  --accent-30:         oklch(0.75 0.17 145 / 0.30);
+  --accent-code:       oklch(0.80 0.05 145);
+
+  --gold:              oklch(0.82 0.18 75);
+  --gold-10:           oklch(0.82 0.18 75 / 0.10);
+  --gold-12:           oklch(0.82 0.18 75 / 0.12);
+  --gold-15:           oklch(0.82 0.18 75 / 0.15);
+  --gold-25:           oklch(0.82 0.18 75 / 0.25);
+  --gold-40:           oklch(0.82 0.18 75 / 0.40);
+
+  --blue:              oklch(0.68 0.17 230);
+  --blue-12:           oklch(0.68 0.17 230 / 0.12);
+  --blue-25:           oklch(0.68 0.17 230 / 0.25);
+
+  --error:             oklch(0.68 0.17 20);
+  --error-text:        oklch(0.80 0.10 20);
+  --error-bg:          oklch(0.20 0.15 20);
+  --error-border:      oklch(0.40 0.15 20);
+
+  --shadow-sm:         oklch(0 0 0 / 0.30);
+  --shadow-md:         oklch(0 0 0 / 0.40);
+  --shadow-lg:         oklch(0 0 0 / 0.50);
+  --overlay:           oklch(0 0 0 / 0.70);
+
+  --project-blue:    oklch(0.68 0.17 230);
+  --project-teal:    oklch(0.65 0.17 190);
+  --project-yellow:  oklch(0.72 0.17 80);
+  --project-green:   oklch(0.75 0.17 145);
+  --project-purple:  oklch(0.65 0.17 310);
+  --project-orange:  oklch(0.68 0.17 30);
+  --project-pink:    oklch(0.65 0.17 265);
+  --project-magenta: oklch(0.70 0.17 350);
+
+  --terminal-red:    #ff5f57;
+  --terminal-amber:  #febc2e;
+  --terminal-green:  #28c840;
+
+  --font: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.6;
+  margin: 0;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-scrollbar); border-radius: 3px; }
+
+a { text-decoration: none; color: inherit; }
+
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes fadeIn  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse   { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.hljs { background: transparent !important; padding: 0 !important; }

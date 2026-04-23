@@ -1,0 +1,135 @@
+<div class="pd">
+  <!-- Sidebar -->
+  <aside class="pd__sidebar">
+    <div class="pd__sidebar-top">
+      <button class="pd__back" (click)="router.navigate(['/dashboard'])">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M13 5l-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Dashboard
+      </button>
+      @if (project()) {
+        <div class="pd__accent" [style.background]="project()!.color"></div>
+        <h2 class="pd__project-title">{{ project()!.title }}</h2>
+        <div class="pd__meta">
+          @for (t of project()!.tags; track t) {
+            <span class="pd__meta-tag">{{ t }}</span>
+          }
+        </div>
+        <div class="pd__progress-box">
+          <div class="pd__progress-top">
+            <span class="pd__progress-label">Progress</span>
+            <span class="pd__progress-val">{{ completed().length }}/{{ totalSteps }}</span>
+          </div>
+          <div class="pd__progress-track">
+            <div class="pd__progress-fill" [style.width]="pct + '%'" [style.background]="project()!.color"></div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="pd__steps-list">
+      @if (generating()) {
+        <div class="pd__gen-msg">
+          <div class="pd__spinner"></div>
+          <span>Generating guide…</span>
+        </div>
+      } @else if (steps()) {
+        @for (s of steps()!; track $index; let i = $index) {
+          <button class="pd__step-item" [class.pd__step-item--active]="activeStep() === i" (click)="activeStep.set(i)">
+            <div class="pd__step-check"
+              [class.pd__step-check--done]="completed().includes(i)"
+              [style.background]="completed().includes(i) ? project()!.color : ''">
+              @if (completed().includes(i)) {
+                <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="oklch(0.12 0.015 255)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              } @else {
+                <span class="pd__step-num">{{ i + 1 }}</span>
+              }
+            </div>
+            <span class="pd__step-item-title">{{ s.title }}</span>
+          </button>
+        }
+      }
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="pd__main">
+    @if (generating()) {
+      <div class="pd__loading">
+        <div class="pd__big-spinner"></div>
+        <p class="pd__loading-text">AI is generating your personalized guide for <strong>{{ project()?.title }}</strong>…</p>
+        <p class="pd__loading-sub">This usually takes a few seconds.</p>
+      </div>
+    } @else if (step) {
+      <div class="pd__content">
+        <div class="pd__step-header">
+          <div class="pd__step-header-left">
+            <span class="pd__step-counter">Step {{ activeStep() + 1 }} of {{ totalSteps }}</span>
+            <h1 class="pd__step-title">{{ step.title }}</h1>
+          </div>
+          <button class="pd__complete-btn"
+            [style.background]="completed().includes(activeStep()) ? 'var(--border)' : project()!.color"
+            [style.color]="completed().includes(activeStep()) ? 'var(--text-section)' : 'oklch(0.12 0.015 255)'"
+            (click)="markComplete(activeStep())">
+            {{ completed().includes(activeStep()) ? '✓ Completed' : 'Mark Complete' }}
+          </button>
+        </div>
+
+        <div class="pd__desc-box">
+          <p class="pd__desc">{{ step.description }}</p>
+        </div>
+
+        <div class="pd__code-card">
+          <div class="pd__code-header">
+            <div class="pd__dots">
+              <div class="pd__dot" style="background:var(--terminal-red)"></div>
+              <div class="pd__dot" style="background:var(--terminal-amber)"></div>
+              <div class="pd__dot" style="background:var(--terminal-green)"></div>
+            </div>
+            <span class="pd__code-lang">{{ step.language }}</span>
+            <button class="pd__copy-btn" (click)="copyToClipboard(step.code, 'code')">
+              {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
+            </button>
+          </div>
+          <pre class="pd__pre"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
+        </div>
+
+        <div class="pd__git-card">
+          <div class="pd__git-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></svg>
+            <span class="pd__git-title">Git Integration</span>
+            @if (user()?.githubConnected) {
+              <span class="pd__gh-connected">GitHub connected</span>
+            }
+          </div>
+          <div class="pd__git-steps">
+            @for (cmd of ['git add .', step.gitCommit, 'git push origin main']; track $index; let i = $index) {
+              <div class="pd__git-row">
+                <code class="pd__git-cmd">{{ cmd }}</code>
+                <button class="pd__git-copy" (click)="copyToClipboard(cmd, 'git' + i)">
+                  {{ copied() === 'git' + i ? '✓' : 'Copy' }}
+                </button>
+              </div>
+            }
+          </div>
+          @if (!user()?.githubConnected) {
+            <div class="pd__gh-prompt">
+              <span>Connect GitHub for one-click commits</span>
+              <button class="pd__gh-btn">Connect GitHub</button>
+            </div>
+          }
+        </div>
+
+        <div class="pd__nav-row">
+          <button class="pd__nav-btn" [disabled]="activeStep() === 0" [style.opacity]="activeStep() === 0 ? '0.3' : '1'"
+            (click)="activeStep.set(activeStep() - 1)">← Previous</button>
+          <button class="pd__nav-btn-primary" [style.background]="project()!.color"
+            [disabled]="activeStep() === totalSteps - 1"
+            [style.opacity]="activeStep() === totalSteps - 1 ? '0.4' : '1'"
+            (click)="nextStep()">
+            {{ activeStep() === totalSteps - 1 ? 'Finish Project' : 'Next Step →' }}
+          </button>
+        </div>
+      </div>
+    }
+  </main>
+</div>

@@ -1,0 +1,138 @@
+import { Injectable } from '@angular/core';
+
+export interface Project {
+  id: string;
+  category: string;
+  difficulty: string;
+  estimatedTime: string;
+  title: string;
+  description: string;
+  tags: string[];
+  stepCount: number;
+  color: string;
+  pro?: boolean;
+}
+
+export interface Category {
+  id: string;
+  label: string;
+}
+
+export interface ProjectStep {
+  title: string;
+  description: string;
+  code: string;
+  language: string;
+  gitCommit: string;
+}
+
+export interface ProjectProgress {
+  completed: number[];
+  total: number;
+}
+
+export interface User {
+  name: string;
+  email: string;
+  avatar: string | null;
+  githubConnected: boolean;
+  isPro?: boolean;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AppDataService {
+  readonly categories: Category[] = [
+    { id: 'all',       label: 'All Projects' },
+    { id: 'web',       label: 'HTML / CSS / JS' },
+    { id: 'react',     label: 'React' },
+    { id: 'python',    label: 'Python' },
+    { id: 'backend',   label: 'Node.js / Express' },
+    { id: 'fullstack', label: 'Full-Stack' },
+  ];
+
+  readonly projects: Project[] = [
+    {
+      id: 'p1', category: 'web', difficulty: 'Beginner', estimatedTime: '2h',
+      title: 'Build a Portfolio Site',
+      description: 'Create a personal portfolio with responsive layout, smooth scrolling, and a contact form.',
+      tags: ['HTML', 'CSS', 'JavaScript'], stepCount: 8,
+      color: 'oklch(0.68 0.17 230)',
+    },
+    {
+      id: 'p2', category: 'react', difficulty: 'Intermediate', estimatedTime: '4h',
+      title: 'Task Manager App',
+      description: 'Build a full-featured task manager with drag-and-drop, local persistence, and filters.',
+      tags: ['React', 'Context API', 'CSS Modules'], stepCount: 10,
+      color: 'oklch(0.65 0.17 190)', pro: true,
+    },
+    {
+      id: 'p3', category: 'python', difficulty: 'Beginner', estimatedTime: '3h',
+      title: 'Web Scraper CLI',
+      description: 'Build a command-line web scraper that extracts structured data and exports to CSV.',
+      tags: ['Python', 'BeautifulSoup', 'Click'], stepCount: 7,
+      color: 'oklch(0.72 0.17 80)',
+    },
+    {
+      id: 'p4', category: 'backend', difficulty: 'Intermediate', estimatedTime: '5h',
+      title: 'REST API with Auth',
+      description: 'Design and build a RESTful API with JWT authentication, rate limiting, and PostgreSQL.',
+      tags: ['Node.js', 'Express', 'PostgreSQL'], stepCount: 12,
+      color: 'oklch(0.75 0.17 145)', pro: true,
+    },
+    {
+      id: 'p5', category: 'fullstack', difficulty: 'Advanced', estimatedTime: '8h',
+      title: 'Real-Time Chat App',
+      description: 'Full-stack chat application with WebSockets, rooms, presence indicators, and message history.',
+      tags: ['React', 'Node.js', 'Socket.io'], stepCount: 14,
+      color: 'oklch(0.65 0.17 310)', pro: true,
+    },
+    {
+      id: 'p6', category: 'python', difficulty: 'Intermediate', estimatedTime: '4h',
+      title: 'ML Image Classifier',
+      description: 'Train a CNN to classify images using PyTorch. Deploy with a simple Flask inference API.',
+      tags: ['Python', 'PyTorch', 'Flask'], stepCount: 9,
+      color: 'oklch(0.68 0.17 30)', pro: true,
+    },
+    {
+      id: 'p7', category: 'react', difficulty: 'Advanced', estimatedTime: '6h',
+      title: 'E-Commerce Storefront',
+      description: 'Build a complete storefront with cart, checkout flow, Stripe integration, and order history.',
+      tags: ['React', 'Stripe', 'Redux'], stepCount: 15,
+      color: 'oklch(0.65 0.17 265)', pro: true,
+    },
+    {
+      id: 'p8', category: 'web', difficulty: 'Beginner', estimatedTime: '1.5h',
+      title: 'CSS Animation Gallery',
+      description: 'Master modern CSS animations: keyframes, transitions, scroll-driven animations, and more.',
+      tags: ['HTML', 'CSS', 'Animations'], stepCount: 6,
+      color: 'oklch(0.70 0.17 350)',
+    },
+  ];
+
+  loadProgress(): Record<string, ProjectProgress> {
+    try { return JSON.parse(localStorage.getItem('devpath_progress') || '{}'); }
+    catch { return {}; }
+  }
+
+  saveProgress(data: Record<string, ProjectProgress>): void {
+    localStorage.setItem('devpath_progress', JSON.stringify(data));
+  }
+
+  loadUser(): User | null {
+    try { return JSON.parse(localStorage.getItem('devpath_user') || 'null'); }
+    catch { return null; }
+  }
+
+  saveUser(user: User | null): void {
+    localStorage.setItem('devpath_user', JSON.stringify(user));
+  }
+
+  loadSteps(projectId: string): ProjectStep[] | null {
+    try { return JSON.parse(localStorage.getItem(`devpath_steps_${projectId}`) || 'null'); }
+    catch { return null; }
+  }
+
+  saveSteps(projectId: string, steps: ProjectStep[]): void {
+    localStorage.setItem(`devpath_steps_${projectId}`, JSON.stringify(steps));
+  }
+}
