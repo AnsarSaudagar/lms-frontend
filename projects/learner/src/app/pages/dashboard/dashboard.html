@@ -1,76 +1,85 @@
-<div class="dash">
+<div class="flex h-screen bg-[var(--bg-secondary)] overflow-hidden">
   <!-- Sidebar -->
-  <aside class="dash__sidebar">
-    <div class="dash__brand">
+  <aside class="w-[220px] flex-shrink-0 bg-[var(--bg)] border-r border-[var(--border-subtle)] flex flex-col">
+    <div class="flex items-center gap-[9px] px-5 pt-[22px] pb-[18px] border-b border-[var(--surface2)]">
       <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
         <rect width="32" height="32" rx="8" fill="var(--accent)"/>
         <path d="M8 22L14 10L20 18L24 14" stroke="oklch(0.12 0.015 255)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span class="dash__brand-name">DevPath</span>
+      <span class="text-[17px] font-bold text-[var(--text)] tracking-[-0.02em]">DevPath</span>
     </div>
 
-    <nav class="dash__nav">
+    <nav class="flex-1 px-[10px] py-3 overflow-y-auto flex flex-col gap-[2px]">
       @for (c of categories; track c.id) {
-        <button class="dash__nav-item" [class.dash__nav-item--active]="activeCategory() === c.id" (click)="activeCategory.set(c.id)">
+        <button
+          class="w-full text-left px-3 py-2 rounded-[7px] border-none text-[13px] font-medium cursor-pointer transition-all duration-[120ms]"
+          [ngClass]="activeCategory() === c.id ? 'bg-[var(--surface2)] text-[var(--text)]' : 'bg-transparent text-[var(--text-section)] hover:bg-[var(--surface2)] hover:text-[var(--text-primary)]'"
+          (click)="activeCategory.set(c.id)">
           {{ c.label }}
         </button>
       }
     </nav>
 
-    <div class="dash__sidebar-footer">
+    <div class="p-4 border-t border-[var(--surface2)] flex flex-col gap-[10px]">
       @if (user()) {
-        <div class="dash__user-card">
-          <div class="dash__avatar">{{ user()!.name[0].toUpperCase() }}</div>
-          <div class="dash__user-info">
-            <div class="dash__user-name">{{ user()!.name }}</div>
-            <div class="dash__user-email">{{ user()!.email }}</div>
+        <div class="flex items-center gap-[10px]">
+          <div class="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center text-sm font-bold text-[oklch(0.12_0.015_255)] flex-shrink-0">{{ user()!.name[0].toUpperCase() }}</div>
+          <div class="overflow-hidden">
+            <div class="text-[13px] font-semibold text-[var(--text-primary)] truncate">{{ user()!.name }}</div>
+            <div class="text-[11px] text-[oklch(0.45_0.02_255)] truncate">{{ user()!.email }}</div>
           </div>
         </div>
         @if (user()!.githubConnected) {
-          <div class="dash__gh-badge">
+          <div class="flex items-center gap-[6px] text-[11px] text-[var(--text-label)] px-2 py-[5px] bg-[var(--surface-terminal)] rounded-[6px] border border-[var(--border)]">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
             GitHub connected
           </div>
         }
       }
-      <button class="dash__logout" (click)="logout()">Sign out</button>
+      <button
+        class="w-full py-[7px] border border-[var(--border)] rounded-[7px] bg-transparent text-[oklch(0.45_0.02_255)] text-xs cursor-pointer transition-all duration-[120ms] hover:border-[var(--border-hover)] hover:text-[var(--muted)]"
+        (click)="logout()">Sign out</button>
     </div>
   </aside>
 
   <!-- Main -->
-  <main class="dash__main">
-    <div class="dash__topbar">
+  <main class="flex-1 overflow-y-auto px-10 py-9">
+    <div class="flex items-start justify-between mb-9 gap-5">
       <div>
-        <h1 class="dash__heading">Good morning, {{ user()?.name?.split(' ')[0] }}.</h1>
-        <p class="dash__subheading">Pick a project and start building.</p>
+        <h1 class="text-[28px] font-bold text-[var(--text)] mb-1 tracking-[-0.02em]">Good morning, {{ user()?.name?.split(' ')[0] }}.</h1>
+        <p class="text-sm text-[var(--muted)]">Pick a project and start building.</p>
       </div>
-      <div class="dash__search-wrap">
-        <svg width="15" height="15" viewBox="0 0 20 20" fill="none" class="dash__search-icon">
+      <div class="relative flex-shrink-0">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none" class="absolute left-3 top-1/2 -translate-y-1/2 text-[oklch(0.45_0.02_255)] pointer-events-none">
           <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/>
           <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
         </svg>
-        <input class="dash__search" placeholder="Search projects or tech…" [value]="search()" (input)="search.set($any($event.target).value)"/>
+        <input
+          class="pl-9 pr-[14px] py-[10px] rounded-[9px] border border-[var(--border)] bg-[var(--surface-terminal)] text-[var(--text-primary)] text-[13px] w-[220px] outline-none focus:border-[var(--accent)]"
+          placeholder="Search projects or tech…" [value]="search()" (input)="search.set($any($event.target).value)"/>
       </div>
     </div>
 
     <!-- Continue learning -->
     @if (inProgress().length > 0) {
-      <section class="dash__section">
-        <h2 class="dash__section-title">Continue Learning</h2>
-        <div class="dash__continue-grid">
+      <section class="mb-10">
+        <h2 class="text-[13px] font-semibold text-[var(--text-section)] uppercase tracking-[0.06em] mb-4 flex items-center gap-2">Continue Learning</h2>
+        <div class="flex flex-col gap-2">
           @for (p of inProgress(); track p.id) {
-            <button class="dash__continue-card" (click)="handleCardClick(p)">
-              <div class="dash__continue-accent" [style.background]="p.color"></div>
-              <div class="dash__continue-body">
-                <div class="dash__continue-title">{{ p.title }}</div>
-                <div class="dash__progress-row">
-                  <div class="dash__progress-bar">
-                    <div class="dash__progress-fill" [style.width]="getProgress(p.id) + '%'" [style.background]="p.color"></div>
+            <button
+              class="flex items-center gap-[14px] px-4 py-[14px] border border-[var(--border)] rounded-[10px] bg-[var(--surface)] cursor-pointer text-left transition-all duration-[120ms] hover:border-[var(--border-hover)] w-full"
+              (click)="handleCardClick(p)">
+              <div class="w-1 h-9 rounded-[3px] flex-shrink-0" [style.background]="p.color"></div>
+              <div class="flex-1 flex flex-col gap-2">
+                <div class="text-sm font-semibold text-[var(--text-continue)]">{{ p.title }}</div>
+                <div class="flex items-center gap-[10px]">
+                  <div class="flex-1 h-1 bg-[var(--border)] rounded-[2px] overflow-hidden">
+                    <div class="h-full rounded-[2px] transition-[width] duration-300" [style.width]="getProgress(p.id) + '%'" [style.background]="p.color"></div>
                   </div>
-                  <span class="dash__progress-pct">{{ getProgress(p.id) }}%</span>
+                  <span class="text-[11px] text-[var(--muted)] min-w-[30px]">{{ getProgress(p.id) }}%</span>
                 </div>
               </div>
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" class="dash__chevron">
+              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" class="text-[oklch(0.45_0.02_255)] flex-shrink-0">
                 <path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
               </svg>
             </button>
@@ -80,37 +89,39 @@
     }
 
     <!-- Projects grid -->
-    <section class="dash__section">
-      <h2 class="dash__section-title">
+    <section class="mb-10">
+      <h2 class="text-[13px] font-semibold text-[var(--text-section)] uppercase tracking-[0.06em] mb-4 flex items-center gap-2">
         {{ activeCategoryLabel() }}
-        <span class="dash__count">{{ filtered().length }}</span>
+        <span class="bg-[oklch(0.20_0.015_255)] text-[var(--text-section)] rounded-[20px] px-2 py-px text-xs font-medium normal-case tracking-normal">{{ filtered().length }}</span>
       </h2>
-      <div class="dash__grid">
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
         @for (p of filtered(); track p.id) {
-          <button class="dash__card" (click)="handleCardClick(p)">
-            <div class="dash__card-bar" [style.background]="p.color"></div>
-            <div class="dash__card-body">
-              <div class="dash__card-top">
-                <span class="dash__diff-badge" [style.color]="p.color" [style.border-color]="p.color + '33'">{{ p.difficulty }}</span>
-                <span class="dash__time">{{ p.estimatedTime }}</span>
+          <button
+            class="text-left border border-[var(--border-subtle)] rounded-[12px] bg-[var(--surface)] cursor-pointer p-0 overflow-hidden transition-all duration-150 flex flex-col hover:border-[var(--border-hover)] hover:-translate-y-px"
+            (click)="handleCardClick(p)">
+            <div class="h-[3px] w-full" [style.background]="p.color"></div>
+            <div class="p-[18px] flex flex-col gap-[10px] flex-1">
+              <div class="flex justify-between items-center">
+                <span class="text-[11px] font-semibold px-2 py-[3px] rounded-[20px] border tracking-[0.02em]" [style.color]="p.color" [style.border-color]="p.color + '33'">{{ p.difficulty }}</span>
+                <span class="text-[11px] text-[oklch(0.45_0.02_255)]">{{ p.estimatedTime }}</span>
               </div>
-              <h3 class="dash__card-title">{{ p.title }}</h3>
-              <p class="dash__card-desc">{{ p.description }}</p>
-              <div class="dash__card-tags">
+              <h3 class="text-base font-bold text-[var(--text)] tracking-[-0.01em] leading-[1.3]">{{ p.title }}</h3>
+              <p class="text-[13px] text-[var(--text-section)] leading-[1.5]">{{ p.description }}</p>
+              <div class="flex flex-wrap gap-[6px]">
                 @for (t of p.tags; track t) {
-                  <span class="dash__tag">{{ t }}</span>
+                  <span class="text-[11px] px-2 py-[3px] rounded-[5px] bg-[oklch(0.20_0.015_255)] text-[var(--text-tag)] border border-[var(--border-alt)]">{{ t }}</span>
                 }
               </div>
-              <div class="dash__card-footer">
-                <span class="dash__steps">{{ p.stepCount }} steps</span>
+              <div class="flex items-center justify-between pt-[6px] border-t border-[var(--border-subtle)] mt-auto">
+                <span class="text-xs text-[oklch(0.45_0.02_255)]">{{ p.stepCount }} steps</span>
                 @if (getProgress(p.id) > 0) {
-                  <div class="dash__mini-progress">
-                    <div class="dash__mini-fill" [style.width]="getProgress(p.id) + '%'" [style.background]="p.color"></div>
+                  <div class="w-20 h-[3px] bg-[var(--border)] rounded-[2px] overflow-hidden">
+                    <div class="h-full rounded-[2px] transition-[width] duration-300" [style.width]="getProgress(p.id) + '%'" [style.background]="p.color"></div>
                   </div>
                 } @else if (p.pro && !user()?.isPro) {
-                  <span class="dash__pro-badge">🔒 Pro</span>
+                  <span class="text-[11px] text-[var(--gold)] font-semibold bg-[var(--gold-10)] border border-[var(--gold-25)] rounded-[20px] px-2 py-[2px]">🔒 Pro</span>
                 } @else {
-                  <span class="dash__start-label">Start →</span>
+                  <span class="text-xs text-[var(--accent)] font-semibold">Start →</span>
                 }
               </div>
             </div>
@@ -123,30 +134,38 @@
 
 <!-- Upgrade modal -->
 @if (upgradeTarget()) {
-  <div class="modal-overlay" (click)="upgradeTarget.set(null)">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <div class="modal__icon">
+  <div class="fixed inset-0 bg-[var(--overlay)] z-[1000] flex items-center justify-center backdrop-blur-[4px] animate-[fadeIn_0.2s_ease]"
+    (click)="upgradeTarget.set(null)">
+    <div class="bg-[var(--surface)] border border-[var(--border-modal)] rounded-[16px] p-9 w-[420px] animate-[fadeIn_0.2s_ease]"
+      (click)="$event.stopPropagation()">
+      <div class="w-12 h-12 rounded-[12px] bg-[var(--gold-12)] border border-[var(--gold-25)] flex items-center justify-center mb-5">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="var(--gold)" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
-      <h2 class="modal__title">{{ upgradeTarget()!.title }}</h2>
-      <p class="modal__desc">This is a <strong class="modal__pro-text">Pro project</strong>. Upgrade to unlock all {{ upgradeTarget()!.stepCount }} steps, including advanced code walkthroughs and Git integration.</p>
-      <div class="modal__pricing">
-        <div class="modal__price-row">
+      <h2 class="text-[22px] font-bold text-[var(--text)] mb-2 tracking-[-0.02em]">{{ upgradeTarget()!.title }}</h2>
+      <p class="text-sm text-[var(--text-section)] mb-7 leading-relaxed">
+        This is a <strong class="text-[var(--gold)]">Pro project</strong>. Upgrade to unlock all {{ upgradeTarget()!.stepCount }} steps, including advanced code walkthroughs and Git integration.
+      </p>
+      <div class="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[12px] p-5 mb-6">
+        <div class="flex justify-between items-center mb-4">
           <div>
-            <div class="modal__tier">DevPath Pro</div>
-            <div class="modal__amount">$12<span>/mo</span></div>
+            <div class="text-[13px] text-[var(--text-section)] mb-1">DevPath Pro</div>
+            <div class="text-[28px] font-bold text-[var(--text)] tracking-[-0.03em]">$12<span class="text-sm font-normal text-[var(--muted)]">/mo</span></div>
           </div>
-          <div class="modal__popular">Most popular</div>
+          <div class="text-xs bg-[var(--gold-12)] text-[var(--gold)] px-[10px] py-1 rounded-[20px] border border-[var(--gold-25)]">Most popular</div>
         </div>
         @for (f of proFeatures; track f) {
-          <div class="modal__feature">
+          <div class="flex items-center gap-2 mb-2 text-[13px] text-[var(--text-feature)]">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             {{ f }}
           </div>
         }
       </div>
-      <button class="modal__cta" (click)="handleUpgrade()">Upgrade to Pro — $12/mo</button>
-      <button class="modal__cancel" (click)="upgradeTarget.set(null)">Maybe later</button>
+      <button
+        class="w-full py-[13px] rounded-[9px] border-none bg-[var(--gold)] text-[oklch(0.12_0.015_255)] text-sm font-bold cursor-pointer mb-[10px] transition-[filter] duration-150 hover:brightness-[1.08]"
+        (click)="handleUpgrade()">Upgrade to Pro — $12/mo</button>
+      <button
+        class="w-full py-[10px] rounded-[9px] border border-[var(--border-alt)] bg-transparent text-[var(--muted)] text-[13px] cursor-pointer"
+        (click)="upgradeTarget.set(null)">Maybe later</button>
     </div>
   </div>
 }

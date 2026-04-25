@@ -1,50 +1,56 @@
-<div class="pd">
+<div class="flex h-screen bg-[var(--bg-secondary)] overflow-hidden">
   <!-- Sidebar -->
-  <aside class="pd__sidebar">
-    <div class="pd__sidebar-top">
-      <button class="pd__back" (click)="router.navigate(['/dashboard'])">
+  <aside class="w-[260px] flex-shrink-0 bg-[var(--bg)] border-r border-[var(--border-subtle)] flex flex-col overflow-hidden">
+    <div class="px-[18px] pt-5 pb-4 border-b border-[var(--surface2)] flex-shrink-0">
+      <button
+        class="flex items-center gap-[6px] bg-transparent border-none text-[var(--muted)] text-[13px] cursor-pointer pb-[14px] transition-colors duration-[120ms] hover:text-[var(--text-primary)]"
+        (click)="router.navigate(['/dashboard'])">
         <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><path d="M13 5l-5 5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
         Dashboard
       </button>
       @if (project()) {
-        <div class="pd__accent" [style.background]="project()!.color"></div>
-        <h2 class="pd__project-title">{{ project()!.title }}</h2>
-        <div class="pd__meta">
+        <div class="h-[3px] rounded-[2px] mb-3" [style.background]="project()!.color"></div>
+        <h2 class="text-base font-bold text-[var(--text)] mb-[10px] tracking-[-0.01em] leading-[1.3]">{{ project()!.title }}</h2>
+        <div class="flex flex-wrap gap-[5px] mb-4">
           @for (t of project()!.tags; track t) {
-            <span class="pd__meta-tag">{{ t }}</span>
+            <span class="text-[11px] px-[7px] py-[2px] rounded-[4px] bg-[var(--surface2)] text-[var(--text-section)] border border-[var(--border)]">{{ t }}</span>
           }
         </div>
-        <div class="pd__progress-box">
-          <div class="pd__progress-top">
-            <span class="pd__progress-label">Progress</span>
-            <span class="pd__progress-val">{{ completed().length }}/{{ totalSteps }}</span>
+        <div class="bg-[var(--surface)] rounded-lg px-3 py-[10px] border border-[var(--border-subtle)]">
+          <div class="flex justify-between mb-2">
+            <span class="text-xs text-[var(--muted)]">Progress</span>
+            <span class="text-xs font-semibold text-[var(--text-loading)]">{{ completed().length }}/{{ totalSteps }}</span>
           </div>
-          <div class="pd__progress-track">
-            <div class="pd__progress-fill" [style.width]="pct + '%'" [style.background]="project()!.color"></div>
+          <div class="h-1 bg-[var(--border)] rounded-[2px] overflow-hidden">
+            <div class="h-full rounded-[2px] transition-[width] duration-[400ms] ease-out" [style.width]="pct + '%'" [style.background]="project()!.color"></div>
           </div>
         </div>
       }
     </div>
 
-    <div class="pd__steps-list">
+    <div class="flex-1 overflow-y-auto px-[10px] py-3">
       @if (generating()) {
-        <div class="pd__gen-msg">
-          <div class="pd__spinner"></div>
+        <div class="flex items-center gap-[10px] px-3 py-4 text-[var(--text-section)] text-[13px]">
+          <div class="w-4 h-4 border-2 border-[oklch(0.25_0.015_255)] border-t-[var(--accent)] rounded-full animate-[spin_0.8s_linear_infinite] flex-shrink-0"></div>
           <span>Generating guide…</span>
         </div>
       } @else if (steps()) {
         @for (s of steps()!; track $index; let i = $index) {
-          <button class="pd__step-item" [class.pd__step-item--active]="activeStep() === i" (click)="activeStep.set(i)">
-            <div class="pd__step-check"
-              [class.pd__step-check--done]="completed().includes(i)"
+          <button
+            class="w-full flex items-center gap-[10px] py-[9px] px-[10px] rounded-[7px] border-none cursor-pointer text-left mb-[2px] transition-colors duration-[120ms]"
+            [ngClass]="activeStep() === i ? 'bg-[var(--surface2)]' : 'bg-transparent hover:bg-[var(--surface2)]'"
+            (click)="activeStep.set(i)">
+            <div
+              class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200"
+              [style.border]="completed().includes(i) ? 'none' : '1.5px solid var(--border-hover)'"
               [style.background]="completed().includes(i) ? project()!.color : ''">
               @if (completed().includes(i)) {
                 <svg width="9" height="9" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="oklch(0.12 0.015 255)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               } @else {
-                <span class="pd__step-num">{{ i + 1 }}</span>
+                <span class="text-[10px] text-[oklch(0.45_0.02_255)] font-semibold">{{ i + 1 }}</span>
               }
             </div>
-            <span class="pd__step-item-title">{{ s.title }}</span>
+            <span class="text-[12.5px] text-[var(--text-label)] leading-[1.4] flex-1">{{ s.title }}</span>
           </button>
         }
       }
@@ -52,21 +58,23 @@
   </aside>
 
   <!-- Main content -->
-  <main class="pd__main">
+  <main class="flex-1 overflow-y-auto px-12 py-10">
     @if (generating()) {
-      <div class="pd__loading">
-        <div class="pd__big-spinner"></div>
-        <p class="pd__loading-text">AI is generating your personalized guide for <strong>{{ project()?.title }}</strong>…</p>
-        <p class="pd__loading-sub">This usually takes a few seconds.</p>
+      <div class="flex flex-col items-center justify-center h-[60vh] gap-4 text-center">
+        <div class="w-10 h-10 border-[3px] border-[var(--border)] border-t-[var(--accent)] rounded-full animate-[spin_0.8s_linear_infinite]"></div>
+        <p class="text-base text-[var(--text-loading)]">AI is generating your personalized guide for <strong>{{ project()?.title }}</strong>…</p>
+        <p class="text-[13px] text-[oklch(0.45_0.02_255)]">This usually takes a few seconds.</p>
       </div>
     } @else if (step) {
-      <div class="pd__content">
-        <div class="pd__step-header">
-          <div class="pd__step-header-left">
-            <span class="pd__step-counter">Step {{ activeStep() + 1 }} of {{ totalSteps }}</span>
-            <h1 class="pd__step-title">{{ step.title }}</h1>
+      <div class="max-w-[780px]">
+        <!-- Step header -->
+        <div class="flex items-start justify-between gap-5 mb-6">
+          <div class="flex-1">
+            <span class="block text-xs text-[oklch(0.45_0.02_255)] font-medium uppercase tracking-[0.06em] mb-2">Step {{ activeStep() + 1 }} of {{ totalSteps }}</span>
+            <h1 class="text-[26px] font-bold text-[var(--text)] tracking-[-0.02em] leading-[1.2]">{{ step.title }}</h1>
           </div>
-          <button class="pd__complete-btn"
+          <button
+            class="px-[18px] py-[10px] rounded-lg border-none text-[13px] font-semibold cursor-pointer flex-shrink-0 transition-[filter] duration-150 hover:brightness-[1.08]"
             [style.background]="completed().includes(activeStep()) ? 'var(--border)' : project()!.color"
             [style.color]="completed().includes(activeStep()) ? 'var(--text-section)' : 'oklch(0.12 0.015 255)'"
             (click)="markComplete(activeStep())">
@@ -74,55 +82,67 @@
           </button>
         </div>
 
-        <div class="pd__desc-box">
-          <p class="pd__desc">{{ step.description }}</p>
+        <!-- Description -->
+        <div class="bg-[var(--surface)] border border-[var(--border-subtle)] rounded-[10px] px-5 py-[18px] mb-6">
+          <p class="text-[15px] text-[var(--text-desc)] leading-[1.7]">{{ step.description }}</p>
         </div>
 
-        <div class="pd__code-card">
-          <div class="pd__code-header">
-            <div class="pd__dots">
-              <div class="pd__dot" style="background:var(--terminal-red)"></div>
-              <div class="pd__dot" style="background:var(--terminal-amber)"></div>
-              <div class="pd__dot" style="background:var(--terminal-green)"></div>
+        <!-- Code card -->
+        <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden mb-6">
+          <div class="flex items-center px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+            <div class="flex gap-[6px] mr-3">
+              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
             </div>
-            <span class="pd__code-lang">{{ step.language }}</span>
-            <button class="pd__copy-btn" (click)="copyToClipboard(step.code, 'code')">
+            <span class="text-xs text-[var(--muted)] flex-1 font-[family-name:var(--mono)] uppercase tracking-[0.05em]">{{ step.language }}</span>
+            <button
+              class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
+              (click)="copyToClipboard(step.code, 'code')">
               {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
             </button>
           </div>
-          <pre class="pd__pre"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
+          <pre class="m-0 p-5 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
         </div>
 
-        <div class="pd__git-card">
-          <div class="pd__git-header">
+        <!-- Git card -->
+        <div class="bg-[var(--bg-button)] border border-[var(--border)] rounded-[10px] px-5 py-[18px] mb-8">
+          <div class="flex items-center gap-2 mb-[14px]">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></svg>
-            <span class="pd__git-title">Git Integration</span>
+            <span class="text-[13px] font-semibold text-[var(--text-loading)] flex-1">Git Integration</span>
             @if (user()?.githubConnected) {
-              <span class="pd__gh-connected">GitHub connected</span>
+              <span class="text-[11px] text-[var(--blue)] bg-[var(--blue-12)] px-2 py-[3px] rounded-[20px] border border-[var(--blue-25)]">GitHub connected</span>
             }
           </div>
-          <div class="pd__git-steps">
+          <div class="flex flex-col gap-2">
             @for (cmd of ['git add .', step.gitCommit, 'git push origin main']; track $index; let i = $index) {
-              <div class="pd__git-row">
-                <code class="pd__git-cmd">{{ cmd }}</code>
-                <button class="pd__git-copy" (click)="copyToClipboard(cmd, 'git' + i)">
+              <div class="flex items-center justify-between bg-[var(--bg)] rounded-[7px] px-[14px] py-[10px] border border-[var(--border-subtle)]">
+                <code class="font-[family-name:var(--mono)] text-[13px] text-[var(--accent-code)]">{{ cmd }}</code>
+                <button
+                  class="text-[11px] text-[var(--muted)] bg-[var(--surface2)] border border-[var(--border-input)] rounded-[4px] px-2 py-[3px] cursor-pointer flex-shrink-0"
+                  (click)="copyToClipboard(cmd, 'git' + i)">
                   {{ copied() === 'git' + i ? '✓' : 'Copy' }}
                 </button>
               </div>
             }
           </div>
           @if (!user()?.githubConnected) {
-            <div class="pd__gh-prompt">
+            <div class="flex items-center justify-between mt-[14px] pt-[14px] border-t border-[var(--border-subtle)] text-xs text-[var(--muted)]">
               <span>Connect GitHub for one-click commits</span>
-              <button class="pd__gh-btn">Connect GitHub</button>
+              <button class="px-3 py-[7px] rounded-[6px] border border-[var(--border-scrollbar)] bg-[var(--surface2)] text-[var(--text-loading)] text-xs cursor-pointer">Connect GitHub</button>
             </div>
           }
         </div>
 
-        <div class="pd__nav-row">
-          <button class="pd__nav-btn" [disabled]="activeStep() === 0" [style.opacity]="activeStep() === 0 ? '0.3' : '1'"
+        <!-- Prev / Next nav -->
+        <div class="flex justify-between gap-3">
+          <button
+            class="px-5 py-[11px] rounded-lg border border-[var(--border-input)] bg-transparent text-[var(--text-label)] text-sm font-medium cursor-pointer transition-all duration-[120ms] disabled:cursor-default hover:enabled:border-[var(--border-hover)]"
+            [disabled]="activeStep() === 0" [style.opacity]="activeStep() === 0 ? '0.3' : '1'"
             (click)="activeStep.set(activeStep() - 1)">← Previous</button>
-          <button class="pd__nav-btn-primary" [style.background]="project()!.color"
+          <button
+            class="px-6 py-[11px] rounded-lg border-none text-[oklch(0.12_0.015_255)] text-sm font-bold cursor-pointer transition-[filter] duration-150 disabled:cursor-default hover:enabled:brightness-[1.08]"
+            [style.background]="project()!.color"
             [disabled]="activeStep() === totalSteps - 1"
             [style.opacity]="activeStep() === totalSteps - 1 ? '0.4' : '1'"
             (click)="nextStep()">

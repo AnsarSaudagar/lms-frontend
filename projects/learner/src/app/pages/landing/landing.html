@@ -1,144 +1,163 @@
 <!-- NAV -->
-<nav class="nav">
-  <div class="nav__brand">
+<nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-12 h-16 bg-[oklch(0.10_0.015_255_/_0.85)] backdrop-blur-[12px] border-b border-[oklch(0.22_0.015_255_/_0.5)]">
+  <div class="flex items-center gap-[10px] text-lg font-bold tracking-[-0.02em] text-[var(--text)]">
     <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
       <rect width="32" height="32" rx="8" fill="var(--accent)"/>
       <path d="M8 22L14 10L20 18L24 14" stroke="oklch(0.12 0.015 255)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     DevPath
   </div>
-  <div class="nav__links">
-    <a (click)="scrollTo('features')">Features</a>
-    <a (click)="scrollTo('projects')">Projects</a>
-    <a (click)="scrollTo('pricing')">Pricing</a>
+  <div class="flex items-center gap-7">
+    <a class="text-sm text-[var(--muted)] transition-colors duration-150 cursor-pointer hover:text-[var(--text)]" (click)="scrollTo('features')">Features</a>
+    <a class="text-sm text-[var(--muted)] transition-colors duration-150 cursor-pointer hover:text-[var(--text)]" (click)="scrollTo('projects')">Projects</a>
+    <a class="text-sm text-[var(--muted)] transition-colors duration-150 cursor-pointer hover:text-[var(--text)]" (click)="scrollTo('pricing')">Pricing</a>
   </div>
-  <div class="nav__cta">
-    <button class="btn-ghost" routerLink="/auth">Sign In</button>
-    <button class="btn-primary" routerLink="/auth">Get Started Free</button>
+  <div class="flex gap-[10px]">
+    <button class="px-4 py-2 rounded-lg border border-[var(--border)] bg-transparent text-[var(--muted)] text-[13px] font-medium cursor-pointer transition-all duration-150 hover:border-[var(--state-ghost-hover)] hover:text-[var(--text)]" routerLink="/auth">Sign In</button>
+    <button class="px-[18px] py-2 rounded-lg border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-[13px] font-bold cursor-pointer transition-[filter] duration-150 hover:brightness-110" routerLink="/auth">Get Started Free</button>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero__glow"></div>
-  <div class="hero__badge">
-    <div class="hero__badge-dot"></div>
+<section class="min-h-screen flex flex-col items-center justify-center px-12 pt-[120px] pb-20 text-center relative overflow-hidden">
+  <div class="absolute w-[700px] h-[700px] rounded-full pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%]"
+    style="background:radial-gradient(circle,var(--accent-7) 0%,transparent 70%)"></div>
+  <div class="inline-flex items-center gap-2 px-[14px] py-[6px] border border-[var(--accent-30)] rounded-[20px] bg-[var(--accent-6)] text-xs text-[var(--accent)] font-semibold mb-7 tracking-[0.02em]">
+    <div class="w-[6px] h-[6px] bg-[var(--accent)] rounded-full animate-[pulse_2s_ease_infinite]"></div>
     AI-powered • Git-integrated • Project-based
   </div>
-  <h1>Learn by building<br/><em>real projects.</em></h1>
-  <p class="hero__sub">Step-by-step AI guides, syntax-highlighted code, and built-in Git workflow. Go from zero to deployed — one commit at a time.</p>
-  <div class="hero__actions">
-    <button class="btn-hero" routerLink="/auth">Start for Free →</button>
-    <button class="btn-hero-ghost" (click)="scrollTo('projects')">Browse Projects</button>
+  <h1 class="text-[clamp(44px,6vw,80px)] font-bold tracking-[-0.04em] leading-none mb-6">
+    Learn by building<br/><em class="not-italic text-[var(--accent)]">real projects.</em>
+  </h1>
+  <p class="text-lg text-[var(--muted)] max-w-[520px] mx-auto mb-10 leading-relaxed">
+    Step-by-step AI guides, syntax-highlighted code, and built-in Git workflow. Go from zero to deployed — one commit at a time.
+  </p>
+  <div class="flex gap-3 justify-center flex-wrap">
+    <button class="px-7 py-[14px] rounded-[10px] border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-[15px] font-bold cursor-pointer transition-all duration-150 hover:brightness-110 hover:-translate-y-px" routerLink="/auth">Start for Free →</button>
+    <button class="px-7 py-[14px] rounded-[10px] border border-[var(--border)] bg-transparent text-[var(--muted)] text-[15px] font-medium cursor-pointer transition-all duration-150 hover:border-[var(--state-ghost-hover)] hover:text-[var(--text)]" (click)="scrollTo('projects')">Browse Projects</button>
   </div>
-  <div class="hero__stats">
-    <div class="stat"><div class="stat__num">40+</div><div class="stat__label">Projects</div></div>
-    <div class="stat"><div class="stat__num">8</div><div class="stat__label">Tech stacks</div></div>
-    <div class="stat"><div class="stat__num">AI</div><div class="stat__label">Generated guides</div></div>
-    <div class="stat"><div class="stat__num">Free</div><div class="stat__label">To start</div></div>
+  <div class="flex gap-10 mt-16 pt-10 border-t border-[var(--surface2)]">
+    <div class="text-center">
+      <div class="text-[30px] font-bold text-[var(--text)] tracking-[-0.03em]">40+</div>
+      <div class="text-[13px] text-[var(--muted)]">Projects</div>
+    </div>
+    <div class="text-center">
+      <div class="text-[30px] font-bold text-[var(--text)] tracking-[-0.03em]">8</div>
+      <div class="text-[13px] text-[var(--muted)]">Tech stacks</div>
+    </div>
+    <div class="text-center">
+      <div class="text-[30px] font-bold text-[var(--text)] tracking-[-0.03em]">AI</div>
+      <div class="text-[13px] text-[var(--muted)]">Generated guides</div>
+    </div>
+    <div class="text-center">
+      <div class="text-[30px] font-bold text-[var(--text)] tracking-[-0.03em]">Free</div>
+      <div class="text-[13px] text-[var(--muted)]">To start</div>
+    </div>
   </div>
 </section>
 
 <!-- TERMINAL DEMO -->
-<div class="demo-section">
-  <div class="terminal">
-    <div class="terminal__bar">
-      <div class="t-dot" style="background:var(--terminal-red)"></div>
-      <div class="t-dot" style="background:var(--terminal-amber)"></div>
-      <div class="t-dot" style="background:var(--terminal-green)"></div>
-      <span class="terminal__label">REST API with Auth — Step 3 of 12</span>
+<div class="px-12 pb-[100px] flex justify-center">
+  <div class="w-full max-w-[760px] bg-[var(--bg)] border border-[var(--border)] rounded-[14px] overflow-hidden shadow-[0_32px_80px_var(--shadow-lg)]">
+    <div class="flex items-center gap-2 px-4 py-3 bg-[var(--surface-terminal)] border-b border-[var(--border-subtle)]">
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+      <span class="text-xs text-[var(--muted)] ml-2 font-[family-name:var(--mono)]">REST API with Auth — Step 3 of 12</span>
     </div>
-    <div class="terminal__body">
-      <div class="t-step">Step 3 of 12</div>
-      <div class="t-title">Set up Express router and middleware</div>
-      <div class="t-code-block">
-        <span class="t-keyword">import</span> <span class="t-code">express</span> <span class="t-keyword">from</span> <span class="t-string">'express'</span>;<br/>
-        <span class="t-keyword">import</span> <span class="t-code">cors</span> <span class="t-keyword">from</span> <span class="t-string">'cors'</span>;<br/><br/>
-        <span class="t-keyword">const</span> <span class="t-code">app</span> = <span class="t-code">express()</span>;<br/><br/>
-        <span class="t-comment">// Middleware</span><br/>
-        <span class="t-code">app</span>.<span class="t-keyword">use</span>(<span class="t-code">cors()</span>);<br/>
-        <span class="t-code">app</span>.<span class="t-keyword">use</span>(<span class="t-code">json()</span>);<br/><br/>
-        <span class="t-code">app</span>.<span class="t-keyword">listen</span>(<span class="t-string">3000</span>);
+    <div class="px-7 py-6 font-[family-name:var(--mono)] text-[13px] leading-[1.8]">
+      <div class="text-[var(--muted)] mb-1 text-[11px] tracking-[0.05em] uppercase">Step 3 of 12</div>
+      <div class="text-[var(--accent)] font-medium mb-3 text-sm">Set up Express router and middleware</div>
+      <div class="leading-[1.8]">
+        <span class="text-[var(--blue)]">import</span> <span class="text-[var(--accent-code)]">express</span> <span class="text-[var(--blue)]">from</span> <span class="text-[oklch(0.72_0.17_80)]">'express'</span>;<br/>
+        <span class="text-[var(--blue)]">import</span> <span class="text-[var(--accent-code)]">cors</span> <span class="text-[var(--blue)]">from</span> <span class="text-[oklch(0.72_0.17_80)]">'cors'</span>;<br/><br/>
+        <span class="text-[var(--blue)]">const</span> <span class="text-[var(--accent-code)]">app</span> = <span class="text-[var(--accent-code)]">express()</span>;<br/><br/>
+        <span class="text-[var(--text-comment)]">// Middleware</span><br/>
+        <span class="text-[var(--accent-code)]">app</span>.<span class="text-[var(--blue)]">use</span>(<span class="text-[var(--accent-code)]">cors()</span>);<br/>
+        <span class="text-[var(--accent-code)]">app</span>.<span class="text-[var(--blue)]">use</span>(<span class="text-[var(--accent-code)]">json()</span>);<br/><br/>
+        <span class="text-[var(--accent-code)]">app</span>.<span class="text-[var(--blue)]">listen</span>(<span class="text-[oklch(0.72_0.17_80)]">3000</span>);
       </div>
-      <hr class="t-divider"/>
-      <div class="t-git-row">
+      <hr class="border-none border-t border-[var(--surface2)] my-5"/>
+      <div class="flex items-center gap-[10px] bg-[var(--bg-button)] border border-[var(--border-subtle)] rounded-[7px] px-[14px] py-[10px] mt-4">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)"><path d="M15.22 4.97a.75.75 0 011.06 0l6.5 6.5a.75.75 0 010 1.06l-6.5 6.5a.75.75 0 01-1.06-1.06L21.19 12l-5.97-5.97a.75.75 0 010-1.06z"/><path d="M8.78 4.97a.75.75 0 010 1.06L2.81 12l5.97 5.97a.75.75 0 11-1.06 1.06l-6.5-6.5a.75.75 0 010-1.06l6.5-6.5a.75.75 0 011.06 0z"/></svg>
-        <span class="t-git-cmd">git commit -m "step 3: setup express middleware"</span>
+        <span class="text-[var(--accent-code)] flex-1 text-[13px]">git commit -m "step 3: setup express middleware"</span>
       </div>
     </div>
   </div>
 </div>
 
 <!-- FEATURES -->
-<section class="features" id="features">
-  <div class="section-label">Why DevPath</div>
-  <h2 class="section-title">The way developers<br/>actually learn</h2>
-  <p class="section-sub">No more watching tutorials. Build real things, commit real code, ship real projects.</p>
-  <div class="features__grid">
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:var(--accent-10);border:1px solid var(--accent-25)">
+<section class="px-12 py-[100px] max-w-[1100px] mx-auto" id="features">
+  <div class="text-xs font-bold text-[var(--accent)] uppercase tracking-[0.08em] mb-3">Why DevPath</div>
+  <h2 class="text-[clamp(28px,4vw,44px)] font-bold tracking-[-0.03em] mb-4">The way developers<br/>actually learn</h2>
+  <p class="text-base text-[var(--muted)] max-w-[480px] leading-relaxed">No more watching tutorials. Build real things, commit real code, ship real projects.</p>
+  <div class="grid grid-cols-3 gap-4 mt-14">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:var(--accent-10);border:1px solid var(--accent-25)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="var(--accent)" stroke-width="1.8" stroke-linejoin="round"/></svg>
       </div>
-      <div class="feature-card__name">AI-Generated Guides</div>
-      <div class="feature-card__desc">Every project generates a fresh, tailored step-by-step guide powered by Claude. Adapted to your tech stack and experience level.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">AI-Generated Guides</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">Every project generates a fresh, tailored step-by-step guide powered by Claude. Adapted to your tech stack and experience level.</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:var(--blue-12);border:1px solid var(--blue-25)">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:var(--blue-12);border:1px solid var(--blue-25)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       </div>
-      <div class="feature-card__name">Git-Integrated Workflow</div>
-      <div class="feature-card__desc">Every step includes a git commit command. Build a real commit history as you learn — your portfolio grows automatically.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">Git-Integrated Workflow</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">Every step includes a git commit command. Build a real commit history as you learn — your portfolio grows automatically.</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:var(--gold-10);border:1px solid var(--gold-25)">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:var(--gold-10);border:1px solid var(--gold-25)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="var(--gold)" stroke-width="1.8"/></svg>
       </div>
-      <div class="feature-card__name">Progress Tracking</div>
-      <div class="feature-card__desc">Mark steps complete and pick up exactly where you left off. Progress is saved locally and synced across sessions.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">Progress Tracking</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">Mark steps complete and pick up exactly where you left off. Progress is saved locally and synced across sessions.</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:oklch(0.65 0.17 310 / 0.10);border:1px solid oklch(0.65 0.17 310 / 0.2)">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:oklch(0.65 0.17 310 / 0.10);border:1px solid oklch(0.65 0.17 310 / 0.2)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M16 18l2-2-4-4-2 2M8 6l-2 2 4 4 2-2M3 3l18 18" stroke="oklch(0.65 0.17 310)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div class="feature-card__name">Syntax Highlighting</div>
-      <div class="feature-card__desc">Beautiful code blocks with language-aware highlighting. Switch themes to match your editor. Copy any snippet in one click.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">Syntax Highlighting</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">Beautiful code blocks with language-aware highlighting. Switch themes to match your editor. Copy any snippet in one click.</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:oklch(0.68 0.17 20 / 0.10);border:1px solid oklch(0.68 0.17 20 / 0.2)">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:oklch(0.68 0.17 20 / 0.10);border:1px solid oklch(0.68 0.17 20 / 0.2)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="oklch(0.68 0.17 20)" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
-      <div class="feature-card__name">Multi-Stack Support</div>
-      <div class="feature-card__desc">HTML/CSS/JS, React, Python, Node.js, full-stack — we cover the languages developers actually use on the job.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">Multi-Stack Support</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">HTML/CSS/JS, React, Python, Node.js, full-stack — we cover the languages developers actually use on the job.</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-card__icon" style="background:var(--accent-10);border:1px solid oklch(0.72 0.17 145 / 0.2)">
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[14px] p-7 transition-colors duration-200 hover:border-[var(--border-card-hover)]">
+      <div class="w-10 h-10 rounded-[10px] flex items-center justify-center mb-4" style="background:var(--accent-10);border:1px solid oklch(0.72 0.17 145 / 0.2)">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <div class="feature-card__name">Instant Setup</div>
-      <div class="feature-card__desc">No environment config needed to get started. Pick a project, get your guide, start coding in minutes.</div>
+      <div class="text-base font-bold text-[var(--text)] mb-2 tracking-[-0.01em]">Instant Setup</div>
+      <div class="text-[13px] text-[var(--muted)] leading-relaxed">No environment config needed to get started. Pick a project, get your guide, start coding in minutes.</div>
     </div>
   </div>
 </section>
 
 <!-- PROJECTS SHOWCASE -->
-<section class="projects-section" id="projects">
-  <div class="projects-inner">
-    <div class="section-label">Projects</div>
-    <h2 class="section-title">Start with what<br/>interests you</h2>
-    <p class="section-sub">3 free projects to get you started. Unlock all 40+ with Pro.</p>
-    <div class="projects-grid">
+<section class="px-12 py-[100px] bg-[oklch(0.11_0.015_255)]" id="projects">
+  <div class="max-w-[1100px] mx-auto">
+    <div class="text-xs font-bold text-[var(--accent)] uppercase tracking-[0.08em] mb-3">Projects</div>
+    <h2 class="text-[clamp(28px,4vw,44px)] font-bold tracking-[-0.03em] mb-4">Start with what<br/>interests you</h2>
+    <p class="text-base text-[var(--muted)] max-w-[480px] leading-relaxed">3 free projects to get you started. Unlock all 40+ with Pro.</p>
+    <div class="grid grid-cols-4 gap-[14px] mt-12">
       @for (p of projects; track p.title) {
-        <div class="proj-card">
-          <div class="proj-card__bar" [style.background]="p.color"></div>
-          <div class="proj-card__body">
-            <div class="proj-card__header">
-              <span class="proj-card__diff" [style.color]="p.color" [style.border-color]="p.color + '33'">{{ p.diff }}</span>
-              @if (p.pro) { <span class="proj-card__pro">🔒 Pro</span> }
-              @else { <span class="proj-card__free">Free</span> }
+        <div class="rounded-[12px] border border-[var(--border)] overflow-hidden transition-all duration-150 hover:-translate-y-[2px] hover:border-[var(--border-hover)]">
+          <div class="h-[3px]" [style.background]="p.color"></div>
+          <div class="p-4 bg-[var(--surface)]">
+            <div class="flex justify-between items-center mb-[10px]">
+              <span class="text-[10px] font-semibold px-[7px] py-[2px] rounded-[20px] border" [style.color]="p.color" [style.border-color]="p.color + '33'">{{ p.diff }}</span>
+              @if (p.pro) { <span class="text-[10px] font-bold text-[var(--gold)] bg-[var(--gold-10)] border border-[var(--gold-25)] rounded-[20px] px-[7px] py-[2px]">🔒 Pro</span> }
+              @else { <span class="text-[10px] font-bold text-[var(--accent)] bg-[var(--accent-10)] border border-[var(--accent-25)] rounded-[20px] px-[7px] py-[2px]">Free</span> }
             </div>
-            <div class="proj-card__title">{{ p.title }}</div>
-            <div class="proj-card__tags">
-              @for (t of p.tags; track t) { <span class="proj-card__tag">{{ t }}</span> }
+            <div class="text-sm font-bold text-[var(--text)] tracking-[-0.01em] mb-[6px] leading-[1.3]">{{ p.title }}</div>
+            <div class="flex flex-wrap gap-1">
+              @for (t of p.tags; track t) {
+                <span class="text-[10px] px-[6px] py-[2px] rounded-[4px] bg-[oklch(0.20_0.015_255)] text-[var(--text-section)] border border-[var(--border-alt)]">{{ t }}</span>
+              }
             </div>
           </div>
         </div>
@@ -148,99 +167,101 @@
 </section>
 
 <!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="pricing__header">
-    <div class="section-label">Pricing</div>
-    <h2 class="section-title">Simple, honest pricing</h2>
-    <p class="section-sub">Start free. Upgrade when you're ready to go deeper.</p>
+<section class="px-12 py-[100px] max-w-[1000px] mx-auto" id="pricing">
+  <div class="text-center mb-14">
+    <div class="text-xs font-bold text-[var(--accent)] uppercase tracking-[0.08em] mb-3">Pricing</div>
+    <h2 class="text-[clamp(28px,4vw,44px)] font-bold tracking-[-0.03em] mb-4">Simple, honest pricing</h2>
+    <p class="text-base text-[var(--muted)] max-w-[480px] leading-relaxed mx-auto">Start free. Upgrade when you're ready to go deeper.</p>
   </div>
-  <div class="pricing__grid">
-    <div class="price-card">
-      <div class="price-card__tier">Free</div>
-      <div class="price-card__amount">$0<span>/forever</span></div>
-      <div class="price-card__desc">Perfect for getting started and seeing if project-based learning works for you.</div>
-      <div class="price-card__features">
-        <div class="price-feature">
+  <div class="grid grid-cols-2 gap-5">
+    <!-- Free -->
+    <div class="bg-[var(--surface)] border border-[var(--border)] rounded-[16px] p-9 relative">
+      <div class="text-[13px] font-semibold text-[var(--muted)] mb-2 uppercase tracking-[0.05em]">Free</div>
+      <div class="text-[44px] font-bold text-[var(--text)] tracking-[-0.04em] mb-1">$0<span class="text-base font-normal text-[var(--muted)]">/forever</span></div>
+      <div class="text-[13px] text-[var(--muted)] mb-7 leading-[1.5]">Perfect for getting started and seeing if project-based learning works for you.</div>
+      <div class="flex flex-col gap-[10px] mb-7">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           3 free projects
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           AI-generated step guides
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Progress tracking
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Git commit instructions
         </div>
-        <div class="price-feature price-feature--disabled">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--state-disabled)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="var(--state-disabled)" stroke-width="1.8" stroke-linecap="round"/></svg>
           Advanced projects
         </div>
-        <div class="price-feature price-feature--disabled">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--state-disabled)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="var(--state-disabled)" stroke-width="1.8" stroke-linecap="round"/></svg>
           Completion certificates
         </div>
       </div>
-      <button class="price-card__cta price-card__cta--free" routerLink="/auth">Get started free</button>
+      <button class="w-full py-[13px] rounded-[9px] border-none bg-[oklch(0.22_0.015_255)] text-[var(--text-button)] text-sm font-bold cursor-pointer" routerLink="/auth">Get started free</button>
     </div>
-
-    <div class="price-card price-card--featured">
-      <div class="price-card__badge">Most Popular</div>
-      <div class="price-card__tier" style="color:var(--gold)">Pro</div>
-      <div class="price-card__amount">$12<span>/month</span></div>
-      <div class="price-card__desc">For developers serious about leveling up. Unlock every project, every feature.</div>
-      <div class="price-card__features">
-        <div class="price-feature">
+    <!-- Pro -->
+    <div class="bg-[var(--bg-button)] border border-[var(--gold-40)] rounded-[16px] p-9 relative shadow-[0_0_0_1px_var(--gold-15)]">
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[var(--gold)] text-[oklch(0.12_0.015_255)] text-[11px] font-bold px-[14px] py-1 rounded-[20px] whitespace-nowrap">Most Popular</div>
+      <div class="text-[13px] font-semibold mb-2 uppercase tracking-[0.05em] text-[var(--gold)]">Pro</div>
+      <div class="text-[44px] font-bold text-[var(--text)] tracking-[-0.04em] mb-1">$12<span class="text-base font-normal text-[var(--muted)]">/month</span></div>
+      <div class="text-[13px] text-[var(--muted)] mb-7 leading-[1.5]">For developers serious about leveling up. Unlock every project, every feature.</div>
+      <div class="flex flex-col gap-[10px] mb-7">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <strong>All 40+ projects</strong> unlocked
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           AI guides for custom topics
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           GitHub OAuth integration
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Completion certificates
         </div>
-        <div class="price-feature">
+        <div class="flex items-center gap-[10px] text-[13px] text-[var(--text-feature)]">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           Priority support
         </div>
       </div>
-      <button class="price-card__cta price-card__cta--pro" routerLink="/auth">Upgrade to Pro →</button>
+      <button class="w-full py-[13px] rounded-[9px] border-none bg-[var(--gold)] text-[oklch(0.12_0.015_255)] text-sm font-bold cursor-pointer transition-[filter] duration-150 hover:brightness-[1.08]" routerLink="/auth">Upgrade to Pro →</button>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="cta-section__glow"></div>
-  <h2>Ready to start building?</h2>
-  <p>Join thousands of developers learning through real projects.</p>
-  <button class="btn-hero" routerLink="/auth">Start for Free →</button>
+<section class="px-12 py-[100px] text-center relative overflow-hidden">
+  <div class="absolute w-[600px] h-[400px] rounded-full pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    style="background:radial-gradient(ellipse,var(--accent-6) 0%,transparent 70%)"></div>
+  <h2 class="text-[clamp(32px,5vw,60px)] font-bold tracking-[-0.04em] mb-4">Ready to start building?</h2>
+  <p class="text-base text-[var(--muted)] mb-9">Join thousands of developers learning through real projects.</p>
+  <button class="px-7 py-[14px] rounded-[10px] border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-[15px] font-bold cursor-pointer transition-all duration-150 hover:brightness-110 hover:-translate-y-px" routerLink="/auth">Start for Free →</button>
 </section>
 
 <!-- FOOTER -->
-<footer class="footer">
-  <div class="footer__brand">
+<footer class="border-t border-[var(--surface-terminal)] px-12 py-8 flex items-center justify-between">
+  <div class="flex items-center gap-2 text-[15px] font-bold">
     <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
       <rect width="32" height="32" rx="8" fill="var(--accent)"/>
       <path d="M8 22L14 10L20 18L24 14" stroke="oklch(0.12 0.015 255)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     DevPath
   </div>
-  <div class="footer__links">
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">GitHub</a>
+  <div class="flex gap-6">
+    <a class="text-xs text-[var(--text-footer)] transition-colors duration-150 hover:text-[var(--muted)]" href="#">Privacy</a>
+    <a class="text-xs text-[var(--text-footer)] transition-colors duration-150 hover:text-[var(--muted)]" href="#">Terms</a>
+    <a class="text-xs text-[var(--text-footer)] transition-colors duration-150 hover:text-[var(--muted)]" href="#">GitHub</a>
   </div>
-  <div class="footer__copy">© 2026 DevPath. All rights reserved.</div>
+  <div class="text-xs text-[var(--text-footer)]">© 2026 DevPath. All rights reserved.</div>
 </footer>
