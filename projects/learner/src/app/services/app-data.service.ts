@@ -1,4 +1,11 @@
 import { Injectable } from '@angular/core';
+import { ANGULAR_TODO_DATA } from '../data/todo-app-angular.data';
+import { BASIC_TODO_DATA } from '../data/todo-app-basic.data';
+
+export interface ProjectDependencies {
+  npm?: Record<string, string>;
+  installCommands?: string[];
+}
 
 export interface Project {
   id: string;
@@ -11,6 +18,13 @@ export interface Project {
   stepCount: number;
   color: string;
   pro?: boolean;
+  // Rich metadata — present on fully-authored projects
+  slug?: string;
+  techStack?: string[];
+  prerequisites?: string[];
+  learningOutcomes?: string[];
+  fileStructure?: Record<string, string>;
+  dependencies?: ProjectDependencies;
 }
 
 export interface Category {
@@ -18,12 +32,26 @@ export interface Category {
   label: string;
 }
 
+export interface CodeBlock {
+  filename: string;
+  language: string;
+  action: string;
+  code: string;
+  explanation: string;
+}
+
 export interface ProjectStep {
   title: string;
   description: string;
-  code: string;
-  language: string;
-  gitCommit: string;
+  explanation?: string;
+  commands?: string[];
+  codeBlocks?: CodeBlock[];
+  expectedOutput?: string;
+  troubleshooting?: string[];
+  // legacy fields kept for fallback generated steps
+  code?: string;
+  language?: string;
+  gitCommit?: string;
 }
 
 export interface ProjectProgress {
@@ -41,10 +69,16 @@ export interface User {
 
 @Injectable({ providedIn: 'root' })
 export class AppDataService {
+  private readonly staticSteps: Record<string, ProjectStep[]> = {
+    p9: ANGULAR_TODO_DATA.steps,
+    p10: BASIC_TODO_DATA.steps,
+  };
+
   readonly categories: Category[] = [
     { id: 'all',       label: 'All Projects' },
     { id: 'web',       label: 'HTML / CSS / JS' },
     { id: 'react',     label: 'React' },
+    { id: 'angular',   label: 'Angular' },
     { id: 'python',    label: 'Python' },
     { id: 'backend',   label: 'Node.js / Express' },
     { id: 'fullstack', label: 'Full-Stack' },
@@ -107,6 +141,41 @@ export class AppDataService {
       tags: ['HTML', 'CSS', 'Animations'], stepCount: 6,
       color: 'oklch(0.70 0.17 350)',
     },
+    {
+      id: 'p9',
+      color: 'oklch(0.65 0.20 15)',
+      // all fields below come directly from the JSON data file
+      slug: ANGULAR_TODO_DATA.project.slug,
+      category: ANGULAR_TODO_DATA.project.category,
+      difficulty: ANGULAR_TODO_DATA.project.difficulty,
+      estimatedTime: `${ANGULAR_TODO_DATA.project.estimatedHours}h`,
+      title: ANGULAR_TODO_DATA.project.title,
+      description: ANGULAR_TODO_DATA.project.description,
+      tags: ANGULAR_TODO_DATA.project.techStack.slice(0, 3),
+      techStack: ANGULAR_TODO_DATA.project.techStack,
+      prerequisites: ANGULAR_TODO_DATA.project.prerequisites,
+      learningOutcomes: ANGULAR_TODO_DATA.project.learningOutcomes,
+      fileStructure: ANGULAR_TODO_DATA.project.fileStructure,
+      dependencies: ANGULAR_TODO_DATA.project.dependencies,
+      stepCount: ANGULAR_TODO_DATA.steps.length,
+    },
+    {
+      id: 'p10',
+      color: 'oklch(0.68 0.17 230)',
+      slug: BASIC_TODO_DATA.project.slug,
+      category: BASIC_TODO_DATA.project.category,
+      difficulty: BASIC_TODO_DATA.project.difficulty,
+      estimatedTime: `${BASIC_TODO_DATA.project.estimatedHours}h`,
+      title: BASIC_TODO_DATA.project.title,
+      description: BASIC_TODO_DATA.project.description,
+      tags: BASIC_TODO_DATA.project.techStack.slice(0, 3),
+      techStack: BASIC_TODO_DATA.project.techStack,
+      prerequisites: BASIC_TODO_DATA.project.prerequisites,
+      learningOutcomes: BASIC_TODO_DATA.project.learningOutcomes,
+      fileStructure: BASIC_TODO_DATA.project.fileStructure,
+      dependencies: BASIC_TODO_DATA.project.dependencies,
+      stepCount: BASIC_TODO_DATA.steps.length,
+    },
   ];
 
   loadProgress(): Record<string, ProjectProgress> {
@@ -128,6 +197,7 @@ export class AppDataService {
   }
 
   loadSteps(projectId: string): ProjectStep[] | null {
+    if (this.staticSteps[projectId]) return this.staticSteps[projectId];
     try { return JSON.parse(localStorage.getItem(`devpath_steps_${projectId}`) || 'null'); }
     catch { return null; }
   }

@@ -1,1 +1,56 @@
 :host { display: block; height: 100vh; }
+
+.prose-section {
+  color: var(--text-desc);
+  font-size: 14px;
+  line-height: 1.75;
+
+  :global(.md-h2) {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  :global(.md-h3) {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-label);
+    margin: 0 0 8px;
+  }
+
+  :global(.md-p) {
+    margin: 0 0 14px;
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  :global(.md-inline) {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    background: var(--surface2);
+    color: var(--accent-code);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    padding: 1px 5px;
+  }
+
+  :global(.md-pre) {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    margin: 4px 0 14px;
+
+    :global(.md-code) {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.65;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+  }
+}

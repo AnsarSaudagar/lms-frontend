@@ -1,5 +1,6 @@
 import { Component, signal, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppDataService, Project, ProjectStep, User } from '../../services/app-data.service';
 
@@ -12,6 +13,7 @@ import { AppDataService, Project, ProjectStep, User } from '../../services/app-d
 export class ProjectDetailComponent implements OnInit {
   private appData = inject(AppDataService);
   private route = inject(ActivatedRoute);
+  private sanitizer = inject(DomSanitizer);
   protected router = inject(Router);
 
   project = signal<Project | null>(null);
@@ -63,6 +65,37 @@ export class ProjectDetailComponent implements OnInit {
     this.steps.set(fallback);
     this.saveProgress(fallback.length);
     this.generating.set(false);
+  }
+
+  renderMarkdown(text: string): SafeHtml {
+    let html = text;
+
+    // fenced code blocks first
+    html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+      const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return `<pre class="md-pre"><code class="language-${lang || 'text'} md-code">${escaped.trimEnd()}</code></pre>`;
+    });
+
+    // headings
+    html = html.replace(/^### (.+)$/gm, '<h3 class="md-h3">$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2 class="md-h2">$1</h2>');
+
+    // bold
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+    // inline code
+    html = html.replace(/`([^`\n]+)`/g, '<code class="md-inline">$1</code>');
+
+    // paragraph wrapping: split on double newlines, skip block-level tags
+    const blocks = html.split(/\n\n+/);
+    html = blocks.map(block => {
+      block = block.trim();
+      if (!block) return '';
+      if (/^<(h[23]|pre|ul|ol|li|table)/.test(block)) return block;
+      return `<p class="md-p">${block.replace(/\n/g, '<br>')}</p>`;
+    }).join('\n');
+
+    return this.sanitizer.bypassSecurityTrustHtml(html);
   }
 
   get step(): ProjectStep | null {

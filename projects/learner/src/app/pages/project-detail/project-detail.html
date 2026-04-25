@@ -87,52 +87,143 @@
           <p class="text-[15px] text-[var(--text-desc)] leading-[1.7]">{{ step.description }}</p>
         </div>
 
-        <!-- Code card -->
-        <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden mb-6">
-          <div class="flex items-center px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
-            <div class="flex gap-[6px] mr-3">
-              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
-              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
-              <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
-            </div>
-            <span class="text-xs text-[var(--muted)] flex-1 font-[family-name:var(--mono)] uppercase tracking-[0.05em]">{{ step.language }}</span>
-            <button
-              class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
-              (click)="copyToClipboard(step.code, 'code')">
-              {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
-            </button>
-          </div>
-          <pre class="m-0 p-5 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
-        </div>
+        <!-- Explanation (rendered markdown) -->
+        @if (step.explanation) {
+          <div class="prose-section mb-7" [innerHTML]="renderMarkdown(step.explanation)"></div>
+        }
 
-        <!-- Git card -->
-        <div class="bg-[var(--bg-button)] border border-[var(--border)] rounded-[10px] px-5 py-[18px] mb-8">
-          <div class="flex items-center gap-2 mb-[14px]">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--blue)"><path d="M15.22 4.97a.75.75 0 0 1 1.06 0l6.5 6.5a.75.75 0 0 1 0 1.06l-6.5 6.5a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L21.19 12l-5.97-5.97a.75.75 0 0 1 0-1.06Zm-6.44 0a.75.75 0 0 1 0 1.06L2.81 12l5.97 5.97a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-6.5-6.5a.75.75 0 0 1 0-1.06l6.5-6.5a.75.75 0 0 1 1.06 0Z"/></svg>
-            <span class="text-[13px] font-semibold text-[var(--text-loading)] flex-1">Git Integration</span>
-            @if (user()?.githubConnected) {
-              <span class="text-[11px] text-[var(--blue)] bg-[var(--blue-12)] px-2 py-[3px] rounded-[20px] border border-[var(--blue-25)]">GitHub connected</span>
-            }
+        <!-- Commands / Terminal -->
+        @if (step.commands?.length) {
+          <div class="mb-6">
+            <p class="text-[11px] font-semibold text-[var(--muted)] uppercase tracking-[0.07em] mb-2 flex items-center gap-[6px]">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM5.22 6.03a.75.75 0 0 1 1.06-1.06l2.5 2.5a.75.75 0 0 1 0 1.06l-2.5 2.5a.75.75 0 0 1-1.06-1.06L7.19 8 5.22 6.03ZM9.5 10.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z"/></svg>
+              Terminal
+            </p>
+            <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden">
+              <div class="flex items-center px-4 py-[9px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+                <div class="flex gap-[6px]">
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+                </div>
+                <span class="text-[11px] text-[var(--muted)] ml-3 font-[family-name:var(--mono)] tracking-[0.03em]">bash</span>
+              </div>
+              <div class="px-5 py-4 flex flex-col gap-[6px]">
+                @for (cmd of step.commands; track $index; let i = $index) {
+                  <div class="flex items-center justify-between group/cmd">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <span class="text-[var(--muted)] font-[family-name:var(--mono)] text-[13px] flex-shrink-0 select-none">$</span>
+                      <code class="font-[family-name:var(--mono)] text-[13px] text-[var(--accent-code)] break-all">{{ cmd }}</code>
+                    </div>
+                    <button
+                      class="ml-3 text-[11px] text-[var(--muted)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[4px] px-[9px] py-[3px] cursor-pointer flex-shrink-0 opacity-0 group-hover/cmd:opacity-100 transition-opacity duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
+                      (click)="copyToClipboard(cmd, 'cmd-' + i)">
+                      {{ copied() === 'cmd-' + i ? '✓' : 'Copy' }}
+                    </button>
+                  </div>
+                }
+              </div>
+            </div>
           </div>
-          <div class="flex flex-col gap-2">
-            @for (cmd of ['git add .', step.gitCommit, 'git push origin main']; track $index; let i = $index) {
-              <div class="flex items-center justify-between bg-[var(--bg)] rounded-[7px] px-[14px] py-[10px] border border-[var(--border-subtle)]">
-                <code class="font-[family-name:var(--mono)] text-[13px] text-[var(--accent-code)]">{{ cmd }}</code>
-                <button
-                  class="text-[11px] text-[var(--muted)] bg-[var(--surface2)] border border-[var(--border-input)] rounded-[4px] px-2 py-[3px] cursor-pointer flex-shrink-0"
-                  (click)="copyToClipboard(cmd, 'git' + i)">
-                  {{ copied() === 'git' + i ? '✓' : 'Copy' }}
-                </button>
+        }
+
+        <!-- Code blocks -->
+        @if (step.codeBlocks?.length) {
+          <div class="flex flex-col gap-5 mb-6">
+            <p class="text-[11px] font-semibold text-[var(--muted)] uppercase tracking-[0.07em] flex items-center gap-[6px] mb-[-6px]">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
+              Files
+            </p>
+            @for (block of step.codeBlocks; track $index; let i = $index) {
+              <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden">
+                <!-- File header -->
+                <div class="flex items-center gap-3 px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+                  <div class="flex gap-[6px] flex-shrink-0">
+                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+                  </div>
+                  <span class="font-[family-name:var(--mono)] text-[12.5px] text-[var(--text-label)] flex-1 truncate">{{ block.filename }}</span>
+                  <span
+                    class="text-[10px] font-semibold px-[7px] py-[2px] rounded-[4px] uppercase tracking-[0.05em] flex-shrink-0"
+                    [class.bg-emerald-950]="block.action === 'create'"
+                    [class.text-emerald-400]="block.action === 'create'"
+                    [class.bg-amber-950]="block.action !== 'create'"
+                    [class.text-amber-400]="block.action !== 'create'">
+                    {{ block.action }}
+                  </span>
+                  <button
+                    class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)] flex-shrink-0"
+                    (click)="copyToClipboard(block.code, 'block-' + i)">
+                    {{ copied() === 'block-' + i ? '✓ Copied' : 'Copy' }}
+                  </button>
+                </div>
+                <!-- Code -->
+                <pre class="m-0 px-5 py-4 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + block.language">{{ block.code }}</code></pre>
+                <!-- Block explanation -->
+                @if (block.explanation) {
+                  <div class="px-5 py-[14px] border-t border-[var(--border-subtle)] bg-[var(--surface)]">
+                    <p class="text-[13px] text-[var(--text-desc)] leading-[1.65] m-0">{{ block.explanation }}</p>
+                  </div>
+                }
               </div>
             }
           </div>
-          @if (!user()?.githubConnected) {
-            <div class="flex items-center justify-between mt-[14px] pt-[14px] border-t border-[var(--border-subtle)] text-xs text-[var(--muted)]">
-              <span>Connect GitHub for one-click commits</span>
-              <button class="px-3 py-[7px] rounded-[6px] border border-[var(--border-scrollbar)] bg-[var(--surface2)] text-[var(--text-loading)] text-xs cursor-pointer">Connect GitHub</button>
+
+        } @else if (step.code) {
+          <!-- Legacy fallback: single code block -->
+          <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden mb-6">
+            <div class="flex items-center px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+              <div class="flex gap-[6px] mr-3">
+                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+              </div>
+              <span class="text-xs text-[var(--muted)] flex-1 font-[family-name:var(--mono)] uppercase tracking-[0.05em]">{{ step.language }}</span>
+              <button
+                class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
+                (click)="copyToClipboard(step.code!, 'code')">
+                {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
+              </button>
             </div>
-          }
-        </div>
+            <pre class="m-0 p-5 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
+          </div>
+        }
+
+        <!-- Expected Output -->
+        @if (step.expectedOutput) {
+          <div class="bg-[oklch(0.13_0.03_145)] border border-[oklch(0.22_0.06_145)] rounded-[10px] px-5 py-[15px] mb-5">
+            <div class="flex items-center gap-2 mb-[8px]">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="7" stroke="oklch(0.55_0.16_145)" stroke-width="1.5"/>
+                <path d="M5 8l2 2 4-4" stroke="oklch(0.65_0.18_145)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="text-[11px] font-semibold text-[oklch(0.55_0.16_145)] uppercase tracking-[0.07em]">Expected Output</span>
+            </div>
+            <p class="text-[13.5px] text-[oklch(0.72_0.12_145)] leading-[1.6] m-0">{{ step.expectedOutput }}</p>
+          </div>
+        }
+
+        <!-- Troubleshooting -->
+        @if (step.troubleshooting?.length) {
+          <div class="bg-[oklch(0.13_0.03_60)] border border-[oklch(0.22_0.07_60)] rounded-[10px] px-5 py-[15px] mb-8">
+            <div class="flex items-center gap-2 mb-[10px]">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z" fill="oklch(0.6_0.18_60)"/>
+                <path d="M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="oklch(0.6_0.18_60)"/>
+              </svg>
+              <span class="text-[11px] font-semibold text-[oklch(0.6_0.18_60)] uppercase tracking-[0.07em]">Troubleshooting</span>
+            </div>
+            <ul class="flex flex-col gap-[7px] list-none m-0 p-0">
+              @for (tip of step.troubleshooting; track $index) {
+                <li class="flex items-start gap-[8px] text-[13.5px] text-[oklch(0.72_0.12_60)] leading-[1.55]">
+                  <span class="flex-shrink-0 mt-[3px] text-[oklch(0.55_0.16_60)]">›</span>
+                  <span>{{ tip }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
 
         <!-- Prev / Next nav -->
         <div class="flex justify-between gap-3">
