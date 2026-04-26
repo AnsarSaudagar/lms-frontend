@@ -1,8 +1,27 @@
 import { inject, Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Project } from "./app-data.service";
+import { Project, ProjectStep } from "./app-data.service";
 import { map } from "rxjs";
+
+interface ApiCodeBlock {
+  filename: string;
+  language: string;
+  action: string;
+  code: string;
+  explanation: string;
+}
+
+interface ApiStep {
+  stepNumber: number;
+  title: string;
+  description: string;
+  explanation?: string;
+  commands?: string[];
+  codeBlocks?: ApiCodeBlock[];
+  expectedOutput?: string;
+  troubleshooting?: string[];
+}
 
 interface ApiProject {
   _id: string;
@@ -18,6 +37,12 @@ interface ApiProject {
   fileStructure?: Record<string, string>;
   dependencies?: { installCommands?: string[] };
   stepCount?: number;
+  steps?: ApiStep[];
+}
+
+export interface ProjectDetail {
+  project: Project;
+  steps: ProjectStep[];
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -59,6 +84,23 @@ export class ProjectServie {
   getAllProjects() {
     return this.http.get<ApiProject[]>(this.API_URL).pipe(
       map(projects => projects.map(mapApiProject))
+    );
+  }
+
+  getProject(id: string) {
+    return this.http.get<ApiProject>(`${this.API_URL}/${id}`).pipe(
+      map(p => ({
+        project: mapApiProject(p),
+        steps: (p.steps ?? []).map((s): ProjectStep => ({
+          title: s.title,
+          description: s.description,
+          explanation: s.explanation,
+          commands: s.commands,
+          codeBlocks: s.codeBlocks,
+          expectedOutput: s.expectedOutput,
+          troubleshooting: s.troubleshooting,
+        })),
+      } as ProjectDetail))
     );
   }
 }

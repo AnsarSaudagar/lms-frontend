@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppDataService, Project, ProjectStep, User } from '../../services/app-data.service';
+import { ProjectServie } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -15,6 +16,7 @@ export class ProjectDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   protected router = inject(Router);
+  private projectService = inject(ProjectServie);
 
   project = signal<Project | null>(null);
   user = signal<User | null>(null);
@@ -35,36 +37,22 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit() {
     this.user.set(this.appData.loadUser());
     const id = this.route.snapshot.params['id'];
-    const p = this.appData.projects.find(x => x.id === id) ?? null;
-    if (!p) { this.router.navigate(['/dashboard']); return; }
-    this.project.set(p);
 
-    const progress = this.appData.loadProgress()[id];
-    if (progress) this.completed.set(progress.completed);
 
-    const cached = this.appData.loadSteps(id);
-    if (cached) { this.steps.set(cached); }
-    else { this.generateSteps(p); }
-  }
 
-  async generateSteps(p: Project) {
     this.generating.set(true);
-    await new Promise(r => setTimeout(r, 1200));
-    const stepTitles = ['Project Setup', 'Install Dependencies', 'Create Entry Point', 'Add Core Logic',
-      'Style Components', 'Add Routing', 'Connect API', 'Write Tests', 'Optimize', 'Deploy', 'Final Touches', 'Review'];
-    const fallback: ProjectStep[] = Array.from({ length: p.stepCount }, (_, i) => ({
-      title: `Step ${i + 1}: ${stepTitles[i] ?? 'Build Feature'}`,
-      description: `In this step, we build the foundation for "${p.title}". Follow the code snippet carefully and verify everything works before moving on.`,
-      code: i === 0
-        ? `mkdir ${p.title.toLowerCase().replace(/\s+/g, '-')}\ncd ${p.title.toLowerCase().replace(/\s+/g, '-')}\nnpm init -y`
-        : `// Step ${i + 1}\nconsole.log('Step ${i + 1} complete');`,
-      language: p.tags[0]?.toLowerCase().includes('python') ? 'python' : 'javascript',
-      gitCommit: `git commit -m "step ${i + 1}: ${(stepTitles[i] ?? 'add feature').toLowerCase().replace(/\s/g, '-')}"`,
-    }));
-    this.appData.saveSteps(p.id, fallback);
-    this.steps.set(fallback);
-    this.saveProgress(fallback.length);
-    this.generating.set(false);
+    this.projectService.getProject(id).subscribe({
+      next: ({ project, steps }) => {
+        this.project.set(project);
+        this.steps.set(steps);
+        this.generating.set(false);
+
+        const progress = this.appData.loadProgress()[project.id];
+        if (progress) this.completed.set(progress.completed);
+      },
+      error: () => this.generating.set(false),
+    });
+
   }
 
   renderMarkdown(text: string): SafeHtml {

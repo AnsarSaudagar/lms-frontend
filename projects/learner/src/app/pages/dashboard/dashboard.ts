@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   }
 
   handleCardClick(p: Project) {
-    if (p.pro && !this.user()?.isPro) { this.upgradeTarget.set(p); return; }
+    // if (p.pro && !this.user()?.isPro) { this.upgradeTarget.set(p); return; }
     this.router.navigate(['/project', p.id]);
   }
 
