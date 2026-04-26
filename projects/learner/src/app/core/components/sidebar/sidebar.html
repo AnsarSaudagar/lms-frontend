@@ -1,0 +1,17 @@
+<aside class="sidebar">
+  @for (group of sidebarItems; track group.label) {
+    @if (group.label) {
+      <p class="sidebar-group-label">{{ group.label }}</p>
+    }
+    @for (nav of group.navs; track nav.label) {
+      <a
+        class="sidebar-item"
+        [routerLink]="nav.route ?? null"
+        [routerLinkActive]="nav.route ? 'active' : ''"
+      >
+        <i [class]="nav.icon"></i>
+        <span>{{ nav.label }}</span>
+      </a>
+    }
+  }
+</aside>

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth.guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,12 +13,12 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.DashboardComponent),
-    canActivate: [authGuard],
+    canMatch: [authGuard],
   },
   {
     path: 'project/:id',
     loadComponent: () => import('./pages/project-detail/project-detail').then(m => m.ProjectDetailComponent),
-    canActivate: [authGuard],
+    canMatch: [authGuard],
   },
   { path: '**', redirectTo: '' },
 ];
