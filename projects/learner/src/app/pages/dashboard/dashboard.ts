@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppDataService, Project, User, ProjectProgress } from '../../services/app-data.service';
+import { ProjectServie } from '../../services/project.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,9 +14,10 @@ import { AppDataService, Project, User, ProjectProgress } from '../../services/a
 export class DashboardComponent implements OnInit {
   private appData = inject(AppDataService);
   private router = inject(Router);
+  private projectService = inject(ProjectServie);
 
   categories = this.appData.categories;
-  allProjects = this.appData.projects;
+  allProjects = signal<Project[]>([]);
 
   user : any = signal<User | null>(null);
   progress = signal<Record<string, ProjectProgress>>({});
@@ -26,7 +28,7 @@ export class DashboardComponent implements OnInit {
   filtered = computed(() => {
     const cat = this.activeCategory();
     const q = this.search().toLowerCase();
-    return this.allProjects.filter(p => {
+    return this.allProjects().filter(p => {
       const matchCat = cat === 'all' || p.category === cat;
       const matchSearch = !q || p.title.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
       return matchCat && matchSearch;
@@ -34,7 +36,7 @@ export class DashboardComponent implements OnInit {
   });
 
   inProgress = computed(() =>
-    this.allProjects.filter(p => {
+    this.allProjects().filter(p => {
       const pr = this.progress()[p.id];
       return pr && pr.completed.length > 0 && pr.completed.length < pr.total;
     })
@@ -45,6 +47,11 @@ export class DashboardComponent implements OnInit {
     if (!u) { this.router.navigate(['/auth']); return; }
     this.user.set(u);
     this.progress.set(this.appData.loadProgress());
+    this.projectService.getAllProjects().subscribe({
+      next: (projects: Project[]) => {
+        this.allProjects.set(projects);
+      }
+    })
   }
 
   getProgress(id: string): number {

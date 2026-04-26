@@ -95,7 +95,7 @@
         <span class="bg-[oklch(0.20_0.015_255)] text-[var(--text-section)] rounded-[20px] px-2 py-px text-xs font-medium normal-case tracking-normal">{{ filtered().length }}</span>
       </h2>
       <div class="grid gap-4" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
-        @for (p of filtered(); track p.id) {
+        @for (p of allProjects(); track p.id) {
           <button
             class="text-left border border-[var(--border-subtle)] rounded-[12px] bg-[var(--surface)] cursor-pointer p-0 overflow-hidden transition-all duration-150 flex flex-col hover:border-[var(--border-hover)] hover:-translate-y-px"
             (click)="handleCardClick(p)">
