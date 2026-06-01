@@ -36,6 +36,7 @@
           [ngClass]="tab() === 'signup' ? 'bg-[oklch(0.20_0.015_255)] text-[var(--text)] shadow-[0_1px_4px_var(--shadow-sm)]' : 'bg-transparent text-[var(--muted)]'"
           (click)="setTab('signup')">Create Account</button>
       </div>
+      <router-outlet></router-outlet>
 
       @if (error()) {
         <div class="bg-[var(--error-bg)] border border-[var(--error-border)] text-[var(--error-text)] px-[14px] py-[10px] rounded-lg text-[13px] mb-4">{{ error() }}</div>

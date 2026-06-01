@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadComponent: () => import('./pages/auth/auth').then(m => m.AuthComponent),
+    loadChildren: () => import('./routes/auth').then(m => m.authRoutes),
   },
   {
     path: 'dashboard',

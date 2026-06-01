@@ -6,5 +6,15 @@ export const authRoutes: Routes = [
     path: '',
     resolve: { layout: authLayoutResolver },
     loadComponent: () => import('../pages/auth/auth').then(m => m.AuthComponent),
+    children:[
+      {
+        path: 'register',
+        loadComponent: () => import('../pages/auth/register/register').then(m => m.Register)
+      },
+      {
+        path: 'login',
+        loadComponent: () => import('../pages/auth/login/login').then(m => m.Login)
+      },
+    ],
   },
 ];
