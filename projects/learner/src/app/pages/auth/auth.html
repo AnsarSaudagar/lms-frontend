@@ -43,11 +43,25 @@
 
       <form class="flex flex-col gap-4 mb-5" (ngSubmit)="handleSubmit($event)">
         @if (tab() === 'signup') {
+          <div class="flex gap-3">
+            <label class="flex flex-col gap-[6px] flex-1">
+              <span class="text-[13px] text-[var(--text-label)] font-medium">First Name <span class="text-[var(--error-text)]">*</span></span>
+              <input
+                class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+                type="text" placeholder="Jane" [value]="firstName()" (input)="firstName.set($any($event.target).value)"/>
+            </label>
+            <label class="flex flex-col gap-[6px] w-[90px]">
+              <span class="text-[13px] text-[var(--text-label)] font-medium">Middle</span>
+              <input
+                class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+                type="text" placeholder="M." [value]="middleName()" (input)="middleName.set($any($event.target).value)"/>
+            </label>
+          </div>
           <label class="flex flex-col gap-[6px]">
-            <span class="text-[13px] text-[var(--text-label)] font-medium">Name</span>
+            <span class="text-[13px] text-[var(--text-label)] font-medium">Last Name <span class="text-[var(--error-text)]">*</span></span>
             <input
               class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-              type="text" placeholder="Jane Smith" [value]="name()" (input)="name.set($any($event.target).value)"/>
+              type="text" placeholder="Smith" [value]="lastName()" (input)="lastName.set($any($event.target).value)"/>
           </label>
         }
         <label class="flex flex-col gap-[6px]">
