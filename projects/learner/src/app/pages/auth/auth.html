@@ -42,48 +42,6 @@
         <div class="bg-[var(--error-bg)] border border-[var(--error-border)] text-[var(--error-text)] px-[14px] py-[10px] rounded-lg text-[13px] mb-4">{{ error() }}</div>
       }
 
-      <form class="flex flex-col gap-4 mb-5" (ngSubmit)="handleSubmit($event)">
-        @if (tab() === 'signup') {
-          <div class="flex gap-3">
-            <label class="flex flex-col gap-[6px] flex-1">
-              <span class="text-[13px] text-[var(--text-label)] font-medium">First Name <span class="text-[var(--error-text)]">*</span></span>
-              <input
-                class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-                type="text" placeholder="Jane" [value]="firstName()" (input)="firstName.set($any($event.target).value)"/>
-            </label>
-            <label class="flex flex-col gap-[6px] w-[90px]">
-              <span class="text-[13px] text-[var(--text-label)] font-medium">Middle</span>
-              <input
-                class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-                type="text" placeholder="M." [value]="middleName()" (input)="middleName.set($any($event.target).value)"/>
-            </label>
-          </div>
-          <label class="flex flex-col gap-[6px]">
-            <span class="text-[13px] text-[var(--text-label)] font-medium">Last Name <span class="text-[var(--error-text)]">*</span></span>
-            <input
-              class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-              type="text" placeholder="Smith" [value]="lastName()" (input)="lastName.set($any($event.target).value)"/>
-          </label>
-        }
-        <label class="flex flex-col gap-[6px]">
-          <span class="text-[13px] text-[var(--text-label)] font-medium">Email</span>
-          <input
-            class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-            type="email" placeholder="you@example.com" [value]="email()" (input)="email.set($any($event.target).value)"/>
-        </label>
-        <label class="flex flex-col gap-[6px]">
-          <span class="text-[13px] text-[var(--text-label)] font-medium">Password</span>
-          <input
-            class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
-            type="password" placeholder="••••••••" [value]="password()" (input)="password.set($any($event.target).value)"/>
-        </label>
-        <button
-          type="submit"
-          class="py-3 rounded-lg border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-sm font-semibold cursor-pointer transition-[filter] duration-150 hover:brightness-[1.08] disabled:cursor-not-allowed"
-          [disabled]="loading()" [style.opacity]="loading() ? '0.7' : '1'">
-          {{ loading() ? 'Please wait…' : (tab() === 'login' ? 'Sign In' : 'Create Account') }}
-        </button>
-      </form>
 
       <div class="relative my-5 border-t border-[var(--border)]">
         <span class="absolute -top-[10px] left-1/2 -translate-x-1/2 bg-[var(--bg-secondary)] px-3 text-[oklch(0.45_0.02_255)] text-xs">or</span>

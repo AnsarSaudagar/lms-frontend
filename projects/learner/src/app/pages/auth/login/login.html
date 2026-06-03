@@ -1,1 +1,24 @@
-<p>login works!</p>
+<form class="flex flex-col gap-4 mb-5">
+  <label class="flex flex-col gap-[6px]">
+    <span class="text-[13px] text-[var(--text-label)] font-medium">Email</span>
+    <input
+      class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      type="email"
+      placeholder="you@example.com"
+    />
+  </label>
+  <label class="flex flex-col gap-[6px]">
+    <span class="text-[13px] text-[var(--text-label)] font-medium">Password</span>
+    <input
+      class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      type="password"
+      placeholder="••••••••"
+    />
+  </label>
+  <button
+    type="submit"
+    class="py-3 rounded-lg border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-sm font-semibold cursor-pointer transition-[filter] duration-150 hover:brightness-[1.08] disabled:cursor-not-allowed"
+  >
+    Create Account
+  </button>
+</form>
