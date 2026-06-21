@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,10 +13,11 @@ import { AuthService } from '../../services/auth.service';
 export class AuthComponent {
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   features = ['AI-generated project guides', 'Git-integrated workflow', 'Progress tracking across all projects', 'Syntax-highlighted code steps'];
 
-  tab = signal<'login' | 'signup'>('login');
+  tab = signal<'login' | 'register'>('login');
   email = signal('');
   password = signal('');
   firstName = signal('');
@@ -25,14 +26,18 @@ export class AuthComponent {
   loading = signal(false);
   error = signal('');
 
-  setTab(t: 'login' | 'signup') { this.tab.set(t); this.error.set(''); }
+  setTab(t: 'login' | 'register') { 
+    this.tab.set(t); 
+    this.error.set(''); 
+    this.router.navigate(['auth/'+ t]);
+  }
 
   handleSubmit(e: Event) {
     e.preventDefault();
     this.error.set('');
 
     if (!this.email() || !this.password()) { this.error.set('Please fill in all fields.'); return; }
-    if (this.tab() === 'signup' && (!this.firstName() || !this.lastName())) {
+    if (this.tab() === 'register' && (!this.firstName() || !this.lastName())) {
       this.error.set('Please enter your first and last name.'); return;
     }
 

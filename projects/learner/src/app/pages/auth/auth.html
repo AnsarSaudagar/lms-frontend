@@ -33,8 +33,8 @@
           (click)="setTab('login')">Sign In</button>
         <button
           class="flex-1 py-[9px] rounded-[7px] border-none cursor-pointer transition-all duration-150 text-sm font-medium"
-          [ngClass]="tab() === 'signup' ? 'bg-[oklch(0.20_0.015_255)] text-[var(--text)] shadow-[0_1px_4px_var(--shadow-sm)]' : 'bg-transparent text-[var(--muted)]'"
-          (click)="setTab('signup')">Create Account</button>
+          [ngClass]="tab() === 'register' ? 'bg-[oklch(0.20_0.015_255)] text-[var(--text)] shadow-[0_1px_4px_var(--shadow-sm)]' : 'bg-transparent text-[var(--muted)]'"
+          (click)="setTab('register')">Create Account</button>
       </div>
       <router-outlet></router-outlet>
 
@@ -59,7 +59,7 @@
       @if (tab() === 'login') {
         <p class="text-center mt-5 text-[13px] text-[var(--muted)]">
           Don't have an account?&nbsp;
-          <button class="border-none bg-transparent text-[var(--accent)] cursor-pointer text-[13px] p-0" type="button" (click)="setTab('signup')">Sign up free</button>
+          <button class="border-none bg-transparent text-[var(--accent)] cursor-pointer text-[13px] p-0" type="button" (click)="setTab('register')">Sign up free</button>
         </p>
       }
     </div>
