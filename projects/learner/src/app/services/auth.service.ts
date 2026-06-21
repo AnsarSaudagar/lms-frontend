@@ -24,6 +24,7 @@ export class AuthService {
   private expiresAtSignal = signal<number | null>(null);
   private logoutTimer: any;
   errorMessage : any = signal(null);
+  successMessage : any = signal(null);
 
   readonly isLoggedIn = computed(() => {
     const token = this.tokenSignal();
@@ -49,6 +50,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(this.API_URL + '/register', payload).pipe(
       tap(res => {
         this.router.navigateByUrl(returnUrl);
+        this.successMessage.set("Successfully Registered")
       }),
       catchError((errRes) => {
         console.error('Registration failed', errRes);

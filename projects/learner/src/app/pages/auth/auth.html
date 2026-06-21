@@ -36,13 +36,15 @@
           [ngClass]="tab() === 'register' ? 'bg-[oklch(0.20_0.015_255)] text-[var(--text)] shadow-[0_1px_4px_var(--shadow-sm)]' : 'bg-transparent text-[var(--muted)]'"
           (click)="setTab('register')">Create Account</button>
       </div>
+
       @if (authService.errorMessage()) {
-        <div class="bg-[var(--error-bg)] border border-[var(--error-border)] text-[var(--error-text)] px-[14px] py-[10px] rounded-lg text-[13px] mb-4">{{ authService.errorMessage() || "ansar" }}</div>
+        <div class="bg-[var(--error-bg)] border border-[var(--error-border)] text-[var(--error-text)] px-[14px] py-[10px] rounded-lg text-[13px] mb-4">{{ authService.errorMessage() }}</div>
       }
+      @if (authService.successMessage()) {
+        <div class="bg-[var(--success-bg)] border border-[var(--success-border)] text-[var(--success-text)] px-[14px] py-[10px] rounded-lg text-[13px] mb-4">{{ authService.successMessage() || "ansar"}}</div>
+      }
+
       <router-outlet></router-outlet>
-
-      
-
 
       <div class="relative my-5 border-t border-[var(--border)]">
         <span class="absolute -top-[10px] left-1/2 -translate-x-1/2 bg-[var(--bg-secondary)] px-3 text-[oklch(0.45_0.02_255)] text-xs">or</span>

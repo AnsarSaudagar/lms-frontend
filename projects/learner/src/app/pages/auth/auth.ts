@@ -13,7 +13,6 @@ import { AuthService } from '../../services/auth.service';
 export class AuthComponent implements OnInit {
   authService = inject(AuthService);
   private router = inject(Router);
-  private route = inject(ActivatedRoute);
 
   features = [
     'AI-generated project guides',
