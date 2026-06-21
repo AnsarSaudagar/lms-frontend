@@ -11,24 +11,17 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './auth.scss',
 })
 export class AuthComponent {
-  private authService = inject(AuthService);
-  private route = inject(ActivatedRoute);
+  authService = inject(AuthService);
   private router = inject(Router);
 
   features = ['AI-generated project guides', 'Git-integrated workflow', 'Progress tracking across all projects', 'Syntax-highlighted code steps'];
 
   tab = signal<'login' | 'register'>('login');
-  email = signal('');
-  password = signal('');
-  firstName = signal('');
-  middleName = signal('');
-  lastName = signal('');
   loading = signal(false);
-  error = signal('');
 
   setTab(t: 'login' | 'register') { 
     this.tab.set(t); 
-    this.error.set(''); 
+    this.authService.errorMessage.set(''); 
     this.router.navigate(['auth/'+ t]);
   }
 }

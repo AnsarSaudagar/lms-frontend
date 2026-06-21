@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AppDataService, User } from './app-data.service';
 import { Login, Register } from '../models/auth.model';
@@ -23,6 +23,7 @@ export class AuthService {
   private tokenSignal = signal<string | null>(null);
   private expiresAtSignal = signal<number | null>(null);
   private logoutTimer: any;
+  errorMessage : any = signal(null);
 
   readonly isLoggedIn = computed(() => {
     const token = this.tokenSignal();
@@ -44,10 +45,15 @@ export class AuthService {
     );
   }
 
-  register(payload : Register, returnUrl = '/auth/login') {
+  register(payload: Register, returnUrl = '/auth/login') {
     return this.http.post<AuthResponse>(this.API_URL + '/register', payload).pipe(
       tap(res => {
         this.router.navigateByUrl(returnUrl);
+      }),
+      catchError((errRes) => {
+        console.error('Registration failed', errRes);
+        this.errorMessage.set(errRes.error.error.message);
+        return throwError(() => errRes);
       })
     );
   }
