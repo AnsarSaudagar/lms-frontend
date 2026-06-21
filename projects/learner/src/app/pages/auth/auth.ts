@@ -31,33 +31,4 @@ export class AuthComponent {
     this.error.set(''); 
     this.router.navigate(['auth/'+ t]);
   }
-
-  handleSubmit(e: Event) {
-    e.preventDefault();
-    this.error.set('');
-
-    if (!this.email() || !this.password()) { this.error.set('Please fill in all fields.'); return; }
-    if (this.tab() === 'register' && (!this.firstName() || !this.lastName())) {
-      this.error.set('Please enter your first and last name.'); return;
-    }
-
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] ?? '/dashboard';
-    this.loading.set(true);
-
-    const call$ = this.tab() === 'login'
-      ? this.authService.login(this.email(), this.password(), returnUrl)
-      : this.authService.register(this.firstName(), this.middleName(), this.lastName(), this.email(), this.password(), returnUrl);
-
-    call$.subscribe({
-      error: (err) => {
-        this.error.set(err?.error?.message ?? 'Something went wrong. Please try again.');
-        this.loading.set(false);
-      },
-    });
-  }
-
-  handleGitHub(){
-    
-  }
-  
 }

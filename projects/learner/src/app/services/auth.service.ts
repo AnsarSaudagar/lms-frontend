@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AppDataService, User } from './app-data.service';
+import { Login, Register } from '../models/auth.model';
 
 interface AuthResponse {
   accessToken: string;
@@ -29,13 +30,13 @@ export class AuthService {
     return !!token && !!expiresAt && Date.now() < expiresAt;
   });
 
-  login(email: string, password: string, returnUrl = '/dashboard') {
-    return this.http.post<AuthResponse>(this.API_URL + '/login', { email, password }).pipe(
+  login(payload: Login, returnUrl = '/dashboard') {
+    return this.http.post<AuthResponse>(this.API_URL + '/login', payload).pipe(
       tap(res => {
         const jwtUser = this.decodeUserFromToken(res.accessToken);
         this.handleAuth(res.accessToken, {
-          name: res.user?.name ?? jwtUser.name ?? email.split('@')[0],
-          email: res.user?.email ?? jwtUser.email ?? email,
+          name: res.user?.name ?? jwtUser.name ?? payload.email.split('@')[0],
+          email: res.user?.email ?? jwtUser.email ?? payload.email,
           avatar: res.user?.avatar,
         });
         this.router.navigateByUrl(returnUrl);
@@ -43,17 +44,9 @@ export class AuthService {
     );
   }
 
-  register(firstName: string, middleName: string, lastName: string, email: string, password: string, returnUrl = '/dashboard') {
-    const body = { firstName, middleName: middleName || undefined, lastName, email, password };
-    return this.http.post<AuthResponse>(this.API_URL + '/register', body).pipe(
+  register(payload : Register, returnUrl = '/auth/login') {
+    return this.http.post<AuthResponse>(this.API_URL + '/register', payload).pipe(
       tap(res => {
-        const jwtUser = this.decodeUserFromToken(res.accessToken);
-        const fullName = [firstName, middleName, lastName].filter(Boolean).join(' ');
-        this.handleAuth(res.accessToken, {
-          name: res.user?.name ?? jwtUser.name ?? fullName,
-          email: res.user?.email ?? jwtUser.email ?? email,
-          avatar: res.user?.avatar,
-        });
         this.router.navigateByUrl(returnUrl);
       })
     );
