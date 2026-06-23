@@ -21,14 +21,16 @@ export class AuthComponent implements OnInit {
     'Syntax-highlighted code steps'
   ];
 
-  tab = signal<'login' | 'register'>('login');
+  tab = signal<'login' | 'register' | null>('login');
   loading = signal(false);
 
   ngOnInit(): void {
     if (this.router.url.includes('/register')) {
       this.tab.set('register');
-    } else {
+    } else if(this.router.url.includes('/login')) {
       this.tab.set('login');
+    } else {
+      this.tab.set(null);
     }
   }
 

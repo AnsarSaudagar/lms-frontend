@@ -16,6 +16,10 @@ export const authRoutes: Routes = [
         loadComponent: () => import('../pages/auth/login/login').then(m => m.Login)
       },
       {
+        path: 'verify-otp',
+        loadComponent: () => import('../pages/auth/verify-register-otp/verify-register-otp').then(m => m.VerifyRegisterOtp)
+      },
+      {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
