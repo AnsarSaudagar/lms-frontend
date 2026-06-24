@@ -5,6 +5,7 @@ import { catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AppDataService, User } from './app-data.service';
 import { Login, Register } from '../models/auth.model';
+import { Common } from 'shared';
 
 interface AuthResponse {
   accessToken: string;
@@ -19,6 +20,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private appData = inject(AppDataService);
+  private commonService = inject(Common)
 
   private tokenSignal = signal<string | null>(null);
   private expiresAtSignal = signal<number | null>(null);
@@ -46,11 +48,12 @@ export class AuthService {
     );
   }
 
-  register(payload: Register, returnUrl = '/auth/login') {
+  register(payload: Register, returnUrl = '/auth/verify-otp') {
     return this.http.post<AuthResponse>(this.API_URL + '/register', payload).pipe(
       tap(res => {
+        // this.successMessage.set("Otp Sent on " + payload.email);
+        this.commonService.setLocalStore('otp_verification_email', payload.email);
         this.router.navigateByUrl(returnUrl);
-        this.successMessage.set("Successfully Registered")
       }),
       catchError((errRes) => {
         console.error('Registration failed', errRes);
@@ -58,6 +61,20 @@ export class AuthService {
         return throwError(() => errRes);
       })
     );
+  }
+
+  verifyOtp(otp: string, email: string, returnUrl='/auth/login'){
+    return this.http.post(this.API_URL + '/verify-otp', {otp, email}).pipe(
+      tap(res => {
+        this.successMessage.set("Successfully Registered");
+        this.router.navigateByUrl(returnUrl);
+      }),
+      catchError((errRes) => {
+        console.error('Registration failed', errRes);
+        this.errorMessage.set(errRes.error.error.message);
+        return throwError(() => errRes);
+      })
+    )
   }
 
   autoLogin() {
@@ -82,6 +99,7 @@ export class AuthService {
     this.appData.saveUser(null);
     this.router.navigate(['/auth']);
   }
+
 
   getToken(): string | null {
     return this.tokenSignal();

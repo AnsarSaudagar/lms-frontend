@@ -1,24 +1,52 @@
-<form class="flex flex-col gap-4 mb-5">
+<form class="flex flex-col gap-4 mb-5" [formGroup]="form" (ngSubmit)="submit()">
   <label class="flex flex-col gap-[6px]">
     <span class="text-[13px] text-[var(--text-label)] font-medium">Email</span>
     <input
-      class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      class="px-[14px] py-[11px] rounded-lg border bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      [class.border-[var(--error-border)]]="form.get('email')?.invalid && form.get('email')?.touched"
+      [class.border-[var(--border-input)]]="!(form.get('email')?.invalid && form.get('email')?.touched)"
       type="email"
+      name="email"
+      autocomplete="email"
       placeholder="you@example.com"
+      formControlName="email"
     />
+    @if (form.get('email')?.invalid && form.get('email')?.touched) {
+      <span class="text-[11px] text-[var(--error-text)]">Enter a valid email</span>
+    }
   </label>
+
   <label class="flex flex-col gap-[6px]">
     <span class="text-[13px] text-[var(--text-label)] font-medium">Password</span>
     <input
-      class="px-[14px] py-[11px] rounded-lg border border-[var(--border-input)] bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      class="px-[14px] py-[11px] rounded-lg border bg-[var(--surface-terminal)] text-[var(--text)] text-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--accent)] focus:shadow-[0_0_0_3px_var(--accent-12)]"
+      [class.border-[var(--error-border)]]="form.get('password')?.invalid && form.get('password')?.touched"
+      [class.border-[var(--border-input)]]="!(form.get('password')?.invalid && form.get('password')?.touched)"
       type="password"
+      name="password"
+      autocomplete="current-password"
       placeholder="••••••••"
+      formControlName="password"
     />
+    @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <span class="text-[11px] text-[var(--error-text)]">Password is required</span>
+    }
   </label>
+
   <button
     type="submit"
-    class="py-3 rounded-lg border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-sm font-semibold cursor-pointer transition-[filter] duration-150 hover:brightness-[1.08] disabled:cursor-not-allowed"
+    class="py-3 rounded-lg border-none bg-[var(--accent)] text-[oklch(0.12_0.015_255)] text-sm font-semibold cursor-pointer transition-[filter] duration-150 hover:brightness-[1.08] disabled:opacity-50 disabled:cursor-not-allowed"
+    [disabled]="loading()"
   >
-    Create Account
+    @if (loading()) {
+      <span class="flex items-center justify-center gap-2">
+        <svg class="animate-spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56" stroke-linecap="round"/>
+        </svg>
+        Signing in…
+      </span>
+    } @else {
+      Sign In
+    }
   </button>
 </form>

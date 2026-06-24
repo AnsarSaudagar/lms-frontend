@@ -1,6 +1,6 @@
-<div class="flex h-screen bg-[var(--bg-secondary)]">
+<div class="flex h-screen overflow-hidden bg-[var(--bg-secondary)]">
   <!-- Left panel -->
-  <div class="flex-1 flex flex-col p-12 bg-[var(--bg)] border-r border-[var(--border)]">
+  <div class="flex-1 flex flex-col p-12 bg-[var(--bg)] border-r border-[var(--border)] overflow-hidden">
     <div class="flex items-center gap-[10px] mb-auto">
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
         <rect width="32" height="32" rx="8" fill="var(--accent)" />
@@ -33,7 +33,7 @@
   </div>
 
   <!-- Right panel -->
-  <div class="w-[480px] flex items-center justify-center p-10">
+  <div class="w-[480px] flex items-center justify-center p-10 overflow-y-auto">
     <div class="w-full max-w-[380px]">
       <!-- Tabs -->
       @if (tab()) {

@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +9,22 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './login.scss',
 })
 export class Login {
-  fb = inject(FormBuilder);
+  private fb = inject(FormBuilder);
+  authService = inject(AuthService);
 
-  signupForm : FormGroup = this.fb.group({
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required]]
+  loading = signal(false);
+
+  form: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   });
+
+  submit() {
+    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    this.loading.set(true);
+    this.authService.login(this.form.getRawValue()).subscribe({
+      error: () => this.loading.set(false),
+      complete: () => this.loading.set(false),
+    });
+  }
 }
