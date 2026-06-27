@@ -82,7 +82,9 @@ export class VerifyRegisterOtp implements OnInit, OnDestroy {
     if (this.otp.join('').length < 6) return;
     this.loading.set(true);
 
-    this.authService.verifyOtp(this.otp.join(''), this.email()).subscribe();
+    this.authService.verifyOtp(this.otp.join(''), this.email()).subscribe({
+      error: () => { this.loading.set(false); this.otp = ['', '', '', '', '', ''] }
+    });
 
   }
 

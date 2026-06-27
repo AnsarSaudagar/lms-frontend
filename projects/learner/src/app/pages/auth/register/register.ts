@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 
@@ -12,6 +12,7 @@ export class Register {
   fb = inject(FormBuilder);
   error: any = input();
   authService = inject(AuthService);
+  loading = signal(false);
 
   signupForm: FormGroup = this.fb.group({
     firstName: ['', [Validators.required]],
@@ -23,8 +24,8 @@ export class Register {
 
   handleSubmit(): void {
 
-    // this.error.set('');
-    console.log(this.signupForm);
+
+    this.loading.set(true);
     
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
@@ -35,9 +36,8 @@ export class Register {
     this.authService
       .register({...this.signupForm.value})
       .subscribe({
-        error: (err) => {
-          // this.error.set(err?.error?.message ?? 'Something went wrong. Please try again.');
-        },
+        error: () => this.loading.set(false),
+        complete: () => this.loading.set(false),
       });
   }
 }
