@@ -68,8 +68,8 @@ export class AuthService {
     );
   }
 
-  verifyOtp(otp: string, email: string, returnUrl='/auth/login'){
-    return this.http.post(this.API_URL + '/verify-otp', {otp, email}).pipe(
+  verifyOtp(otp: string, email: string, returnUrl='/auth/login', key: 'otp' | 'reset-otp' = 'otp'){
+    return this.http.post(this.API_URL + '/verify-otp', { key, otp, email }).pipe(
       tap(res => {
         this.successMessage.set("Successfully Registered");
         this.router.navigateByUrl(returnUrl);
@@ -80,6 +80,33 @@ export class AuthService {
         return throwError(() => errRes);
       })
     )
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(this.API_URL + '/forgot-password', { email }).pipe(
+      tap(() => {
+        this.commonService.setLocalStore('forgot_password_email', email);
+        this.router.navigate(['/auth/verify-otp'], { queryParams: { mode: 'forgot' } });
+      }),
+      catchError((errRes) => {
+        this.errorMessage.set(errRes.error?.error?.message ?? 'Something went wrong.');
+        return throwError(() => errRes);
+      })
+    );
+  }
+
+  resetPassword(email: string, newPassword: string){
+    return this.http.post(this.API_URL + '/reset-password', {email, newPassword}).pipe(
+      tap(res => {
+        this.successMessage.set("Successfully Registered");
+        this.router.navigateByUrl('/auth/login');
+      }),
+      catchError((errRes) => {
+        console.error('Registration failed', errRes);
+        this.errorMessage.set(errRes.error.error.message);
+        return throwError(() => errRes);
+      })
+    );
   }
 
   autoLogin() {

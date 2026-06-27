@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, OnDestroy, OnInit, QueryList, signal, ViewChildren } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Common } from 'shared';
 import { AuthService } from '../../../services/auth.service';
 
@@ -13,9 +13,9 @@ export class VerifyRegisterOtp implements OnInit, OnDestroy {
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private commonService = inject(Common);
   private authService = inject(AuthService);
-  
 
   readonly otpIndices = [0, 1, 2, 3, 4, 5];
   otp: string[] = ['', '', '', '', '', ''];
@@ -23,12 +23,18 @@ export class VerifyRegisterOtp implements OnInit, OnDestroy {
   email = signal('');
   loading = signal(false);
   countdown = signal(30);
+  mode = signal<'forgot' | 'register'>('register');
 
   private countdownTimer: any;
 
   ngOnInit() {
-    const saved = this.commonService.getLocalStore('otp_verification_email');
+    const queryMode = this.route.snapshot.queryParamMap.get('mode');
+    this.mode.set(queryMode === 'forgot' ? 'forgot' : 'register');
+
+    const storageKey = this.mode() === 'forgot' ? 'forgot_password_email' : 'otp_verification_email';
+    const saved = this.commonService.getLocalStore(storageKey);
     if (saved) this.email.set(saved);
+
     this.startCountdown();
   }
 
@@ -81,11 +87,16 @@ export class VerifyRegisterOtp implements OnInit, OnDestroy {
   verify() {
     if (this.otp.join('').length < 6) return;
     this.loading.set(true);
-
-    this.authService.verifyOtp(this.otp.join(''), this.email()).subscribe({
-      error: () => { this.loading.set(false); this.otp = ['', '', '', '', '', ''] }
+    const returnUrl = this.mode() === 'forgot' ? '/auth/reset-password' : '/auth/login';
+    const key = this.mode() === 'forgot' ? 'reset-otp' : 'otp';
+    this.authService.verifyOtp(this.otp.join(''), this.email(), returnUrl, key).subscribe({
+      error: () => {
+        this.loading.set(false);
+        this.otp = ['', '', '', '', '', ''];
+        this.otpInputs.toArray().forEach(i => i.nativeElement.value = '');
+        this.otpInputs.first?.nativeElement.focus();
+      },
     });
-
   }
 
   resend() {
@@ -94,7 +105,8 @@ export class VerifyRegisterOtp implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/auth/register']);
+    const route = this.mode() === 'forgot' ? '/auth/forgot-password' : '/auth/register';
+    this.router.navigate([route]);
   }
 
   private startCountdown() {

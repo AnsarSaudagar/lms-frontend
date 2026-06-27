@@ -15,7 +15,7 @@
     Check your email
   </h2>
   <p class="text-[13px] text-[var(--text-section)] leading-[1.6] mb-6">
-    We sent a 6-digit code to<br />
+    {{ mode() === 'forgot' ? 'We sent a password reset code to' : 'We sent a 6-digit code to' }}<br />
     <span class="text-[var(--text-primary)] font-semibold">{{ email() }}</span>
   </p>
 
@@ -74,6 +74,6 @@
     class="mt-4 border-none bg-transparent text-[var(--text-section)] text-[13px] cursor-pointer p-0 hover:text-[var(--text)] transition-colors duration-150"
     (click)="goBack()"
   >
-    ← Back to sign up
+    {{ mode() === 'forgot' ? '← Back to forgot password' : '← Back to sign up' }}
   </button>
 </div>
