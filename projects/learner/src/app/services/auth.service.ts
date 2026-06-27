@@ -44,6 +44,11 @@ export class AuthService {
           avatar: res.user?.avatar,
         });
         this.router.navigateByUrl(returnUrl);
+      }),
+      catchError((errRes) => {
+        console.error('Registration failed', errRes);
+        this.errorMessage.set(errRes.error.error.message);
+        return throwError(() => errRes);
       })
     );
   }
