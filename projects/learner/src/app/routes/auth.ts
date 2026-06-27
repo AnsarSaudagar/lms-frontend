@@ -20,6 +20,10 @@ export const authRoutes: Routes = [
         loadComponent: () => import('../pages/auth/verify-register-otp/verify-register-otp').then(m => m.VerifyRegisterOtp)
       },
       {
+        path: 'forgot-password',
+        loadComponent: () => import('../pages/auth/forgot-password/forgot-password').then(m => m.ForgotPassword)
+      },
+      {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'

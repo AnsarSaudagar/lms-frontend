@@ -1,7 +1,9 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,9 +12,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   authService = inject(AuthService);
   private router = inject(Router);
+  private routerSub!: Subscription;
 
   features = [
     'AI-generated project guides',
@@ -25,9 +28,21 @@ export class AuthComponent implements OnInit {
   loading = signal(false);
 
   ngOnInit(): void {
-    if (this.router.url.includes('/register')) {
+    this.syncTab(this.router.url);
+
+    this.routerSub = this.router.events.pipe(
+      filter(e => e instanceof NavigationEnd)
+    ).subscribe((e: NavigationEnd) => this.syncTab(e.urlAfterRedirects));
+  }
+
+  ngOnDestroy(): void {
+    this.routerSub?.unsubscribe();
+  }
+
+  private syncTab(url: string) {
+    if (url.includes('/register')) {
       this.tab.set('register');
-    } else if(this.router.url.includes('/login')) {
+    } else if (url.includes('/login')) {
       this.tab.set('login');
     } else {
       this.tab.set(null);
