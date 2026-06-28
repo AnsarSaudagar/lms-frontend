@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppDataService, Project, User, ProjectProgress } from '../../services/app-data.service';
 import { ProjectServie } from '../../services/project.service';
+import { Header } from './header/header';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Header],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
