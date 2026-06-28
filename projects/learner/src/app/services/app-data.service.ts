@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import type { User } from './auth.service';
+export type { User } from './auth.service';
 import { ANGULAR_TODO_DATA } from '../data/todo-app-angular.data';
 import { BASIC_TODO_DATA } from '../data/todo-app-basic.data';
 
@@ -59,13 +61,6 @@ export interface ProjectProgress {
   total: number;
 }
 
-export interface User {
-  name: string;
-  email: string;
-  avatar: string | null;
-  githubConnected: boolean;
-  isPro?: boolean;
-}
 
 @Injectable({ providedIn: 'root' })
 export class AppDataService {

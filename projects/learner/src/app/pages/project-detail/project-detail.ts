@@ -2,7 +2,8 @@ import { Component, signal, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppDataService, Project, ProjectStep, User } from '../../services/app-data.service';
+import { AppDataService, Project, ProjectStep } from '../../services/app-data.service';
+import { AuthService } from '../../services/auth.service';
 import { ProjectServie } from '../../services/project.service';
 
 @Component({
@@ -13,13 +14,14 @@ import { ProjectServie } from '../../services/project.service';
 })
 export class ProjectDetailComponent implements OnInit {
   private appData = inject(AppDataService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   protected router = inject(Router);
   private projectService = inject(ProjectServie);
 
   project = signal<Project | null>(null);
-  user = signal<User | null>(null);
+  user = this.authService.currentUser;
   steps = signal<ProjectStep[] | null>(null);
   generating = signal(false);
   activeStep = signal(0);
@@ -35,7 +37,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user.set(this.appData.loadUser());
     const id = this.route.snapshot.params['id'];
 
 

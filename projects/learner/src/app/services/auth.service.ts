@@ -3,9 +3,16 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { AppDataService, User } from './app-data.service';
 import { Login, Register } from '../models/auth.model';
 import { Common } from 'shared';
+
+export interface User {
+  name: string;
+  email: string;
+  avatar: string | null;
+  githubConnected: boolean;
+  isPro?: boolean;
+}
 
 interface AuthResponse {
   accessToken: string;
@@ -15,18 +22,21 @@ interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'learner_token';
+  private readonly USER_KEY = 'learner_user';
   private readonly API_URL = environment.API_URL + '/auth';
 
   private http = inject(HttpClient);
   private router = inject(Router);
-  private appData = inject(AppDataService);
-  private commonService = inject(Common)
+  private commonService = inject(Common);
 
   private tokenSignal = signal<string | null>(null);
   private expiresAtSignal = signal<number | null>(null);
+  private userSignal = signal<User | null>(null);
   private logoutTimer: any;
-  errorMessage : any = signal(null);
-  successMessage : any = signal(null);
+  errorMessage: any = signal(null);
+  successMessage: any = signal(null);
+
+  readonly currentUser = this.userSignal.asReadonly();
 
   readonly isLoggedIn = computed(() => {
     const token = this.tokenSignal();
@@ -118,6 +128,7 @@ export class AuthService {
       this.tokenSignal.set(token);
       this.expiresAtSignal.set(expiresAt);
       this.startLogoutTimer(expiresAt);
+      this.userSignal.set(this.loadUserLocal());
     } catch {
       this.logout();
     }
@@ -127,8 +138,9 @@ export class AuthService {
     this.clearTimer();
     this.tokenSignal.set(null);
     this.expiresAtSignal.set(null);
+    this.userSignal.set(null);
     localStorage.removeItem(this.TOKEN_KEY);
-    this.appData.saveUser(null);
+    localStorage.removeItem(this.USER_KEY);
     this.router.navigate(['/auth']);
   }
 
@@ -150,7 +162,8 @@ export class AuthService {
       avatar: userInfo.avatar ?? null,
       githubConnected: false,
     };
-    this.appData.saveUser(user);
+    this.saveUserLocal(user);
+    
   }
 
   private extractExpiration(token: string): number {
@@ -175,5 +188,22 @@ export class AuthService {
 
   private clearTimer() {
     if (this.logoutTimer) { clearTimeout(this.logoutTimer); this.logoutTimer = null; }
+  }
+
+  updateUser(partial: Partial<User>) {
+    const updated = { ...this.userSignal()!, ...partial };
+    this.saveUserLocal(updated);
+  }
+
+  private saveUserLocal(user: User | null) {
+    this.userSignal.set(user);
+    this.commonService.setLocalStore(this.USER_KEY, JSON.stringify(user));
+  }
+
+  private loadUserLocal(): User | null {
+    try {
+      const raw = this.commonService.getLocalStore(this.USER_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
   }
 }

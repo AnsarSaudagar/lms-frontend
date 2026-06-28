@@ -2,7 +2,8 @@ import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppDataService, Project, User, ProjectProgress } from '../../services/app-data.service';
+import { AppDataService, Project, ProjectProgress } from '../../services/app-data.service';
+import { AuthService } from '../../services/auth.service';
 import { ProjectServie } from '../../services/project.service';
 import { Header } from './header/header';
 
@@ -14,13 +15,14 @@ import { Header } from './header/header';
 })
 export class DashboardComponent implements OnInit {
   private appData = inject(AppDataService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private projectService = inject(ProjectServie);
 
   categories = this.appData.categories;
   allProjects = signal<Project[]>([]);
 
-  user : any = signal<User | null>(null);
+  user = this.authService.currentUser;
   progress = signal<Record<string, ProjectProgress>>({});
   activeCategory = signal('all');
   search = signal('');
@@ -44,9 +46,7 @@ export class DashboardComponent implements OnInit {
   );
 
   ngOnInit() {
-    const u = this.appData.loadUser();
-    if (!u) { this.router.navigate(['/auth']); return; }
-    this.user.set(u);
+    if (!this.user()) { this.router.navigate(['/auth']); return; }
     this.progress.set(this.appData.loadProgress());
     this.projectService.getAllProjects().subscribe({
       next: (projects: Project[]) => {
@@ -67,18 +67,14 @@ export class DashboardComponent implements OnInit {
   }
 
   handleUpgrade() {
-    const u = this.user()!;
-    const upgraded = { ...u, isPro: true };
-    this.appData.saveUser(upgraded);
-    this.user.set(upgraded);
+    this.authService.updateUser({ isPro: true });
     const target = this.upgradeTarget()!;
     this.upgradeTarget.set(null);
     this.router.navigate(['/project', target.id]);
   }
 
   logout() {
-    this.appData.saveUser(null);
-    this.router.navigate(['/']);
+    this.authService.logout();
   }
 
   proFeatures = ['All 40+ projects unlocked', 'AI-generated guides for any topic', 'Priority support', 'Certificate of completion'];
