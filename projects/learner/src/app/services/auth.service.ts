@@ -46,10 +46,11 @@ export class AuthService {
 
   login(payload: Login, returnUrl = '/learner') {
     return this.http.post<AuthResponse>(this.API_URL + '/login', payload).pipe(
-      tap(res => {
+      tap((res : any) => {
         const jwtUser = this.decodeUserFromToken(res.accessToken);
+        
         this.handleAuth(res.accessToken, {
-          name: res.user?.name ?? jwtUser.name ?? payload.email.split('@')[0],
+          name: res.firstName ,
           email: res.user?.email ?? jwtUser.email ?? payload.email,
           avatar: res.user?.avatar,
         });

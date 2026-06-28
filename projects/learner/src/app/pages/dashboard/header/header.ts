@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.scss',
 })
 export class Header {
-  userName = signal('Alex');
+
+  private authService = inject(AuthService);
+
+  userName = computed(() => this.authService.currentUser()?.name ?? '');
   completed = signal(1);
   inProgress = signal(2);
   stepsDone = signal(13);
@@ -17,7 +21,7 @@ export class Header {
     name: 'Web Scraper CLI',
     currentStep: 3,
     totalSteps: 7,
-    progress: 40, // percent
+    progress: 40,
   });
 
   greeting = signal(this.getGreeting());
