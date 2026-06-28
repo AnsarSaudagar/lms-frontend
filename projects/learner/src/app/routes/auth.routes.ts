@@ -4,7 +4,7 @@ import { authLayoutResolver } from '../core/resolvers/layout.resolver';
 export const authRoutes: Routes = [
   {
     path: '',
-    resolve: { layout: authLayoutResolver },
+    // resolve: { layout: authLayoutResolver },
     loadComponent: () => import('../pages/auth/auth').then(m => m.AuthComponent),
     children:[
       {

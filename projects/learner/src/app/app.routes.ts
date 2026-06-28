@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { layoutResolver } from './core/resolvers/layout.resolver';
 
 export const routes: Routes = [
   {
@@ -8,16 +9,13 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./routes/auth').then(m => m.authRoutes),
+    loadChildren: () => import('./routes/auth.routes').then(m => m.authRoutes),
   },
   {
-    path: 'dashboard',
-    loadComponent: () => import('./pages/dashboard/dashboard').then(m => m.DashboardComponent),
-    canMatch: [authGuard],
-  },
-  {
-    path: 'project/:id',
-    loadComponent: () => import('./pages/project-detail/project-detail').then(m => m.ProjectDetailComponent),
+    path: 'learner',
+    resolve: { layout: layoutResolver },
+    loadComponent: () => import('./layout/main/main').then(m => m.MainLayout),
+    loadChildren: () => import('./routes/main.routes').then(m => m.routes),
     canMatch: [authGuard],
   },
   { path: '**', redirectTo: '' },

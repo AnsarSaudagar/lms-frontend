@@ -34,7 +34,7 @@ export class AuthService {
     return !!token && !!expiresAt && Date.now() < expiresAt;
   });
 
-  login(payload: Login, returnUrl = '/dashboard') {
+  login(payload: Login, returnUrl = '/learner') {
     return this.http.post<AuthResponse>(this.API_URL + '/login', payload).pipe(
       tap(res => {
         const jwtUser = this.decodeUserFromToken(res.accessToken);
