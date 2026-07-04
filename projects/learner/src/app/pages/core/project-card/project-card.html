@@ -1,0 +1,184 @@
+<div
+  class="flex-shrink-0 w-[300px] bg-surface border border-border rounded-2xl overflow-hidden cursor-pointer transition-colors duration-150 hover:border-border-card-hover"
+>
+  <!-- Thumbnail -->
+  <div
+    class="relative h-[140px] flex items-center justify-center"
+    [style.background]="project?.color + '1f'"
+  >
+    @if (project?.pro) {
+      <span
+        class="absolute top-3 left-3 text-[10px] font-bold text-black bg-gold px-2 py-[3px] rounded-md uppercase tracking-wide"
+        >Pro</span
+      >
+    }
+    <button
+      class="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center border-0 cursor-pointer text-white/70 hover:text-white"
+      (click)="$event.stopPropagation()"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 21s-7.5-4.6-10-9.1C.5 8.5 2 5 5.5 5c2 0 3.5 1.2 4.5 2.6C11 6.2 12.5 5 14.5 5 18 5 19.5 8.5 22 11.9 19.5 16.4 12 21 12 21z"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </button>
+    <svg
+      viewBox="0 0 320 180"
+      preserveAspectRatio="xMidYMid slice"
+      data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:9865:164:5"
+      style="width: 100%; height: 100%; display: block"
+    >
+      <defs
+        data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:9989:165:7"
+      >
+        <linearGradient
+          id="cv-p1"
+          x1="0"
+          y1="0"
+          x2="1"
+          y2="1"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:10004:166:9"
+        >
+          <stop
+            offset="0"
+            stop-color="#0a0f16"
+            data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:10083:167:11"
+          ></stop>
+          <stop
+            offset="1"
+            stop-color="#00a8eb1f"
+            data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:10132:168:11"
+          ></stop>
+        </linearGradient>
+      </defs>
+      <rect
+        width="320"
+        height="180"
+        fill="url(#cv-p1)"
+        data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:10216:171:7"
+      ></rect>
+      <g
+        data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4486:58:5"
+      >
+        <rect
+          x="44"
+          y="34"
+          width="232"
+          height="118"
+          rx="9"
+          fill="#0b111a"
+          stroke="#00a8eb33"
+          stroke-width="1.5"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4496:59:7"
+        ></rect>
+        <rect
+          x="44"
+          y="34"
+          width="232"
+          height="26"
+          rx="9"
+          fill="#131c28"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4605:60:7"
+        ></rect>
+        <rect
+          x="44"
+          y="50"
+          width="232"
+          height="10"
+          fill="#131c28"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4679:61:7"
+        ></rect>
+        <circle
+          cx="58"
+          cy="47"
+          r="3.2"
+          fill="#ef6855"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4746:62:7"
+        ></circle>
+        <circle
+          cx="69"
+          cy="47"
+          r="3.2"
+          fill="#db9500"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4794:62:55"
+        ></circle>
+        <circle
+          cx="80"
+          cy="47"
+          r="3.2"
+          fill="#5ec965"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4842:62:103"
+        ></circle>
+        <rect
+          x="98"
+          y="42"
+          width="120"
+          height="10"
+          rx="5"
+          fill="#00a8eb2e"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4897:63:7"
+        ></rect>
+        <rect
+          x="60"
+          y="76"
+          width="92"
+          height="60"
+          rx="7"
+          fill="#00a8eb33"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:4970:64:7"
+        ></rect>
+        <circle
+          cx="106"
+          cy="100"
+          r="13"
+          fill="#00a8eb66"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:5042:65:7"
+        ></circle>
+        <rect
+          x="166"
+          y="78"
+          width="98"
+          height="9"
+          rx="4.5"
+          fill="#1e2935"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:5097:66:7"
+        ></rect>
+        <rect
+          x="166"
+          y="94"
+          width="98"
+          height="9"
+          rx="4.5"
+          fill="#1e2935"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:5172:67:7"
+        ></rect>
+        <rect
+          x="166"
+          y="110"
+          width="62"
+          height="9"
+          rx="4.5"
+          fill="#00a8eb77"
+          data-om-id="jsx:/https:/8736d7da-6fa5-4c23-9133-05ec35edc108.claudeusercontent.com/v1/design/projects/8736d7da-6fa5-4c23-9133-05ec35edc108/serve/components/Dashboard.jsx:5247:68:7"
+        ></rect>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Body -->
+  <div class="p-4">
+    <h3 class="text-base font-bold text-text mb-1 truncate">{{ project?.title }}</h3>
+    <!-- <p class="text-xs text-text-desc mb-3 leading-relaxed line-clamp-2">{{ project.description }}</p> -->
+    <div class="mb-3"></div>
+    <div class="flex items-center gap-[6px] text-xs text-text-section mb-3">
+      <span>{{ project?.estimatedTime }}</span>
+      <span>&bull;</span>
+      <span>{{ project?.stepCount }} steps</span>
+      <span>&bull;</span>
+      <span>{{ project?.difficulty }}</span>
+    </div>
+  </div>
+</div>
