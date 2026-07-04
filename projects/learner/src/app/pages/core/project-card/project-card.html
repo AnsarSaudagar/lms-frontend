@@ -206,7 +206,7 @@
             <p class="text-sm text-accent font-bold">Free</p>
         } @else {
             <div class="flex items-center justify-between">
-                <p class="text-sm font-bold text-white">{{'149' | currency}}</p>
+                <p class="text-sm font-bold text-white">{{project?.price | currency:'INR'}}</p>
                 <button  class="bg-accent text-secondary text-xs rounded-md p-2 font-bold">Add to cart</button>
             </div>
         }

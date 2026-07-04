@@ -24,7 +24,7 @@
         @if (!project.isPaid) {
           <span class="text-3xl font-extrabold text-accent">Free</span>
         } @else {
-          <span class="text-3xl font-extrabold text-text">{{ project.price | currency }}</span>
+          <span class="text-3xl font-extrabold text-text">{{ project.price | currency:'INR' }}</span>
           @if (project.originalPrice) {
             <span class="text-base text-text-section line-through">{{ project.originalPrice | currency }}</span>
           }
