@@ -127,8 +127,8 @@ export class ProjectServie {
     );
   }
 
-  getProject(id: string) {
-    return this.http.get<ApiProject>(`${this.API_URL}/${id}`).pipe(
+  getProject(slug: string) {
+    return this.http.get<ApiProject>(`${this.API_URL}/${slug}`).pipe(
       map(p => ({
         project: mapApiProject(p),
         steps: (p.steps ?? []).map((s): ProjectStep => ({

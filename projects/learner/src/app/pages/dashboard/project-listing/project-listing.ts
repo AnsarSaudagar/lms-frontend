@@ -35,4 +35,8 @@ export class ProjectListing {
   scrollProjects(dir: number) {
     this.projectsRow?.nativeElement.scrollBy({ left: dir * 320, behavior: 'smooth' });
   }
+
+  goToProject(p: Project) {
+    this.router.navigate(['/learner/project', p.slug ?? p.id]);
+  }
 }
