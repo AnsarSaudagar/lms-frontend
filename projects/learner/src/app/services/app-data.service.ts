@@ -16,6 +16,8 @@ export interface Project {
   estimatedTime: string;
   title: string;
   description: string;
+  isPaid: boolean;
+  price?:number;
   tags: string[];
   stepCount: number;
   color: string;
@@ -79,99 +81,7 @@ export class AppDataService {
     { id: 'fullstack', label: 'Full-Stack' },
   ];
 
-  readonly projects: Project[] = [
-    {
-      id: 'p1', category: 'web', difficulty: 'Beginner', estimatedTime: '2h',
-      title: 'Build a Portfolio Site',
-      description: 'Create a personal portfolio with responsive layout, smooth scrolling, and a contact form.',
-      tags: ['HTML', 'CSS', 'JavaScript'], stepCount: 8,
-      color: 'oklch(0.68 0.17 230)',
-    },
-    {
-      id: 'p2', category: 'react', difficulty: 'Intermediate', estimatedTime: '4h',
-      title: 'Task Manager App',
-      description: 'Build a full-featured task manager with drag-and-drop, local persistence, and filters.',
-      tags: ['React', 'Context API', 'CSS Modules'], stepCount: 10,
-      color: 'oklch(0.65 0.17 190)', pro: true,
-    },
-    {
-      id: 'p3', category: 'python', difficulty: 'Beginner', estimatedTime: '3h',
-      title: 'Web Scraper CLI',
-      description: 'Build a command-line web scraper that extracts structured data and exports to CSV.',
-      tags: ['Python', 'BeautifulSoup', 'Click'], stepCount: 7,
-      color: 'oklch(0.72 0.17 80)',
-    },
-    {
-      id: 'p4', category: 'backend', difficulty: 'Intermediate', estimatedTime: '5h',
-      title: 'REST API with Auth',
-      description: 'Design and build a RESTful API with JWT authentication, rate limiting, and PostgreSQL.',
-      tags: ['Node.js', 'Express', 'PostgreSQL'], stepCount: 12,
-      color: 'oklch(0.75 0.17 145)', pro: true,
-    },
-    {
-      id: 'p5', category: 'fullstack', difficulty: 'Advanced', estimatedTime: '8h',
-      title: 'Real-Time Chat App',
-      description: 'Full-stack chat application with WebSockets, rooms, presence indicators, and message history.',
-      tags: ['React', 'Node.js', 'Socket.io'], stepCount: 14,
-      color: 'oklch(0.65 0.17 310)', pro: true,
-    },
-    {
-      id: 'p6', category: 'python', difficulty: 'Intermediate', estimatedTime: '4h',
-      title: 'ML Image Classifier',
-      description: 'Train a CNN to classify images using PyTorch. Deploy with a simple Flask inference API.',
-      tags: ['Python', 'PyTorch', 'Flask'], stepCount: 9,
-      color: 'oklch(0.68 0.17 30)', pro: true,
-    },
-    {
-      id: 'p7', category: 'react', difficulty: 'Advanced', estimatedTime: '6h',
-      title: 'E-Commerce Storefront',
-      description: 'Build a complete storefront with cart, checkout flow, Stripe integration, and order history.',
-      tags: ['React', 'Stripe', 'Redux'], stepCount: 15,
-      color: 'oklch(0.65 0.17 265)', pro: true,
-    },
-    {
-      id: 'p8', category: 'web', difficulty: 'Beginner', estimatedTime: '1.5h',
-      title: 'CSS Animation Gallery',
-      description: 'Master modern CSS animations: keyframes, transitions, scroll-driven animations, and more.',
-      tags: ['HTML', 'CSS', 'Animations'], stepCount: 6,
-      color: 'oklch(0.70 0.17 350)',
-    },
-    {
-      id: 'p9',
-      color: 'oklch(0.65 0.20 15)',
-      // all fields below come directly from the JSON data file
-      slug: ANGULAR_TODO_DATA.project.slug,
-      category: ANGULAR_TODO_DATA.project.category,
-      difficulty: ANGULAR_TODO_DATA.project.difficulty,
-      estimatedTime: `${ANGULAR_TODO_DATA.project.estimatedHours}h`,
-      title: ANGULAR_TODO_DATA.project.title,
-      description: ANGULAR_TODO_DATA.project.description,
-      tags: ANGULAR_TODO_DATA.project.techStack.slice(0, 3),
-      techStack: ANGULAR_TODO_DATA.project.techStack,
-      prerequisites: ANGULAR_TODO_DATA.project.prerequisites,
-      learningOutcomes: ANGULAR_TODO_DATA.project.learningOutcomes,
-      fileStructure: ANGULAR_TODO_DATA.project.fileStructure,
-      dependencies: ANGULAR_TODO_DATA.project.dependencies,
-      stepCount: ANGULAR_TODO_DATA.steps.length,
-    },
-    {
-      id: 'p10',
-      color: 'oklch(0.68 0.17 230)',
-      slug: BASIC_TODO_DATA.project.slug,
-      category: BASIC_TODO_DATA.project.category,
-      difficulty: BASIC_TODO_DATA.project.difficulty,
-      estimatedTime: `${BASIC_TODO_DATA.project.estimatedHours}h`,
-      title: BASIC_TODO_DATA.project.title,
-      description: BASIC_TODO_DATA.project.description,
-      tags: BASIC_TODO_DATA.project.techStack.slice(0, 3),
-      techStack: BASIC_TODO_DATA.project.techStack,
-      prerequisites: BASIC_TODO_DATA.project.prerequisites,
-      learningOutcomes: BASIC_TODO_DATA.project.learningOutcomes,
-      fileStructure: BASIC_TODO_DATA.project.fileStructure,
-      dependencies: BASIC_TODO_DATA.project.dependencies,
-      stepCount: BASIC_TODO_DATA.steps.length,
-    },
-  ];
+  
 
   loadProgress(): Record<string, ProjectProgress> {
     try { return JSON.parse(localStorage.getItem('devpath_progress') || '{}'); }

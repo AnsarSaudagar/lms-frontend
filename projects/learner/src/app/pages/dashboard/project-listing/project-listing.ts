@@ -4,10 +4,11 @@ import { Project } from '../../../services/app-data.service';
 import { Router, RouterModule } from '@angular/router';
 import { ProjectServie } from '../../../services/project.service';
 import { AuthService } from '../../../services/auth.service';
+import { ProjectCard } from '../../core/project-card/project-card';
 
 @Component({
   selector: 'app-project-listing',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProjectCard],
   templateUrl: './project-listing.html',
   styleUrl: './project-listing.scss',
 })

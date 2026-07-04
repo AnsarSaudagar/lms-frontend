@@ -1,7 +1,6 @@
 <div
   class="flex-shrink-0 w-[300px] bg-surface border border-border rounded-2xl overflow-hidden cursor-pointer transition-colors duration-150 hover:border-border-card-hover"
 >
-  <!-- Thumbnail -->
   <div
     class="relative h-[140px] flex items-center justify-center"
     [style.background]="project?.color + '1f'"
@@ -179,6 +178,16 @@
       <span>{{ project?.stepCount }} steps</span>
       <span>&bull;</span>
       <span>{{ project?.difficulty }}</span>
+    </div>
+    <div class="mt-3">
+        @if(!project?.isPaid){
+            <p class="text-sm text-accent font-bold">Free</p>
+        } @else {
+            <div class="flex items-center justify-between">
+                <p class="text-sm font-bold text-white">{{'149' | currency}}</p>
+                <button  class="bg-accent text-secondary text-xs rounded-md p-2 font-bold">Add to cart</button>
+            </div>
+        }
     </div>
   </div>
 </div>
