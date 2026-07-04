@@ -1,4 +1,4 @@
-import { Component, signal, computed, inject, OnInit } from '@angular/core';
+import { Component, signal, computed, inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,10 +6,11 @@ import { AppDataService, Project, ProjectProgress } from '../../services/app-dat
 import { AuthService } from '../../services/auth.service';
 import { ProjectServie } from '../../services/project.service';
 import { Header } from './header/header';
+import { ProjectListing } from './project-listing/project-listing';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule, Header],
+  imports: [CommonModule, FormsModule, Header, ProjectListing],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -17,10 +18,8 @@ export class DashboardComponent implements OnInit {
   private appData = inject(AppDataService);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private projectService = inject(ProjectServie);
 
   categories = this.appData.categories;
-  allProjects = signal<Project[]>([]);
 
   user = this.authService.currentUser;
   progress = signal<Record<string, ProjectProgress>>({});
@@ -28,31 +27,31 @@ export class DashboardComponent implements OnInit {
   search = signal('');
   upgradeTarget = signal<Project | null>(null);
 
-  filtered = computed(() => {
-    const cat = this.activeCategory();
-    const q = this.search().toLowerCase();
-    return this.allProjects().filter(p => {
-      const matchCat = cat === 'all' || p.category === cat;
-      const matchSearch = !q || p.title.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
-      return matchCat && matchSearch;
-    });
-  });
+  // filtered = computed(() => {
+  //   const cat = this.activeCategory();
+  //   const q = this.search().toLowerCase();
+  //   return this.allProjects().filter(p => {
+  //     const matchCat = cat === 'all' || p.category === cat;
+  //     const matchSearch = !q || p.title.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
+  //     return matchCat && matchSearch;
+  //   });
+  // });
 
-  inProgress = computed(() =>
-    this.allProjects().filter(p => {
-      const pr = this.progress()[p.id];
-      return pr && pr.completed.length > 0 && pr.completed.length < pr.total;
-    })
-  );
+  // inProgress = computed(() =>
+  //   this.allProjects().filter(p => {
+  //     const pr = this.progress()[p.id];
+  //     return pr && pr.completed.length > 0 && pr.completed.length < pr.total;
+  //   })
+  // );
 
   ngOnInit() {
-    if (!this.user()) { this.router.navigate(['/auth']); return; }
-    this.progress.set(this.appData.loadProgress());
-    this.projectService.getAllProjects().subscribe({
-      next: (projects: Project[]) => {
-        this.allProjects.set(projects);
-      }
-    })
+    // if (!this.user()) { this.router.navigate(['/auth']); return; }
+    // this.progress.set(this.appData.loadProgress());
+    // this.projectService.getAllProjects().subscribe({
+    //   next: (projects: Project[]) => {
+    //     this.allProjects.set(projects);
+    //   }
+    // })
   }
 
   getProgress(id: string): number {
@@ -60,6 +59,7 @@ export class DashboardComponent implements OnInit {
     if (!p || p.total === 0) return 0;
     return Math.round((p.completed.length / p.total) * 100);
   }
+
 
   handleCardClick(p: Project) {
     // if (p.pro && !this.user()?.isPro) { this.upgradeTarget.set(p); return; }
