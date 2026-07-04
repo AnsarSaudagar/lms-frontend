@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div #projectsRow class="flex gap-5 overflow-x-auto pb-2" style="scrollbar-width:none">
+    <div #projectsRow class="flex items-stretch gap-5 overflow-x-auto pb-2" style="scrollbar-width:none">
       @for (p of allProjects(); track p.id) {
         <app-project-card [project]="p"></app-project-card>
       }
