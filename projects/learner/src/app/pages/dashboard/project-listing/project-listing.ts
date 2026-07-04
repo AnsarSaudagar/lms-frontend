@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
-import { Project } from '../../../services/app-data.service';
+import { Project } from '../../../models/project.model';
 import { Router, RouterModule } from '@angular/router';
 import { ProjectServie } from '../../../services/project.service';
 import { AuthService } from '../../../services/auth.service';

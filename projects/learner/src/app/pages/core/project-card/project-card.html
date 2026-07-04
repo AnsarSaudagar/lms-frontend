@@ -177,6 +177,23 @@
         <span class="text-[11px] font-semibold text-text-tag bg-surface2 border border-border-alt rounded-md px-2 py-[3px]">{{ tag }}</span>
       }
     </div>
+
+    @if (project?.reviewCount) {
+      <div class="flex items-center gap-[6px] mb-3">
+        <span class="text-sm font-bold text-gold">{{ project.rating }}</span>
+        <span class="flex gap-[1px] text-gold text-xs leading-none">
+          @for (s of [1,2,3,4,5]; track s) {
+            <span [class.opacity-25]="s > (project.rating ?? 0)">&#9733;</span>
+          }
+        </span>
+        <span class="text-xs text-text-section">({{ project.reviewCount }})</span>
+      </div>
+    } @else {
+      <div class="mb-3">
+        <span class="text-[11px] font-bold text-gold border border-gold-40 bg-gold-10 rounded-md px-2 py-[3px]">Be the first</span>
+      </div>
+    }
+
     <div class="flex items-center gap-[6px] text-xs text-text-section mb-3">
       <span>{{ project?.estimatedTime }}</span>
       <span>&bull;</span>

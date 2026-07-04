@@ -1,7 +1,9 @@
 import { inject, Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
-import { Project, ProjectStep } from "./app-data.service";
+import { Category, Project, ProjectProgress, ProjectStep } from "../models/project.model";
+import { ANGULAR_TODO_DATA } from '../data/todo-app-angular.data';
+import { BASIC_TODO_DATA } from '../data/todo-app-basic.data';
 import { map } from "rxjs";
 
 interface ApiCodeBlock {
@@ -84,6 +86,40 @@ function mapApiProject(p: ApiProject): Project {
 export class ProjectServie {
   private API_URL = environment.API_URL + '/projects';
   private http = inject(HttpClient);
+
+  private readonly staticSteps: Record<string, ProjectStep[]> = {
+    p9: ANGULAR_TODO_DATA.steps,
+    p10: BASIC_TODO_DATA.steps,
+  };
+
+  readonly categories: Category[] = [
+    { id: 'all',       label: 'All Projects' },
+    { id: 'web',       label: 'HTML / CSS / JS' },
+    { id: 'react',     label: 'React' },
+    { id: 'angular',   label: 'Angular' },
+    { id: 'python',    label: 'Python' },
+    { id: 'backend',   label: 'Node.js / Express' },
+    { id: 'fullstack', label: 'Full-Stack' },
+  ];
+
+  loadProgress(): Record<string, ProjectProgress> {
+    try { return JSON.parse(localStorage.getItem('devpath_progress') || '{}'); }
+    catch { return {}; }
+  }
+
+  saveProgress(data: Record<string, ProjectProgress>): void {
+    localStorage.setItem('devpath_progress', JSON.stringify(data));
+  }
+
+  loadSteps(projectId: string): ProjectStep[] | null {
+    if (this.staticSteps[projectId]) return this.staticSteps[projectId];
+    try { return JSON.parse(localStorage.getItem(`devpath_steps_${projectId}`) || 'null'); }
+    catch { return null; }
+  }
+
+  saveSteps(projectId: string, steps: ProjectStep[]): void {
+    localStorage.setItem(`devpath_steps_${projectId}`, JSON.stringify(steps));
+  }
 
   getAllProjects() {
     return this.http.get<ApiProject[]>(this.API_URL).pipe(

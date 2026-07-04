@@ -2,7 +2,7 @@ import { Component, signal, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppDataService, Project, ProjectStep } from '../../services/app-data.service';
+import { Project, ProjectStep } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
 import { ProjectServie } from '../../services/project.service';
 
@@ -13,7 +13,6 @@ import { ProjectServie } from '../../services/project.service';
   styleUrl: './project-detail.scss',
 })
 export class ProjectDetailComponent implements OnInit {
-  private appData = inject(AppDataService);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
@@ -48,7 +47,7 @@ export class ProjectDetailComponent implements OnInit {
         this.steps.set(steps);
         this.generating.set(false);
 
-        const progress = this.appData.loadProgress()[project.id];
+        const progress = this.projectService.loadProgress()[project.id];
         if (progress) this.completed.set(progress.completed);
       },
       error: () => this.generating.set(false),
@@ -122,8 +121,8 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   private saveProgress(total: number) {
-    const p = this.appData.loadProgress();
+    const p = this.projectService.loadProgress();
     p[this.project()!.id] = { completed: this.completed(), total };
-    this.appData.saveProgress(p);
+    this.projectService.saveProgress(p);
   }
 }

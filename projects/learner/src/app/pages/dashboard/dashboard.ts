@@ -2,7 +2,7 @@ import { Component, signal, computed, inject, OnInit, ViewChild, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppDataService, Project, ProjectProgress } from '../../services/app-data.service';
+import { Project, ProjectProgress } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
 import { ProjectServie } from '../../services/project.service';
 import { Header } from './header/header';
@@ -15,11 +15,11 @@ import { ProjectListing } from './project-listing/project-listing';
   styleUrl: './dashboard.scss',
 })
 export class DashboardComponent implements OnInit {
-  private appData = inject(AppDataService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private projectService = inject(ProjectServie);
 
-  categories = this.appData.categories;
+  categories = this.projectService.categories;
 
   user = this.authService.currentUser;
   progress = signal<Record<string, ProjectProgress>>({});

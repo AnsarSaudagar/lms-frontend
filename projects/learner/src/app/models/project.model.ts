@@ -10,6 +10,10 @@ export interface Project {
   estimatedTime: string;
   title: string;
   description: string;
+  isPaid: boolean;
+  price?:number;
+  rating?: number;
+  reviewCount?: number;
   tags: string[];
   stepCount: number;
   color: string;
@@ -46,4 +50,9 @@ export interface ProjectStep {
 export interface ProjectProgress {
   completed: number[];
   total: number;
+}
+
+export interface Category {
+  id: string;
+  label: string;
 }

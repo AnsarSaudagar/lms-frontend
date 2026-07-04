@@ -1,4 +1,4 @@
-import { ProjectStep } from '../services/app-data.service';
+import { ProjectStep } from '../models/project.model';
 
 export const ANGULAR_TODO_DATA: {
   project: {

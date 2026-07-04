@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Project } from '../../../services/app-data.service';
+import { Project } from '../../../models/project.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
