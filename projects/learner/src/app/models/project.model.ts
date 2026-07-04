@@ -12,6 +12,7 @@ export interface Project {
   description: string;
   isPaid: boolean;
   price?:number;
+  originalPrice?: number;
   rating?: number;
   reviewCount?: number;
   learnerCount?: number;

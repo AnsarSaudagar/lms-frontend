@@ -1,0 +1,59 @@
+@if (project) {
+  <div>
+    @if (project.learningOutcomes?.length) {
+      <section class="mb-8">
+        <h2 class="text-xl font-bold text-text mb-4">What you'll build</h2>
+        <div class="grid grid-cols-2 gap-x-8 gap-y-3">
+          @for (o of project.learningOutcomes; track o) {
+            <div class="flex items-start gap-[10px] text-sm text-text-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="mt-[2px] flex-shrink-0"><path d="M3 8l3 3 7-7" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              {{ o }}
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (steps.length) {
+      <section>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-text">Project Curriculum</h2>
+          <span class="text-xs text-text-section">{{ steps.length }} steps &bull; {{ project.estimatedTime }}</span>
+        </div>
+
+        <div class="border border-border rounded-2xl overflow-hidden">
+          @for (s of steps; track $index; let i = $index) {
+            <div
+              class="flex items-center gap-4 px-5 py-4"
+              [class.border-t]="i > 0"
+              [class.border-border]="i > 0"
+              [class.opacity-40]="isLocked(i)"
+            >
+              <span
+                class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold"
+                [style.background]="isLocked(i) ? 'var(--surface2)' : (project.color + '2a')"
+                [style.color]="isLocked(i) ? 'var(--text-section)' : project.color"
+              >
+                @if (isLocked(i)) {
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7V4.5a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                } @else {
+                  {{ i + 1 }}
+                }
+              </span>
+
+              <span class="flex-1 text-sm font-medium" [class.text-text]="!isLocked(i)" [class.text-text-section]="isLocked(i)">
+                {{ s.title }}
+              </span>
+
+              @if (isLocked(i)) {
+                <span class="text-[10px] font-bold text-gold border border-gold-25 bg-gold-10 rounded-full px-[10px] py-[3px] flex-shrink-0">Pro</span>
+              } @else {
+                <span class="text-[10px] font-bold text-blue border border-blue-25 bg-blue-12 rounded-full px-[10px] py-[3px] flex-shrink-0">Preview</span>
+              }
+            </div>
+          }
+        </div>
+      </section>
+    }
+  </div>
+}

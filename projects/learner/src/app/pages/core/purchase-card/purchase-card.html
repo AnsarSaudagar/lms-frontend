@@ -1,0 +1,92 @@
+@if (project) {
+  <div class="sticky top-6 border border-border rounded-2xl overflow-hidden bg-surface">
+
+    <!-- Thumbnail -->
+    <div class="relative h-[180px] flex items-center justify-center p-6" [style.background]="'linear-gradient(135deg, ' + project.color + '33, ' + project.color + '11)'">
+      <div class="grid grid-cols-2 gap-3 w-full h-full">
+        @for (i of [1,2,3,4]; track i) {
+          <div class="rounded-lg border flex items-center gap-2 px-3" [style.background]="project.color + '1a'" [style.border-color]="project.color + '40'">
+            <span class="w-4 h-4 rounded-full flex-shrink-0" [style.background]="project.color + '66'"></span>
+            <span class="h-1.5 flex-1 rounded-full" [style.background]="project.color + '4d'"></span>
+          </div>
+        }
+      </div>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" class="absolute bottom-4 right-4" [style.color]="project.color">
+        <circle cx="9" cy="19" r="1.6" fill="currentColor"/>
+        <circle cx="18" cy="19" r="1.6" fill="currentColor"/>
+        <path d="M2 3h2l2.2 11.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20 7H6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="p-5">
+      <!-- Price -->
+      <div class="flex items-center gap-[10px] mb-1">
+        @if (!project.isPaid) {
+          <span class="text-3xl font-extrabold text-accent">Free</span>
+        } @else {
+          <span class="text-3xl font-extrabold text-text">{{ project.price | currency }}</span>
+          @if (project.originalPrice) {
+            <span class="text-base text-text-section line-through">{{ project.originalPrice | currency }}</span>
+          }
+          @if (discountPct > 0) {
+            <span class="text-xs font-bold text-success border border-success-border bg-success-bg rounded-full px-[10px] py-[3px]">{{ discountPct }}% off</span>
+          }
+        }
+      </div>
+
+      <p class="text-[13px] text-text-section leading-relaxed mb-5">
+        @if (project.isPaid) {
+          One-time purchase. Lifetime access to all {{ project.stepCount }} steps and the full code guide.
+        } @else {
+          Free forever. Full access to all {{ project.stepCount }} steps and the code guide.
+        }
+      </p>
+
+      <div class="flex flex-col gap-[10px]">
+        @if (project.isPaid) {
+          <button class="w-full py-[13px] rounded-lg border-0 bg-gold text-black text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
+            Add to cart
+          </button>
+        } @else {
+          <button class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
+            Start Project
+          </button>
+        }
+
+        <button class="w-full py-[13px] rounded-lg border border-border bg-transparent text-text-button text-sm font-semibold cursor-pointer flex items-center justify-center gap-2 hover:border-border-hover transition-colors">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.1C.5 8.5 2 5 5.5 5c2 0 3.5 1.2 4.5 2.6C11 6.2 12.5 5 14.5 5 18 5 19.5 8.5 22 11.9 19.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Add to wishlist
+        </button>
+
+        @if (project.isPaid) {
+          <button class="w-full py-[13px] rounded-lg border-0 bg-text text-bg text-sm font-bold cursor-pointer hover:opacity-90 transition-opacity">
+            Buy now
+          </button>
+        }
+      </div>
+
+      <p class="flex items-center justify-center gap-[6px] text-[11px] text-text-section mt-4">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.9 3.9 4.3.6-3.1 3 .7 4.3L8 11.3l-3.8 2 .7-4.3-3.1-3 4.3-.6L8 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+        30-day money-back guarantee
+      </p>
+
+      <div class="pt-4 mt-4 border-t border-border-alt">
+        <p class="text-[11px] font-bold text-text-section uppercase tracking-wide mb-3">This project includes:</p>
+        <ul class="flex flex-col gap-[8px] list-none m-0 p-0">
+          <li class="flex items-center gap-[8px] text-[13px] text-text-feature">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {{ project.stepCount }} step-by-step guide
+          </li>
+          <li class="flex items-center gap-[8px] text-[13px] text-text-feature">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Full source code
+          </li>
+          <li class="flex items-center gap-[8px] text-[13px] text-text-feature">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="var(--success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {{ project.isPaid ? 'Lifetime access' : 'Free forever' }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+}

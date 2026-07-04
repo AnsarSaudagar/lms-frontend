@@ -15,4 +15,11 @@
   </div>
 } @else {
   <app-project-header [project]="project()"></app-project-header>
+
+  <div class=" mx-auto pb-16">
+    <div class="grid grid-cols-[1fr_360px] gap-10 items-start px-20 mt-8">
+      <app-curriculum-list [project]="project()" [steps]="steps()"></app-curriculum-list>
+      <app-purchase-card [project]="project()"></app-purchase-card>
+    </div>
+  </div>
 }
