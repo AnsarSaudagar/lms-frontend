@@ -14,6 +14,8 @@ export interface Project {
   price?:number;
   rating?: number;
   reviewCount?: number;
+  learnerCount?: number;
+  authorName?: string;
   tags: string[];
   stepCount: number;
   color: string;

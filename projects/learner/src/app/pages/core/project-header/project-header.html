@@ -1,0 +1,78 @@
+@if (project) {
+  <div class="container mx-auto">
+    <div class="display px-20 py-8">
+
+      <!-- Breadcrumb -->
+      <div class="flex items-center gap-2 text-[13px] text-text-section mb-5">
+        <a routerLink="/learner" class="hover:text-text transition-colors duration-150">Dashboard</a>
+        <span>&rsaquo;</span>
+        <span>{{ categoryLabel() }}</span>
+        <span>&rsaquo;</span>
+        <span class="text-text font-semibold">{{ project.title }}</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl font-extrabold text-text tracking-tight mb-3">{{ project.title }}</h1>
+
+      <!-- Description -->
+      <p class="text-[15px] text-text-desc leading-relaxed max-w-[620px] mb-4">{{ project.description }}</p>
+
+      <!-- Rating + learners -->
+      @if (project.reviewCount) {
+        <div class="flex items-center gap-[10px] mb-3 text-sm">
+          <span class="font-bold text-gold">{{ project.rating }}</span>
+          <span class="flex gap-[1px] text-gold text-sm leading-none">
+            @for (s of [1,2,3,4,5]; track s) {
+              <span [class.opacity-25]="s > (project.rating ?? 0)">&#9733;</span>
+            }
+          </span>
+          <span class="text-text-section">({{ project.reviewCount | number }} ratings)</span>
+          @if (project.learnerCount) {
+            <span class="text-text-section">&bull;</span>
+            <span class="text-text-section">{{ project.learnerCount | number }} learners</span>
+          }
+        </div>
+      }
+
+      <!-- Author -->
+      <!-- @if (project.authorName) {
+        <div class="flex items-center gap-[10px] mb-4 text-sm text-text-section">
+          <span class="w-7 h-7 rounded-full bg-surface2 border border-border-alt flex items-center justify-center text-[11px] font-bold text-text-primary">{{ authorInitials() }}</span>
+          <span>Created by <span class="text-text font-semibold">{{ project.authorName }}</span></span>
+        </div>
+      } -->
+
+      <!-- Tech tags -->
+      <div class="flex flex-wrap gap-[6px] mb-3">
+        @for (tag of project.tags; track tag) {
+          <span class="text-[11px] font-semibold text-text-tag bg-surface2 border border-border-alt rounded-md px-2 py-[3px]">{{ tag }}</span>
+        }
+      </div>
+
+      <!-- Meta pills -->
+      <div class="flex flex-wrap items-center gap-[10px]">
+        <span class="text-xs font-bold text-blue border border-blue-25 bg-blue-12 rounded-full px-3 py-[5px]">{{ project.difficulty }}</span>
+        <span class="flex items-center gap-[5px] text-xs text-text-section">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 4.5V8l2.5 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          {{ project.estimatedTime }}
+        </span>
+        <span class="flex items-center gap-[5px] text-xs text-text-section">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          {{ project.stepCount }} steps
+        </span>
+        @if (!project.isPaid) {
+          <span class="flex items-center gap-[5px] text-xs font-bold text-success border border-success-border bg-success-bg rounded-full px-3 py-[5px]">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Free Access
+          </span>
+        } @else {
+          <span class="flex items-center gap-[5px] text-xs font-bold text-gold border border-gold-25 bg-gold-10 rounded-full px-3 py-[5px]">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 7V4.5a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Pro
+          </span>
+        }
+      </div>
+
+    </div>
+  </div>
+}

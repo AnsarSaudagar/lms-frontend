@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ProjectServie } from '../../services/project.service';
 import { Project } from '../../models/project.model';
+import { ProjectHeader } from '../core/project-header/project-header';
 
 @Component({
   selector: 'app-project-page',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProjectHeader],
   templateUrl: './project-page.html',
   styleUrl: './project-page.scss',
 })
