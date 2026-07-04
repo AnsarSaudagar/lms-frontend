@@ -48,7 +48,7 @@
             Add to cart
           </button>
         } @else {
-          <button class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
+          <button (click)="startProject()" class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
             Start Project
           </button>
         }
@@ -59,7 +59,7 @@
         </button>
 
         @if (project.isPaid) {
-          <button class="w-full py-[13px] rounded-lg border-0 bg-text text-bg text-sm font-bold cursor-pointer hover:opacity-90 transition-opacity">
+          <button (click)="startProject()" class="w-full py-[13px] rounded-lg border-0 bg-text text-bg text-sm font-bold cursor-pointer hover:opacity-90 transition-opacity">
             Buy now
           </button>
         }

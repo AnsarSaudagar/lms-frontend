@@ -36,12 +36,10 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.params['id'];
-
-
+    const slug = this.route.snapshot.params['slug'];
 
     this.generating.set(true);
-    this.projectService.getProject(id).subscribe({
+    this.projectService.getProject(slug).subscribe({
       next: ({ project, steps }) => {
         this.project.set(project);
         this.steps.set(steps);
