@@ -36,6 +36,7 @@ interface ApiProject {
   techStack: string[];
   isPaid: boolean;
   price?:number;
+  isEnrolled?: boolean;
   prerequisites?: string[];
   learningOutcomes?: string[];
   fileStructure?: Record<string, string>;
@@ -69,6 +70,7 @@ function mapApiProject(p: ApiProject): Project {
     category: p.category,
     isPaid: p.isPaid,
     price: p.price,
+    isEnrolled: p.isEnrolled,
     difficulty: p.difficulty.charAt(0).toUpperCase() + p.difficulty.slice(1),
     estimatedTime: `${p.estimatedHours}h`,
     tags: (p.techStack ?? []).slice(0, 3),

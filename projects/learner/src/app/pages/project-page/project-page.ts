@@ -31,7 +31,9 @@ export class ProjectPage implements OnInit {
         this.steps.set(steps);
         this.loading.set(false);
       },
-      error: () => {
+      error: (err) => {       
+        console.error(err);
+         
         this.error.set(true);
         this.loading.set(false);
       },
