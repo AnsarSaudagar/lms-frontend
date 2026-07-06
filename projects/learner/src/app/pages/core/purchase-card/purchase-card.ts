@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Project } from '../../../models/project.model';
+import { ProjectServie } from '../../../services/project.service';
 
 @Component({
   selector: 'app-purchase-card',
@@ -11,6 +12,7 @@ import { Project } from '../../../models/project.model';
 })
 export class PurchaseCard {
   private router = inject(Router);
+  private projectService = inject(ProjectServie);
 
   @Input() project: Project | null = null;
 
@@ -26,6 +28,20 @@ export class PurchaseCard {
   }
 
   enrollProject(){
-    
+
+    if(!this.project){
+      return;
+    }
+
+    this.projectService.enrollFreeProject(this.project?.id).subscribe({
+      next: () => {
+        const url = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([url]);
+        });
+      }, error: (err) => {
+        alert(err)
+      }
+    })
   }
 }

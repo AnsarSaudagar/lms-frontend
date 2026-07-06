@@ -43,18 +43,18 @@
       </p>
 
       <div class="flex flex-col gap-[10px]">
-        @if (project.isPaid) {
+        @if (project.isPaid && !project.isEnrolled) {
           <button class="w-full py-[13px] rounded-lg border-0 bg-gold text-black text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
             Add to cart
           </button>
-        } @else if(true){
-          <button (click)="startProject()" class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
+        } @else if(!project.isPaid && !project.isEnrolled){
+          <button (click)="enrollProject()" class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
             Enroll In Project
           </button>
         }
          @else {
-          <button (click)="enrollProject()" class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
-            Start Project
+          <button (click)="startProject()" class="w-full py-[13px] rounded-lg border-0 bg-accent text-secondary text-sm font-bold cursor-pointer hover:brightness-110 transition-[filter]">
+            View Project
           </button>
         }
 
@@ -63,7 +63,7 @@
           Add to wishlist
         </button>
 
-        @if (project.isPaid) {
+        @if (project.isPaid && !project.isEnrolled) {
           <button (click)="startProject()" class="w-full py-[13px] rounded-lg border-0 bg-text text-bg text-sm font-bold cursor-pointer hover:opacity-90 transition-opacity">
             Buy now
           </button>

@@ -86,7 +86,7 @@ function mapApiProject(p: ApiProject): Project {
 
 @Injectable({ providedIn: 'root' })
 export class ProjectServie {
-  private API_URL = environment.API_URL + '/projects';
+  private API_URL = environment.API_URL ;
   private http = inject(HttpClient);
 
   private readonly staticSteps: Record<string, ProjectStep[]> = {
@@ -124,13 +124,13 @@ export class ProjectServie {
   }
 
   getAllProjects() {
-    return this.http.get<ApiProject[]>(this.API_URL).pipe(
+    return this.http.get<ApiProject[]>(this.API_URL+ '/projects').pipe(
       map(projects => projects.map(mapApiProject))
     );
   }
 
   getProject(slug: string) {
-    return this.http.get<ApiProject>(`${this.API_URL}/${slug}`).pipe(
+    return this.http.get<ApiProject>(`${this.API_URL}/projects/${slug}`).pipe(
       map(p => ({
         project: mapApiProject(p),
         steps: (p.steps ?? []).map((s): ProjectStep => ({
@@ -145,4 +145,9 @@ export class ProjectServie {
       } as ProjectDetail))
     );
   }
+
+  enrollFreeProject(projectId: string){
+    return this.http.post(`${this.API_URL}/projects/${projectId}/enroll`, {});
+  }
+
 }
