@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap, throwError } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { Login, Register } from '../models/auth.model';
 import { Common } from 'shared';
 
@@ -23,7 +22,7 @@ interface AuthResponse {
 export class AuthService {
   private readonly TOKEN_KEY = 'learner_token';
   private readonly USER_KEY = 'learner_user';
-  private readonly API_URL = environment.API_URL + '/auth';
+  private readonly API_URL = '/auth';
 
   private http = inject(HttpClient);
   private router = inject(Router);

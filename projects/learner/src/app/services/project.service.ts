@@ -1,5 +1,4 @@
 import { inject, Injectable } from "@angular/core";
-import { environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Category, Project, ProjectProgress, ProjectStep } from "../models/project.model";
 import { ANGULAR_TODO_DATA } from '../data/todo-app-angular.data';
@@ -86,7 +85,7 @@ function mapApiProject(p: ApiProject): Project {
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
-  private API_URL = environment.API_URL ;
+  private API_URL = '/projects';
   private http = inject(HttpClient);
 
   readonly categories: Category[] = [
@@ -108,13 +107,13 @@ export class ProjectService {
   }
 
   getAllProjects() {
-    return this.http.get<ApiProject[]>(this.API_URL+ '/projects').pipe(
+    return this.http.get<ApiProject[]>(this.API_URL).pipe(
       map(projects => projects.map(mapApiProject))
     );
   }
 
   getProject(slug: string) {
-    return this.http.get<ApiProject>(`${this.API_URL}/projects/${slug}`).pipe(
+    return this.http.get<ApiProject>(`${this.API_URL}/${slug}`).pipe(
       map(p => ({
         project: mapApiProject(p),
         steps: (p.steps ?? []).map((s): ProjectStep => ({
@@ -131,7 +130,7 @@ export class ProjectService {
   }
 
   enrollFreeProject(projectId: string){
-    return this.http.post(`${this.API_URL}/projects/${projectId}/enroll`, {});
+    return this.http.post(`${this.API_URL}/${projectId}/enroll`, {});
   }
 
 }
