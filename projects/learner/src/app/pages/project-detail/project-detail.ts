@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectStep } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
-import { ProjectServie } from '../../services/project.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -17,7 +17,7 @@ export class ProjectDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   protected router = inject(Router);
-  private projectService = inject(ProjectServie);
+  private projectService = inject(ProjectService);
 
   project = signal<Project | null>(null);
   user = this.authService.currentUser;
@@ -45,8 +45,6 @@ export class ProjectDetailComponent implements OnInit {
         this.steps.set(steps);
         this.generating.set(false);
 
-        const progress = this.projectService.loadProgress()[project.id];
-        if (progress) this.completed.set(progress.completed);
       },
       error: () => this.generating.set(false),
     });
@@ -96,16 +94,6 @@ export class ProjectDetailComponent implements OnInit {
     return t > 0 ? Math.round((this.completed().length / t) * 100) : 0;
   }
 
-  markComplete(idx: number) {
-    const current = this.completed();
-    const next = current.includes(idx) ? current.filter(i => i !== idx) : [...current, idx];
-    this.completed.set(next);
-    this.saveProgress(this.totalSteps);
-    if (!current.includes(idx) && idx < this.totalSteps - 1) {
-      setTimeout(() => this.activeStep.set(idx + 1), 300);
-    }
-  }
-
   copyToClipboard(text: string, key: string) {
     navigator.clipboard.writeText(text).catch(() => {});
     this.copied.set(key);
@@ -114,13 +102,8 @@ export class ProjectDetailComponent implements OnInit {
 
   nextStep() {
     const next = Math.min(this.totalSteps - 1, this.activeStep() + 1);
-    this.markComplete(this.activeStep());
     this.activeStep.set(next);
   }
 
-  private saveProgress(total: number) {
-    const p = this.projectService.loadProgress();
-    p[this.project()!.id] = { completed: this.completed(), total };
-    this.projectService.saveProgress(p);
-  }
+  
 }

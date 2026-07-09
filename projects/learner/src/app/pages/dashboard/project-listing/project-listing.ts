@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { Router, RouterModule } from '@angular/router';
-import { ProjectServie } from '../../../services/project.service';
 import { AuthService } from '../../../services/auth.service';
-import { ProjectCard } from '../../core/project-card/project-card';
+import { ProjectCard } from '../../../core/components/project-card/project-card';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-project-listing',
@@ -16,7 +16,7 @@ export class ProjectListing {
 
   allProjects = signal<Project[]>([]);
   private router = inject(Router);
-  private projectService = inject(ProjectServie);
+  private projectService = inject(ProjectService);
   private authService = inject(AuthService);
 
   user = this.authService.currentUser;

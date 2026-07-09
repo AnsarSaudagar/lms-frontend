@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Project, ProjectProgress } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
-import { ProjectServie } from '../../services/project.service';
 import { Header } from './header/header';
 import { ProjectListing } from './project-listing/project-listing';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,7 @@ import { ProjectListing } from './project-listing/project-listing';
 export class DashboardComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
-  private projectService = inject(ProjectServie);
+  private projectService = inject(ProjectService);
 
   categories = this.projectService.categories;
 
@@ -27,31 +27,7 @@ export class DashboardComponent implements OnInit {
   search = signal('');
   upgradeTarget = signal<Project | null>(null);
 
-  // filtered = computed(() => {
-  //   const cat = this.activeCategory();
-  //   const q = this.search().toLowerCase();
-  //   return this.allProjects().filter(p => {
-  //     const matchCat = cat === 'all' || p.category === cat;
-  //     const matchSearch = !q || p.title.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q));
-  //     return matchCat && matchSearch;
-  //   });
-  // });
-
-  // inProgress = computed(() =>
-  //   this.allProjects().filter(p => {
-  //     const pr = this.progress()[p.id];
-  //     return pr && pr.completed.length > 0 && pr.completed.length < pr.total;
-  //   })
-  // );
-
   ngOnInit() {
-    // if (!this.user()) { this.router.navigate(['/auth']); return; }
-    // this.progress.set(this.appData.loadProgress());
-    // this.projectService.getAllProjects().subscribe({
-    //   next: (projects: Project[]) => {
-    //     this.allProjects.set(projects);
-    //   }
-    // })
   }
 
   getProgress(id: string): number {

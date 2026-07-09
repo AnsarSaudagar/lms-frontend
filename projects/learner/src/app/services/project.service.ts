@@ -85,14 +85,9 @@ function mapApiProject(p: ApiProject): Project {
 }
 
 @Injectable({ providedIn: 'root' })
-export class ProjectServie {
+export class ProjectService {
   private API_URL = environment.API_URL ;
   private http = inject(HttpClient);
-
-  private readonly staticSteps: Record<string, ProjectStep[]> = {
-    p9: ANGULAR_TODO_DATA.steps,
-    p10: BASIC_TODO_DATA.steps,
-  };
 
   readonly categories: Category[] = [
     { id: 'all',       label: 'All Projects' },
@@ -104,19 +99,8 @@ export class ProjectServie {
     { id: 'fullstack', label: 'Full-Stack' },
   ];
 
-  loadProgress(): Record<string, ProjectProgress> {
-    try { return JSON.parse(localStorage.getItem('devpath_progress') || '{}'); }
-    catch { return {}; }
-  }
-
   saveProgress(data: Record<string, ProjectProgress>): void {
     localStorage.setItem('devpath_progress', JSON.stringify(data));
-  }
-
-  loadSteps(projectId: string): ProjectStep[] | null {
-    if (this.staticSteps[projectId]) return this.staticSteps[projectId];
-    try { return JSON.parse(localStorage.getItem(`devpath_steps_${projectId}`) || 'null'); }
-    catch { return null; }
   }
 
   saveSteps(projectId: string, steps: ProjectStep[]): void {

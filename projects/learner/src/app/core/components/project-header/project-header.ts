@@ -1,8 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ProjectServie } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-project-header',
@@ -11,7 +11,7 @@ import { Project } from '../../../models/project.model';
   styleUrl: './project-header.scss',
 })
 export class ProjectHeader {
-  private projectService = inject(ProjectServie);
+  private projectService = inject(ProjectService);
 
   @Input() project: Project | null = null;
 

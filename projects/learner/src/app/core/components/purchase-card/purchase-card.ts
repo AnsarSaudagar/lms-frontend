@@ -2,7 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Project } from '../../../models/project.model';
-import { ProjectServie } from '../../../services/project.service';
+import { ProjectService } from '../../../services/project.service';
 
 @Component({
   selector: 'app-purchase-card',
@@ -12,7 +12,7 @@ import { ProjectServie } from '../../../services/project.service';
 })
 export class PurchaseCard {
   private router = inject(Router);
-  private projectService = inject(ProjectServie);
+  private projectService = inject(ProjectService);
 
   @Input() project: Project | null = null;
 
