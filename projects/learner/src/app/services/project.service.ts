@@ -98,14 +98,6 @@ export class ProjectService {
     { id: 'fullstack', label: 'Full-Stack' },
   ];
 
-  saveProgress(data: Record<string, ProjectProgress>): void {
-    localStorage.setItem('devpath_progress', JSON.stringify(data));
-  }
-
-  saveSteps(projectId: string, steps: ProjectStep[]): void {
-    localStorage.setItem(`devpath_steps_${projectId}`, JSON.stringify(steps));
-  }
-
   getAllProjects() {
     return this.http.get<ApiProject[]>(this.API_URL).pipe(
       map(projects => projects.map(mapApiProject))

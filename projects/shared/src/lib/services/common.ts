@@ -47,4 +47,18 @@ export class Common {
 
     return null;
   }
+
+  /**
+   * Removes a value from the browser's localStorage.
+   *
+   * @param {string} key - The key of the item to remove from localStorage.
+   *
+   * @returns {void} This function does not return anything.
+   *
+   * @example
+   * common.removeLocalStore('username');
+   */
+  removeLocalStore(key: string): void {
+    localStorage.removeItem(key);
+  }
 }

@@ -120,7 +120,7 @@ export class AuthService {
   }
 
   autoLogin() {
-    const raw = localStorage.getItem(this.TOKEN_KEY);
+    const raw = this.commonService.getLocalStore(this.TOKEN_KEY);
     if (!raw) return;
     try {
       const { token, expiresAt } = JSON.parse(raw);
@@ -139,8 +139,8 @@ export class AuthService {
     this.tokenSignal.set(null);
     this.expiresAtSignal.set(null);
     this.userSignal.set(null);
-    localStorage.removeItem(this.TOKEN_KEY);
-    localStorage.removeItem(this.USER_KEY);
+    this.commonService.removeLocalStore(this.TOKEN_KEY);
+    this.commonService.removeLocalStore(this.USER_KEY);
     this.router.navigate(['/auth']);
   }
 
@@ -153,7 +153,7 @@ export class AuthService {
     const expiresAt = this.extractExpiration(token);
     this.tokenSignal.set(token);
     this.expiresAtSignal.set(expiresAt);
-    localStorage.setItem(this.TOKEN_KEY, JSON.stringify({ token, expiresAt }));
+    this.commonService.setLocalStore(this.TOKEN_KEY, JSON.stringify({ token, expiresAt }));
     this.startLogoutTimer(expiresAt);
 
     const user: User = {
