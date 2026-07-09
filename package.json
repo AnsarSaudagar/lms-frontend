@@ -7,8 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "start-learner": "ng serve --project=learner --port=4201",
-    "start-admin": "ng serve --project=admin --port=4202"
+    "start:learner": "ng serve --project=learner --port=4201",
+    "start:admin": "ng serve --project=admin --port=4202"
   },
   "prettier": {
     "printWidth": 100,
