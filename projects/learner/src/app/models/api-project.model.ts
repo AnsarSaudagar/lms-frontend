@@ -35,4 +35,5 @@ export interface ApiProject {
   dependencies?: { installCommands?: string[] };
   stepCount?: number;
   steps?: ApiStep[];
+  completedSteps: number[];
 }

@@ -40,10 +40,11 @@ export class ProjectDetailComponent implements OnInit {
 
     this.generating.set(true);
     this.projectService.getProject(slug).subscribe({
-      next: ({ project, steps }) => {
+      next: ({ project, steps , completedSteps}) => {
         this.project.set(project);
         this.steps.set(steps);
         this.generating.set(false);
+        this.completed.set(completedSteps.map((s) => s - 1));
 
       },
       error: () => this.generating.set(false),
@@ -53,7 +54,7 @@ export class ProjectDetailComponent implements OnInit {
 
   markComplete(activeStep: number){
     const projectId = this.project()?.id;
-    if (!projectId) return;
+    if (!projectId || this.completed().includes(activeStep)) return;
 
     this.projectService.markStepAsCompleted(projectId, activeStep+1).subscribe(() => {
       if (!this.completed().includes(activeStep)) {

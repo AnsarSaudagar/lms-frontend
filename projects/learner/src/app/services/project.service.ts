@@ -42,6 +42,7 @@ export class ProjectService {
         (p) =>
           ({
             project: this.mapApiProject(p),
+            completedSteps: p.completedSteps,
             steps: (p.steps ?? []).map(
               (s): ProjectStep => ({
                 title: s.title,

@@ -28,6 +28,7 @@ export interface Project {
   learningOutcomes?: string[];
   fileStructure?: Record<string, string>;
   dependencies?: ProjectDependencies;
+  completedSteps?: number[];
 }
 
 export interface CodeBlock {
@@ -60,4 +61,5 @@ export interface Category {
 export interface ProjectDetail {
   project: Project;
   steps: ProjectStep[];
+  completedSteps: number[];
 }
