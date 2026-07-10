@@ -1,0 +1,25 @@
+<div class="bg-surface border border-border rounded-xl shadow-xs p-6 h-full flex flex-col">
+  <div class="flex items-center justify-between mb-6">
+    <h3 class="text-[15px] font-semibold text-text">Weekly active learners</h3>
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-success-soft text-accent-dark">
+      <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+      Live
+    </span>
+  </div>
+
+  <div class="flex-1 flex items-end justify-between gap-3 min-h-[160px]">
+    @for (point of points; track point.day) {
+      <div class="flex-1 flex flex-col items-center gap-2.5">
+        <div class="w-full max-w-9 h-36 flex items-end rounded-md overflow-hidden bg-surface-2">
+          <div
+            class="w-full rounded-md transition-all duration-300"
+            [class.bg-accent]="isPeak(point.value)"
+            [class.bg-success-soft]="!isPeak(point.value)"
+            [style.height.%]="heightPercent(point.value)"
+          ></div>
+        </div>
+        <span class="text-xs text-text-muted">{{ point.day }}</span>
+      </div>
+    }
+  </div>
+</div>

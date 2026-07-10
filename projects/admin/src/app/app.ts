@@ -1,26 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { AuthService } from './services/auth.service';
-import { ConfigureLayout } from './core/components/configure-layout/configure-layout';
-import { GlobalLoader } from './core/components/global-loader/global-loader';
-import { LoaderService } from './services/loader.service';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [ CommonModule, ConfigureLayout, GlobalLoader, ToastModule],
-  providers: [MessageService],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css',
 })
-export class App {
-
-  private loaderService = inject(LoaderService);
-
-  loading = this.loaderService.loading;
-  
-  constructor(private authService: AuthService){
-    this.authService.autoLogin();
-  }
-}
+export class App {}

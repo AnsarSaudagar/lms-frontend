@@ -1,24 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { SIDEBAR_ITEMS } from '../../utils/constants/sidebar.constant';
-import { Router } from '@angular/router';
+import { Component, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Icon } from '../ui/icon/icon';
+import { SIDEBAR_FOOTER_ITEMS, SIDEBAR_ITEMS } from '../../utils/constants/sidebar.constant';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule],
+  imports: [RouterLink, RouterLinkActive, Icon],
   templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
 })
 export class Sidebar {
-  activeItem = 'courses';
   sidebarItems = SIDEBAR_ITEMS;
-  router = inject(Router);
+  footerItems = SIDEBAR_FOOTER_ITEMS;
 
-  setActive(item: string, route: any) {
-    this.activeItem = item;
+  collapsed = signal(false);
 
-    if(route){
-      this.router.navigate([route]);
-    }
+  toggleCollapse() {
+    this.collapsed.update(v => !v);
   }
 }

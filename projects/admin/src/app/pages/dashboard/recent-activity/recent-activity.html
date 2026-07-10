@@ -1,0 +1,19 @@
+<div class="bg-surface border border-border rounded-xl shadow-xs p-6">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-[15px] font-semibold text-text">Recent activity</h3>
+    <a routerLink="/system-logs" class="text-sm font-medium text-accent-dark cursor-pointer">View all logs</a>
+  </div>
+
+  <div class="flex flex-col divide-y divide-border">
+    @for (log of logs; track log.timestamp + log.message) {
+      <div class="flex items-center gap-4 py-3">
+        <span class="px-2 py-1 rounded-md bg-surface-2 text-text-2 text-[11px] font-medium uppercase tracking-wide shrink-0 w-20 text-center">
+          {{ log.tag }}
+        </span>
+        <span class="flex-1 text-sm text-text truncate">{{ log.message }}</span>
+        <span class="text-sm text-text-muted hidden sm:block">{{ log.meta }}</span>
+        <span class="text-xs text-text-muted shrink-0 w-20 text-right">{{ log.timestamp }}</span>
+      </div>
+    }
+  </div>
+</div>

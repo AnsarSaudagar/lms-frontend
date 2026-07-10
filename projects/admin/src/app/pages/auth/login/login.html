@@ -1,0 +1,79 @@
+<div class="w-full max-w-[400px] bg-surface border border-border rounded-2xl shadow-lg p-8">
+  <div class="flex items-center gap-2.5 mb-8">
+    <span class="w-8 h-8 rounded-md bg-accent text-white font-bold flex items-center justify-center text-sm">D</span>
+    <span class="text-base font-semibold text-text">DevPath <span class="text-accent-dark">Admin</span></span>
+  </div>
+
+  <h1 class="text-xl font-semibold text-text mb-1.5">Welcome back</h1>
+  <p class="text-sm text-text-muted mb-7">Sign in to manage learners, projects, and platform activity.</p>
+
+  @if (errorMessage()) {
+    <div class="mb-5 px-3.5 py-2.5 rounded-lg bg-error-soft text-error text-sm">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="submit()">
+    <label class="flex flex-col gap-1.5">
+      <span class="text-[13px] font-medium text-text-2">Email</span>
+      <div class="relative">
+        <app-icon name="mail" [size]="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+        <input
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="you@devpath.com"
+          class="w-full pl-9 pr-3.5 py-2.5 rounded-lg border bg-surface text-sm text-text outline-none transition-colors"
+          [class.border-error]="form.get('email')?.invalid && form.get('email')?.touched"
+          [class.border-border]="!(form.get('email')?.invalid && form.get('email')?.touched)"
+        />
+      </div>
+      @if (form.get('email')?.invalid && form.get('email')?.touched) {
+        <span class="text-xs text-error">Enter a valid email</span>
+      }
+    </label>
+
+    <label class="flex flex-col gap-1.5">
+      <span class="text-[13px] font-medium text-text-2">Password</span>
+      <div class="relative">
+        <app-icon name="lock" [size]="16" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
+        <input
+          [type]="showPassword() ? 'text' : 'password'"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          class="w-full pl-9 pr-9 py-2.5 rounded-lg border bg-surface text-sm text-text outline-none transition-colors"
+          [class.border-error]="form.get('password')?.invalid && form.get('password')?.touched"
+          [class.border-border]="!(form.get('password')?.invalid && form.get('password')?.touched)"
+        />
+        <button
+          type="button"
+          (click)="togglePassword()"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted border-0 bg-transparent cursor-pointer p-0 flex"
+        >
+          <app-icon [name]="showPassword() ? 'eye-off' : 'eye'" [size]="16" />
+        </button>
+      </div>
+      @if (form.get('password')?.invalid && form.get('password')?.touched) {
+        <span class="text-xs text-error">Password is required</span>
+      }
+    </label>
+
+    <button appButton type="submit" class="w-full mt-2" [disabled]="loading()">
+      @if (loading()) {
+        <span class="flex items-center gap-2">
+          <svg class="animate-spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" stroke-linecap="round" />
+          </svg>
+          Signing in…
+        </span>
+      } @else {
+        Sign in
+      }
+    </button>
+  </form>
+
+  <p class="mt-6 text-xs text-text-muted text-center">
+    Demo mode — any email with a password (4+ characters) signs in.
+  </p>
+</div>

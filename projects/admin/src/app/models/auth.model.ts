@@ -1,8 +1,11 @@
-export interface AuthResponse {
-  accessToken: string;
+export interface LoginPayload {
+  email: string;
+  password: string;
 }
 
-export interface StoredAuthData {
-  token: string;
-  expiresAt: number;
+export interface AdminUser {
+  name: string;
+  email: string;
+  role: string;
+  avatarInitials: string;
 }

@@ -1,0 +1,22 @@
+<div class="flex flex-col gap-6 py-6">
+  <div>
+    <h1 class="text-2xl font-semibold text-text mb-1">Projects</h1>
+    <p class="text-sm text-text-muted">Browse and manage every project on the platform.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    @for (project of projects; track project.id) {
+      <div class="bg-surface border border-border rounded-xl shadow-xs p-5 flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-2">
+          <span class="font-medium text-text">{{ project.title }}</span>
+          <app-badge [tone]="STATUS_TONE[project.status]">{{ project.status }}</app-badge>
+        </div>
+        <span class="text-xs text-text-muted">{{ project.category }}</span>
+        <div class="flex items-center justify-between text-xs text-text-muted mt-2 pt-3 border-t border-border">
+          <span>{{ project.enrolled }} enrolled</span>
+          <span>Updated {{ project.updatedOn }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="flex flex-col gap-6 py-6">
+  <div>
+    <h1 class="text-2xl font-semibold text-text mb-1">Learners</h1>
+    <p class="text-sm text-text-muted">Manage learner accounts, cohorts, and progress.</p>
+  </div>
+
+  <div class="bg-surface border border-border rounded-xl shadow-xs overflow-hidden">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-border text-left text-xs uppercase tracking-wide text-text-muted">
+          <th class="px-5 py-3 font-medium">Name</th>
+          <th class="px-5 py-3 font-medium">Cohort</th>
+          <th class="px-5 py-3 font-medium">Progress</th>
+          <th class="px-5 py-3 font-medium">Status</th>
+          <th class="px-5 py-3 font-medium">Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (learner of learners; track learner.id) {
+          <tr class="border-b border-border last:border-0 hover:bg-surface-2">
+            <td class="px-5 py-3.5">
+              <div class="flex flex-col">
+                <span class="font-medium text-text">{{ learner.name }}</span>
+                <span class="text-xs text-text-muted">{{ learner.email }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-3.5 text-text-2">{{ learner.cohort }}</td>
+            <td class="px-5 py-3.5">
+              <div class="flex items-center gap-2 w-32">
+                <div class="flex-1 h-1.5 rounded-full bg-surface-2 overflow-hidden">
+                  <div class="h-full rounded-full bg-accent" [style.width.%]="learner.progress"></div>
+                </div>
+                <span class="text-xs text-text-muted w-8 text-right">{{ learner.progress }}%</span>
+              </div>
+            </td>
+            <td class="px-5 py-3.5">
+              <app-badge [tone]="STATUS_TONE[learner.status]">{{ learner.status }}</app-badge>
+            </td>
+            <td class="px-5 py-3.5 text-text-muted">{{ learner.joinedOn }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

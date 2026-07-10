@@ -1,0 +1,35 @@
+<div class="flex flex-col gap-6 py-6">
+  <div class="flex items-start justify-between gap-4 flex-wrap">
+    <div>
+      <h1 class="text-2xl font-semibold text-text mb-1">Dashboard</h1>
+      <p class="text-sm text-text-muted">Overview of learners, projects, and platform activity.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <button appButton variant="outline">
+        <app-icon name="download" [size]="15" />
+        Export report
+      </button>
+      <button appButton variant="primary">
+        <app-icon name="plus" [size]="15" />
+        New project
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    @for (stat of statCards; track stat.label) {
+      <app-stat-tile [stat]="stat" />
+    }
+  </div>
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 items-stretch">
+    <div class="xl:col-span-2">
+      <app-weekly-chart [points]="weeklyActiveLearners" />
+    </div>
+    <div>
+      <app-pending-actions [actions]="pendingActions" />
+    </div>
+  </div>
+
+  <app-recent-activity [logs]="recentActivity" />
+</div>
