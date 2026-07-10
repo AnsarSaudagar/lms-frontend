@@ -60,3 +60,8 @@ export interface Category {
   id: string;
   label: string;
 }
+
+export interface ProjectDetail {
+  project: Project;
+  steps: ProjectStep[];
+}
