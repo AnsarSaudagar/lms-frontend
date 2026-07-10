@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Category, Project, ProjectDetail, ProjectStep } from '../models/project.model';
 import { map } from 'rxjs';
 import { ApiProject } from '../models/api-project.model';
+import { ProjectProgress } from '../models/project-progress.model';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'html-css-js': 'oklch(0.68 0.17 230)',
@@ -17,7 +18,6 @@ const DEFAULT_COLOR = 'oklch(0.68 0.17 270)';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
-  private API_URL = '/projects';
   private http = inject(HttpClient);
 
   readonly categories: Category[] = [
@@ -32,12 +32,12 @@ export class ProjectService {
 
   getAllProjects() {
     return this.http
-      .get<ApiProject[]>(this.API_URL)
+      .get<ApiProject[]>('/projects')
       .pipe(map((projects) => projects.map(this.mapApiProject)));
   }
 
   getProject(slug: string) {
-    return this.http.get<ApiProject>(`${this.API_URL}/${slug}`).pipe(
+    return this.http.get<ApiProject>(`/projects/${slug}`).pipe(
       map(
         (p) =>
           ({
@@ -59,7 +59,11 @@ export class ProjectService {
   }
 
   enrollFreeProject(projectId: string) {
-    return this.http.post(`${this.API_URL}/${projectId}/enroll`, {});
+    return this.http.post(`/projects/${projectId}/enroll`, {});
+  }
+
+  getAllProjectsProgress(){
+    return this.http.get<ProjectProgress[]>(`/me/progress`);
   }
 
   private mapApiProject(p: ApiProject): Project {

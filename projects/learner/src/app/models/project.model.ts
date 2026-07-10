@@ -51,10 +51,6 @@ export interface ProjectStep {
   gitCommit?: string;
 }
 
-export interface ProjectProgress {
-  completed: number[];
-  total: number;
-}
 
 export interface Category {
   id: string;

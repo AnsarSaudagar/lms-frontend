@@ -2,15 +2,17 @@ import { Component, signal, computed, inject, OnInit, ViewChild, ElementRef } fr
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Project, ProjectProgress } from '../../models/project.model';
+import { Project } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
 import { Header } from './header/header';
 import { ProjectListing } from './project-listing/project-listing';
 import { ProjectService } from '../../services/project.service';
+import { ProjectProgress } from '../../models/project-progress.model';
+import { ContinueLearning } from './continue-learning/continue-learning';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule, Header, ProjectListing],
+  imports: [CommonModule, FormsModule, Header, ProjectListing, ContinueLearning],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -28,12 +30,11 @@ export class DashboardComponent implements OnInit {
   upgradeTarget = signal<Project | null>(null);
 
   ngOnInit() {
+    
   }
 
-  getProgress(id: string): number {
-    const p = this.progress()[id];
-    if (!p || p.total === 0) return 0;
-    return Math.round((p.completed.length / p.total) * 100);
+  getProgress(id: string) {
+   
   }
 
 
