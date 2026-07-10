@@ -1,6 +1,8 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
+import { CommonService } from '../../../services/common.service';
+import { ProjectSummary } from '../../../models/project-summary.model';
 
 @Component({
   selector: 'app-header',
@@ -8,9 +10,9 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
-
+export class Header implements OnInit {
   private authService = inject(AuthService);
+  private commonService = inject(CommonService);
 
   userName = computed(() => this.authService.currentUser()?.name ?? '');
   completed = signal(1);
@@ -23,6 +25,16 @@ export class Header {
     totalSteps: 7,
     progress: 40,
   });
+
+  ngOnInit(): void {
+    this.commonService.getDashboardProjectSummary().subscribe({
+      next: (summary: ProjectSummary) => {
+        this.completed.set(summary.completedProjects);
+        this.inProgress.set(summary.inProgressProjects);
+        this.stepsDone.set(summary.totalStepsCompleted);
+      },
+    });
+  }
 
   greeting = signal(this.getGreeting());
 
