@@ -51,6 +51,17 @@ export class ProjectDetailComponent implements OnInit {
 
   }
 
+  markComplete(activeStep: number){
+    const projectId = this.project()?.id;
+    if (!projectId) return;
+
+    this.projectService.markStepAsCompleted(projectId, activeStep+1).subscribe(() => {
+      if (!this.completed().includes(activeStep)) {
+        this.completed.update((c) => [...c, activeStep]);
+      }
+    });
+  }
+
   renderMarkdown(text: string): SafeHtml {
     let html = text;
 
