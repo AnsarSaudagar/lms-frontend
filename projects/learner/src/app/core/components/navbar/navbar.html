@@ -1,7 +1,54 @@
-<nav class="navbar">
-  <div class="flex gap-2">
+<nav class="flex items-center justify-between gap-6 px-6 h-14 bg-[var(--bg)] border-b border-[var(--border)]">
+  <div class="flex items-center gap-2">
     <img src="images/logo.svg" width="28" height="28" alt="DevPath logo" />
     <span class="text-[17px] font-bold text-[var(--text)] tracking-[-0.02em]">DevPath</span>
   </div>
-  <div class="navbar-actions"></div>
+
+  <div class="flex-1 max-w-[420px] flex items-center gap-2 px-3 h-9 rounded-lg bg-[var(--surface)] border border-[var(--border)]">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <circle cx="11" cy="11" r="7" stroke="var(--text-muted)" stroke-width="1.8" />
+      <path d="M21 21l-4.3-4.3" stroke="var(--text-muted)" stroke-width="1.8" stroke-linecap="round" />
+    </svg>
+    <input
+      type="text"
+      placeholder="Search projects, technologies..."
+      class="flex-1 border-none outline-none bg-transparent text-[13px] text-[var(--text)] font-[var(--font)] placeholder:text-[var(--text-muted)]"
+    />
+  </div>
+
+  <div class="flex items-center gap-3.5">
+    <button
+      class="h-[34px] px-4 rounded-lg border-none bg-[var(--gold)] text-[oklch(0.12_0.015_255)] text-[13px] font-bold cursor-pointer whitespace-nowrap transition-[filter] duration-150 hover:brightness-[1.08]"
+      routerLink="/auth"
+    >
+      Upgrade to Pro
+    </button>
+
+    <button class="relative flex items-center justify-center w-[34px] h-[34px] rounded-lg border-none bg-transparent cursor-pointer transition-colors duration-150 hover:bg-[var(--surface2)]" aria-label="Wishlist">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 21s-7.5-4.9-10-9.3C.4 8 2 4 5.6 3.3c2-.4 4 .5 5 2.2 1-1.7 3-2.6 5-2.2C19.2 4 20.8 8 18 11.7 15.5 16.1 12 21 12 21z"
+          stroke="var(--text-button)" stroke-width="1.6" stroke-linejoin="round" />
+      </svg>
+      @if (wishlistCount > 0) {
+        <span class="absolute -top-1 -right-1 min-w-[16px] h-4 px-[3px] rounded-full bg-[var(--error)] text-[var(--text)] text-[10px] font-bold leading-4 text-center">{{ wishlistCount }}</span>
+      }
+    </button>
+
+    <button class="relative flex items-center justify-center w-[34px] h-[34px] rounded-lg border-none bg-transparent cursor-pointer transition-colors duration-150 hover:bg-[var(--surface2)]" aria-label="Cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6" stroke="var(--text-button)"
+          stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="9" cy="21" r="1.4" fill="var(--text-button)" />
+        <circle cx="17" cy="21" r="1.4" fill="var(--text-button)" />
+      </svg>
+      @if (cartCount > 0) {
+        <span class="absolute -top-1 -right-1 min-w-[16px] h-4 px-[3px] rounded-full bg-[var(--error)] text-[var(--text)] text-[10px] font-bold leading-4 text-center">{{ cartCount }}</span>
+      }
+    </button>
+
+    <div class="w-8 h-8 rounded-full bg-[var(--accent)] text-[var(--bg)] flex items-center justify-center text-[13px] font-bold">
+      {{ (user()?.name?.charAt(0) ?? 'U') | uppercase }}
+    </div>
+  </div>
 </nav>
