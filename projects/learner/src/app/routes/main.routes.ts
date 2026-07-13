@@ -13,4 +13,8 @@ export const routes: Routes = [
     path: 'project/:slug/learn',
     loadComponent: () => import('../pages/project-detail/project-detail').then((m) => m.ProjectDetailComponent),
   },
+  {
+    path: 'cart',
+    loadComponent: () => import('../pages/cart/cart').then(m => m.Cart),
+  }
 ];
