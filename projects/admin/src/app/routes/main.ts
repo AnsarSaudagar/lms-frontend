@@ -17,6 +17,12 @@ export const mainRoutes: Routes = [
     loadComponent: () => import('../pages/projects/create/create-project').then(m => m.CreateProjectComponent),
   },
   {
+    path: 'projects/history',
+    data: { title: 'Generation History' },
+    loadComponent: () =>
+      import('../pages/projects/history/generation-history').then(m => m.GenerationHistoryComponent),
+  },
+  {
     path: 'projects',
     data: { title: 'Projects' },
     loadComponent: () => import('../pages/projects/projects').then(m => m.ProjectsComponent),

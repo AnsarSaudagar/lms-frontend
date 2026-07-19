@@ -1,0 +1,55 @@
+<div class="flex flex-col gap-6 py-6">
+  <div>
+    <h1 class="text-2xl font-semibold text-text mb-1">Generation History</h1>
+    <p class="text-sm text-text-muted">All AI project generation jobs, past and present.</p>
+  </div>
+
+  @if (loading()) {
+    <div class="py-24 text-center text-sm text-text-muted">Loading history…</div>
+  } @else if (error()) {
+    <div class="px-3.5 py-2.5 rounded-lg bg-error-soft text-error text-sm">{{ error() }}</div>
+  } @else if (!history().length) {
+    <app-empty-state
+      icon="list"
+      title="No generation jobs yet"
+      description="Jobs will appear here once a project generation is queued."
+    />
+  } @else {
+    <div class="bg-surface border border-border rounded-xl shadow-xs overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border text-left text-xs text-text-muted uppercase tracking-wider">
+            <th class="px-4 py-3 font-medium">Topic</th>
+            <th class="px-4 py-3 font-medium">Category</th>
+            <th class="px-4 py-3 font-medium">Difficulty</th>
+            <th class="px-4 py-3 font-medium">Status</th>
+            <th class="px-4 py-3 font-medium">Steps</th>
+            <th class="px-4 py-3 font-medium">Attempts</th>
+            <th class="px-4 py-3 font-medium">Started</th>
+            <th class="px-4 py-3 font-medium">Completed</th>
+            <th class="px-4 py-3 font-medium">Duration</th>
+            <th class="px-4 py-3 font-medium">Error</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (job of history(); track job.jobId) {
+            <tr class="border-b border-border last:border-0">
+              <td class="px-4 py-3 text-text">{{ job.topic }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.category ?? '—' }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.difficulty ?? '—' }}</td>
+              <td class="px-4 py-3">
+                <app-badge [tone]="STATUS_TONE[job.status] ?? 'neutral'">{{ job.status }}</app-badge>
+              </td>
+              <td class="px-4 py-3 text-text-muted">{{ job.stepCount ?? '—' }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.attemptsMade ?? '—' }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.startedAt ? (job.startedAt | date:'medium') : '—' }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.completedAt ? (job.completedAt | date:'medium') : '—' }}</td>
+              <td class="px-4 py-3 text-text-muted">{{ job.durationMs ? (job.durationMs / 1000 | number:'1.0-1') + 's' : '—' }}</td>
+              <td class="px-4 py-3 text-error">{{ job.errorMessage ?? '—' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

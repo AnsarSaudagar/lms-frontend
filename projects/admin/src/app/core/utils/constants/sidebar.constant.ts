@@ -19,6 +19,7 @@ export const SIDEBAR_ITEMS: SidebarGroup[] = [
     navs: [
       { label: 'Learners', icon: 'users', route: '/learners' },
       { label: 'Projects', icon: 'folder', route: '/projects' },
+      { label: 'Generation History', icon: 'list', route: '/projects/history' },
       { label: 'Content', icon: 'file', route: '/content' },
     ],
   },
