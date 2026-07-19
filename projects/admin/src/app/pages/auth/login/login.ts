@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../services/auth.service';
 import { Icon } from '../../../core/components/ui/icon/icon';
 import { ButtonDirective } from '../../../core/components/ui/button/button';
@@ -20,7 +21,7 @@ export class Login {
   errorMessage = signal<string | null>(null);
 
   form = this.fb.group({
-    email: ['admin@devpath.com', [Validators.required, Validators.email]],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
 
@@ -36,15 +37,22 @@ export class Login {
     this.errorMessage.set(null);
     this.loading.set(true);
 
-    setTimeout(() => {
-      const { email, password } = this.form.getRawValue();
-      const result = this.authService.login({ email: email!, password: password! });
-      this.loading.set(false);
-      if (result.success) {
+    const { email, password } = this.form.getRawValue();
+    this.authService.login({ email: email!, password: password! }).subscribe({
+      next: () => {
+        this.loading.set(false);
         this.router.navigateByUrl('/dashboard');
-      } else {
-        this.errorMessage.set(result.error ?? 'Something went wrong.');
-      }
-    }, 400);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
+        if (err.status === 401) {
+          this.errorMessage.set('Incorrect email or password.');
+        } else if (err.status === 403) {
+          this.errorMessage.set('Your account is inactive. Contact an administrator.');
+        } else {
+          this.errorMessage.set(err.error?.message ?? 'Something went wrong. Please try again.');
+        }
+      },
+    });
   }
 }

@@ -1,0 +1,131 @@
+<div class="flex flex-col gap-6 py-6 max-w-2xl">
+  <div>
+    <h1 class="text-2xl font-semibold text-text mb-1">Create Project</h1>
+    <p class="text-sm text-text-muted">Generate a new project via AI. Generation runs in the background.</p>
+  </div>
+
+  <app-card>
+    @if (errorMessage()) {
+      <div class="mb-5 px-3.5 py-2.5 rounded-lg bg-error-soft text-error text-sm">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form class="flex flex-col gap-4" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="flex flex-col gap-1.5">
+        <span class="text-[13px] font-medium text-text-2">Topic</span>
+        <input
+          type="text"
+          formControlName="topic"
+          placeholder="e.g. React Weather App"
+          class="w-full px-3.5 py-2.5 rounded-lg border bg-surface text-sm text-text outline-none transition-colors"
+          [class.border-error]="form.get('topic')?.invalid && form.get('topic')?.touched"
+          [class.border-border]="!(form.get('topic')?.invalid && form.get('topic')?.touched)"
+        />
+        @if (form.get('topic')?.invalid && form.get('topic')?.touched) {
+          <span class="text-xs text-error">Topic is required</span>
+        }
+      </label>
+
+      <div class="grid grid-cols-2 gap-4">
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-medium text-text-2">Category</span>
+          <select
+            formControlName="category"
+            class="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-text outline-none"
+          >
+            <option value="">Auto-detect</option>
+            @for (c of categories; track c) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-medium text-text-2">Difficulty</span>
+          <select
+            formControlName="difficulty"
+            class="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-text outline-none"
+          >
+            <option value="">Auto-detect</option>
+            @for (d of difficulties; track d) {
+              <option [value]="d">{{ d }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      <label class="flex flex-col gap-1.5">
+        <span class="text-[13px] font-medium text-text-2">Estimated hours</span>
+        <input
+          type="number"
+          min="1"
+          formControlName="estimatedHours"
+          class="w-full px-3.5 py-2.5 rounded-lg border border-border bg-surface text-sm text-text outline-none"
+        />
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" formControlName="isPaid" />
+        <span class="text-sm text-text">This is a paid project</span>
+      </label>
+
+      @if (form.get('isPaid')?.value) {
+        <label class="flex flex-col gap-1.5">
+          <span class="text-[13px] font-medium text-text-2">Price</span>
+          <input
+            type="number"
+            min="1"
+            formControlName="price"
+            class="w-full px-3.5 py-2.5 rounded-lg border bg-surface text-sm text-text outline-none transition-colors"
+            [class.border-error]="form.get('price')?.invalid && form.get('price')?.touched"
+            [class.border-border]="!(form.get('price')?.invalid && form.get('price')?.touched)"
+          />
+          @if (form.get('price')?.invalid && form.get('price')?.touched) {
+            <span class="text-xs text-error">Price is required for a paid project</span>
+          }
+        </label>
+      }
+
+      <button appButton type="submit" class="w-full mt-2" [disabled]="submitting()">
+        @if (submitting()) {
+          <span class="flex items-center gap-2">
+            <svg class="animate-spin" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" stroke-linecap="round" />
+            </svg>
+            Queuing…
+          </span>
+        } @else {
+          Generate Project
+        }
+      </button>
+    </form>
+  </app-card>
+
+  @if (jobId()) {
+    <app-card>
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <span class="text-sm font-medium text-text">Job {{ jobId() }}</span>
+          @if (polling()) {
+            <p class="text-xs text-text-muted mt-1">Generating…</p>
+          }
+        </div>
+        <app-badge [tone]="STATUS_TONE[jobStatus() ?? ''] ?? 'neutral'">{{ jobStatus() }}</app-badge>
+      </div>
+
+      @if (jobStatus() === 'failed' && jobError()) {
+        <div class="mt-4 px-3.5 py-2.5 rounded-lg bg-error-soft text-error text-sm">
+          {{ jobError() }}
+        </div>
+      }
+
+      @if (jobStatus() === 'completed') {
+        <div class="mt-4 flex items-center gap-3">
+          <span class="text-sm text-success">Project generated successfully.</span>
+          <button appButton variant="outline" (click)="viewProjects()">View Projects</button>
+        </div>
+      }
+    </app-card>
+  }
+</div>

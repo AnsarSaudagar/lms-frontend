@@ -1,8 +1,18 @@
 export interface AdminProject {
-  id: string;
+  _id: string;
+  slug: string;
   title: string;
+  description?: string;
   category: string;
-  status: 'published' | 'draft' | 'in-review';
-  enrolled: number;
-  updatedOn: string;
+  difficulty: string;
+  estimatedHours?: number;
+  techStack?: string[];
+  prerequisites?: string[];
+  learningOutcomes?: string[];
+  isPaid: boolean;
+  price?: number;
+  stepCount: number;
+  isEnrolled: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
