@@ -25,6 +25,11 @@ export interface GenerationJobResult {
   error?: string;
 }
 
+export interface GenerationLogEntry {
+  at: string;
+  message: string;
+}
+
 export interface GenerationHistoryItem {
   jobId: string;
   topic: string;
@@ -35,6 +40,9 @@ export interface GenerationHistoryItem {
   status: string;
   projectSlug?: string;
   stepCount?: number;
+  stepsCompleted?: number;
+  currentModel?: string;
+  logs?: GenerationLogEntry[];
   errorMessage?: string;
   attemptsMade?: number;
   startedAt?: string;

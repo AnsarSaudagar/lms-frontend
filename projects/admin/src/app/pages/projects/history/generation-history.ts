@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Badge, BadgeTone } from '../../../core/components/ui/badge/badge';
 import { EmptyState } from '../../../core/components/ui/empty-state/empty-state';
 import { ProjectsService } from '../../../services/projects.service';
@@ -16,7 +17,7 @@ const STATUS_TONE: Partial<Record<string, BadgeTone>> = {
 
 @Component({
   selector: 'app-generation-history',
-  imports: [Badge, EmptyState, DatePipe, DecimalPipe],
+  imports: [Badge, EmptyState, DatePipe, DecimalPipe, RouterLink],
   templateUrl: './generation-history.html',
 })
 export class GenerationHistoryComponent {

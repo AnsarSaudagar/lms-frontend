@@ -31,4 +31,8 @@ export class ProjectsService {
   getGenerationHistory() {
     return this.http.get<GenerationHistoryItem[]>('/admin/generator/history');
   }
+
+  getGenerationHistoryDetail(jobId: string) {
+    return this.http.get<GenerationHistoryItem>(`/admin/generator/history/${jobId}`);
+  }
 }

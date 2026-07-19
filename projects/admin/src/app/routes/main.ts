@@ -23,6 +23,12 @@ export const mainRoutes: Routes = [
       import('../pages/projects/history/generation-history').then(m => m.GenerationHistoryComponent),
   },
   {
+    path: 'projects/history/:jobId',
+    data: { title: 'Generation Job Detail' },
+    loadComponent: () =>
+      import('../pages/projects/history/job-detail/job-detail').then(m => m.JobDetailComponent),
+  },
+  {
     path: 'projects',
     data: { title: 'Projects' },
     loadComponent: () => import('../pages/projects/projects').then(m => m.ProjectsComponent),

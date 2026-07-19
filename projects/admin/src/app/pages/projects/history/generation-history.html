@@ -33,7 +33,10 @@
         </thead>
         <tbody>
           @for (job of history(); track job.jobId) {
-            <tr class="border-b border-border last:border-0">
+            <tr
+              class="border-b border-border last:border-0 cursor-pointer hover:bg-surface-2"
+              [routerLink]="['/projects/history', job.jobId]"
+            >
               <td class="px-4 py-3 text-text">{{ job.topic }}</td>
               <td class="px-4 py-3 text-text-muted">{{ job.category ?? '—' }}</td>
               <td class="px-4 py-3 text-text-muted">{{ job.difficulty ?? '—' }}</td>
