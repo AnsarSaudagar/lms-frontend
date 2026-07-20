@@ -26,6 +26,6 @@ export class ContinueLearning implements OnInit {
   }
 
   resume(p: ProjectProgress) {
-    this.router.navigate(['/learner/project', p.project.slug, 'learn']);
+    this.router.navigate(['/learner/project', p.project.slug, 'learn', p.lastVisitedStep || 1]);
   }
 }

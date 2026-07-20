@@ -10,7 +10,7 @@ export const routes: Routes = [
     loadComponent: () => import('../pages/project-page/project-page').then((m) => m.ProjectPage),
   },
   {
-    path: 'project/:slug/learn',
+    path: 'project/:slug/learn/:stepNum',
     loadComponent: () => import('../pages/project-detail/project-detail').then((m) => m.ProjectDetailComponent),
   },
   {

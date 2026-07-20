@@ -1,14 +1,16 @@
-import { Component, signal, inject, OnInit, effect } from '@angular/core';
+import { Component, signal, inject, OnInit, effect, ElementRef, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectStep } from '../../models/project.model';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
+import { CodeBlockCard } from './code-block-card/code-block-card';
 
 @Component({
   selector: 'app-project-detail',
-  imports: [CommonModule],
+  imports: [CommonModule, CodeBlockCard],
   templateUrl: './project-detail.html',
   styleUrl: './project-detail.scss',
 })
@@ -18,28 +20,43 @@ export class ProjectDetailComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);
   protected router = inject(Router);
   private projectService = inject(ProjectService);
+  private elRef = inject(ElementRef<HTMLElement>);
 
   project = signal<Project | null>(null);
   user = this.authService.currentUser;
   steps = signal<ProjectStep[] | null>(null);
   generating = signal(false);
-  activeStep = signal(0);
   completed = signal<number[]>([]);
   copied = signal('');
+
+  private routeParams = toSignal(this.route.params, { initialValue: this.route.snapshot.params });
+  activeStep = computed(() => (Number(this.routeParams()['stepNum']) || 1) - 1);
+
+  private slug = '';
 
   constructor() {
     effect(() => {
       if (this.steps()) {
-        setTimeout(() => (window as any)['hljs']?.highlightAll(), 0);
+        this.activeStep();
+        setTimeout(() => this.highlightCode(), 0);
       }
     });
   }
 
+  private highlightCode() {
+    const hljs = (window as any)['hljs'];
+    if (!hljs) return;
+    this.elRef.nativeElement.querySelectorAll('pre code').forEach((el: Element) => {
+      el.removeAttribute('data-highlighted');
+      hljs.highlightElement(el);
+    });
+  }
+
   ngOnInit() {
-    const slug = this.route.snapshot.params['slug'];
+    this.slug = this.route.snapshot.params['slug'];
 
     this.generating.set(true);
-    this.projectService.getProject(slug).subscribe({
+    this.projectService.getProject(this.slug).subscribe({
       next: ({ project, steps , completedSteps}) => {
         this.project.set(project);
         this.steps.set(steps);
@@ -50,6 +67,10 @@ export class ProjectDetailComponent implements OnInit {
       error: () => this.generating.set(false),
     });
 
+  }
+
+  goToStep(stepIndex: number) {
+    this.router.navigate(['/learner/project', this.slug, 'learn', stepIndex + 1]);
   }
 
   markComplete(activeStep: number){
@@ -114,7 +135,7 @@ export class ProjectDetailComponent implements OnInit {
 
   nextStep() {
     const next = Math.min(this.totalSteps - 1, this.activeStep() + 1);
-    this.activeStep.set(next);
+    this.goToStep(next);
   }
 
   

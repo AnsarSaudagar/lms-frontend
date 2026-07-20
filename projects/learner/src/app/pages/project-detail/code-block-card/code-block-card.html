@@ -1,0 +1,32 @@
+<div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden">
+  <!-- File header -->
+  <div class="flex items-center gap-3 px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+    <div class="flex gap-[6px] flex-shrink-0">
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+      <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+    </div>
+    <span class="font-[family-name:var(--mono)] text-[12.5px] text-[var(--text-label)] flex-1 truncate">{{ block().filename }}</span>
+    <span
+      class="text-[10px] font-semibold px-[7px] py-[2px] rounded-[4px] uppercase tracking-[0.05em] flex-shrink-0"
+      [class.bg-emerald-950]="block().action === 'create'"
+      [class.text-emerald-400]="block().action === 'create'"
+      [class.bg-amber-950]="block().action !== 'create'"
+      [class.text-amber-400]="block().action !== 'create'">
+      {{ block().action }}
+    </span>
+    <button
+      class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)] flex-shrink-0"
+      (click)="copyToClipboard()">
+      {{ copied() ? '✓ Copied' : 'Copy' }}
+    </button>
+  </div>
+  <!-- Code -->
+  <pre class="m-0 px-5 py-4 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + block().language">{{ block().code }}</code></pre>
+  <!-- Block explanation -->
+  @if (block().explanation) {
+    <div class="px-5 py-[14px] border-t border-[var(--border-subtle)] bg-[var(--surface)]">
+      <p class="text-[13px] text-[var(--text-desc)] leading-[1.65] m-0">{{ block().explanation }}</p>
+    </div>
+  }
+</div>

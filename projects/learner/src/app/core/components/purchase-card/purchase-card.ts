@@ -24,7 +24,7 @@ export class PurchaseCard {
 
   startProject() {
     const p = this.project!;
-    this.router.navigate(['/learner/project', p.slug ?? p.id, 'learn']);
+    this.router.navigate(['/learner/project', p.slug ?? p.id, 'learn', 1]);
   }
 
   enrollProject(){

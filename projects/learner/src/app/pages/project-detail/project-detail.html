@@ -39,7 +39,7 @@
           <button
             class="w-full flex items-center gap-[10px] py-[9px] px-[10px] rounded-[7px] border-none cursor-pointer text-left mb-[2px] transition-colors duration-[120ms]"
             [ngClass]="activeStep() === i ? 'bg-[var(--surface2)]' : 'bg-transparent hover:bg-[var(--surface2)]'"
-            (click)="activeStep.set(i)">
+            (click)="goToStep(i)">
             <div
               class="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200"
               [style.border]="completed().includes(i) ? 'none' : '1.5px solid var(--border-hover)'"
@@ -109,7 +109,7 @@
                 <span class="text-[11px] text-[var(--muted)] ml-3 font-[family-name:var(--mono)] tracking-[0.03em]">bash</span>
               </div>
               <div class="px-5 py-4 flex flex-col gap-[6px]">
-                @for (cmd of step.commands; track $index; let i = $index) {
+                @for (cmd of step.commands; track activeStep() + '-' + $index; let i = $index) {
                   <div class="flex items-center justify-between group/cmd">
                     <div class="flex items-center gap-2 min-w-0">
                       <span class="text-[var(--muted)] font-[family-name:var(--mono)] text-[13px] flex-shrink-0 select-none">$</span>
@@ -134,60 +134,31 @@
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .138.112.25.25.25h9.5a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 9 4.25V1.5Zm6.75.062V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"/></svg>
               Files
             </p>
-            @for (block of step.codeBlocks; track $index; let i = $index) {
-              <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden">
-                <!-- File header -->
-                <div class="flex items-center gap-3 px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
-                  <div class="flex gap-[6px] flex-shrink-0">
-                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
-                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
-                    <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
-                  </div>
-                  <span class="font-[family-name:var(--mono)] text-[12.5px] text-[var(--text-label)] flex-1 truncate">{{ block.filename }}</span>
-                  <span
-                    class="text-[10px] font-semibold px-[7px] py-[2px] rounded-[4px] uppercase tracking-[0.05em] flex-shrink-0"
-                    [class.bg-emerald-950]="block.action === 'create'"
-                    [class.text-emerald-400]="block.action === 'create'"
-                    [class.bg-amber-950]="block.action !== 'create'"
-                    [class.text-amber-400]="block.action !== 'create'">
-                    {{ block.action }}
-                  </span>
-                  <button
-                    class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)] flex-shrink-0"
-                    (click)="copyToClipboard(block.code, 'block-' + i)">
-                    {{ copied() === 'block-' + i ? '✓ Copied' : 'Copy' }}
-                  </button>
-                </div>
-                <!-- Code -->
-                <pre class="m-0 px-5 py-4 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + block.language">{{ block.code }}</code></pre>
-                <!-- Block explanation -->
-                @if (block.explanation) {
-                  <div class="px-5 py-[14px] border-t border-[var(--border-subtle)] bg-[var(--surface)]">
-                    <p class="text-[13px] text-[var(--text-desc)] leading-[1.65] m-0">{{ block.explanation }}</p>
-                  </div>
-                }
-              </div>
+            @for (block of step.codeBlocks; track activeStep() + '-' + block.filename) {
+              <app-code-block-card [block]="block" />
             }
           </div>
 
         } @else if (step.code) {
           <!-- Legacy fallback: single code block -->
-          <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden mb-6">
-            <div class="flex items-center px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
-              <div class="flex gap-[6px] mr-3">
-                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
-                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
-                <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+          @for (_ of [0]; track activeStep()) {
+            <div class="bg-[var(--bg-code)] border border-[var(--border)] rounded-[10px] overflow-hidden mb-6">
+              <div class="flex items-center px-4 py-[10px] border-b border-[var(--border-subtle)] bg-[var(--surface-terminal)]">
+                <div class="flex gap-[6px] mr-3">
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-red)"></div>
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-amber)"></div>
+                  <div class="w-[11px] h-[11px] rounded-full" style="background:var(--terminal-green)"></div>
+                </div>
+                <span class="text-xs text-[var(--muted)] flex-1 font-[family-name:var(--mono)] uppercase tracking-[0.05em]">{{ step.language }}</span>
+                <button
+                  class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
+                  (click)="copyToClipboard(step.code!, 'code')">
+                  {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
+                </button>
               </div>
-              <span class="text-xs text-[var(--muted)] flex-1 font-[family-name:var(--mono)] uppercase tracking-[0.05em]">{{ step.language }}</span>
-              <button
-                class="text-xs text-[var(--text-section)] bg-[oklch(0.20_0.015_255)] border border-[var(--border-modal)] rounded-[5px] px-[10px] py-1 cursor-pointer transition-all duration-[120ms] hover:bg-[oklch(0.22_0.015_255)]"
-                (click)="copyToClipboard(step.code!, 'code')">
-                {{ copied() === 'code' ? '✓ Copied' : 'Copy' }}
-              </button>
+              <pre class="m-0 p-5 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
             </div>
-            <pre class="m-0 p-5 overflow-x-auto text-[13.5px] leading-[1.7] font-[family-name:var(--mono)]"><code [class]="'language-' + step.language">{{ step.code }}</code></pre>
-          </div>
+          }
         }
 
         <!-- Expected Output -->
@@ -230,7 +201,7 @@
           <button
             class="px-5 py-[11px] rounded-lg border border-[var(--border-input)] bg-transparent text-[var(--text-label)] text-sm font-medium cursor-pointer transition-all duration-[120ms] disabled:cursor-default hover:enabled:border-[var(--border-hover)]"
             [disabled]="activeStep() === 0" [style.opacity]="activeStep() === 0 ? '0.3' : '1'"
-            (click)="activeStep.set(activeStep() - 1)">← Previous</button>
+            (click)="goToStep(activeStep() - 1)">← Previous</button>
           <button
             class="px-6 py-[11px] rounded-lg border-none text-[oklch(0.12_0.015_255)] text-sm font-bold cursor-pointer transition-[filter] duration-150 disabled:cursor-default hover:enabled:brightness-[1.08]"
             [style.background]="project()!.color"
