@@ -1,0 +1,66 @@
+<div class="flex items-center gap-4 border border-border rounded-2xl bg-surface px-5 py-4">
+  <div
+    class="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 bg-[var(--project-teal)]/10"
+  >
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="color: var(--project-teal)">
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.2"
+        stroke="currentColor"
+        stroke-width="1.6"
+        transform="rotate(0 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.2"
+        stroke="currentColor"
+        stroke-width="1.6"
+        transform="rotate(60 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.2"
+        stroke="currentColor"
+        stroke-width="1.6"
+        transform="rotate(120 12 12)"
+      />
+      <circle cx="12" cy="12" r="2.2" fill="currentColor" />
+    </svg>
+  </div>
+
+  <div class="flex-1 min-w-0">
+    <h3 class="text-[15px] font-bold text-text mb-[2px] truncate">{{ progress?.project?.title }}</h3>
+    <p class="text-xs text-text-section mb-[10px]">{{ progress?.completedSteps?.length }} steps completed</p>
+    <div class="flex items-center gap-3">
+      <div class="flex-1 h-[6px] bg-border-alt rounded-full overflow-hidden max-w-[420px]">
+        <div
+          class="h-full rounded-full bg-[var(--project-teal)] transition-all duration-300"
+          [style.width.%]="progress?.progressPercent"
+        ></div>
+      </div>
+      <span class="text-xs text-text-section flex-shrink-0">{{ progress?.progressPercent }}%</span>
+    </div>
+  </div>
+
+  <button
+    class="flex items-center gap-[6px] text-sm font-bold text-blue bg-transparent border-0 cursor-pointer flex-shrink-0 hover:opacity-80 transition-opacity"
+    (click)="progress && resume(progress)"
+  >
+    Resume
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+      <path
+        d="M6 3l5 5-5 5"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
