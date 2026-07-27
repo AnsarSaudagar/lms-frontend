@@ -138,6 +138,7 @@
               }
             ],
             "styles": [
+              "node_modules/@phosphor-icons/web/src/regular/style.css",
               "projects/learner/src/styles.scss"
             ]
           },
@@ -198,6 +199,7 @@
               }
             ],
             "styles": [
+              "node_modules/@phosphor-icons/web/src/regular/style.css",
               "projects/learner/src/styles.scss"
             ]
           }

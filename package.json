@@ -32,6 +32,7 @@
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@nestjs/mapped-types": "*",
+    "@phosphor-icons/web": "^2.1.2",
     "@primeuix/themes": "^2.0.2",
     "crypto-js": "^4.2.0",
     "primeicons": "^7.0.0",
