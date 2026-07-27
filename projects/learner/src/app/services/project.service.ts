@@ -63,8 +63,8 @@ export class ProjectService {
     return this.http.post(`/projects/${projectId}/enroll`, {});
   }
 
-  getAllProjectsProgress(){
-    return this.http.get<ProjectProgress[]>(`/me/progress`);
+  getProgressForDashboard(){
+    return this.http.get<ProjectProgress[]>(`/me/progress/dashboard`);
   }
 
   markStepAsCompleted(projectId: string, stepNumber : number){

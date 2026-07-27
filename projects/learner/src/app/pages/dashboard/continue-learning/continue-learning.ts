@@ -18,7 +18,7 @@ export class ContinueLearning implements OnInit {
   inProgress = signal<ProjectProgress[]>([]);
 
   ngOnInit() {
-    this.projectService.getAllProjectsProgress().subscribe({
+    this.projectService.getProgressForDashboard().subscribe({
       next: (progress) => {        
         this.inProgress.set((progress ?? []));
       },
