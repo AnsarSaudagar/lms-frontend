@@ -1,1 +1,5 @@
-<p>my-progress works!</p>
+<div class="p-8 flex flex-col gap-4">
+    @for (progress of allProgresses(); track $index) {
+        <app-progress-long-card [progress]="progress"></app-progress-long-card>
+    }
+</div>

@@ -67,6 +67,10 @@ export class ProjectService {
     return this.http.get<ProjectProgress[]>(`/me/progress/dashboard`);
   }
 
+  getAllProgress(){
+    return this.http.get<ProjectProgress[]>(`/me/progress`);
+  }
+
   markStepAsCompleted(projectId: string, stepNumber : number){
     return this.http.post(`/me/projects/${projectId}/progress/complete-step`, { stepNumber });
   }
