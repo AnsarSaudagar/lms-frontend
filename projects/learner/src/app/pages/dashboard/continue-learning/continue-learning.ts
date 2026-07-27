@@ -1,13 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { ProjectProgress } from '../../../models/project-progress.model';
 import { ProgressLongCard } from '../../../core/components/progress-long-card/progress-long-card';
 
 @Component({
   selector: 'app-continue-learning',
-  imports: [CommonModule, RouterModule, ProgressLongCard],
+  imports: [CommonModule, RouterModule, ProgressLongCard, RouterLink],
   templateUrl: './continue-learning.html',
   styleUrl: './continue-learning.scss',
 })

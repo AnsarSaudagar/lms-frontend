@@ -6,13 +6,13 @@
         {{ inProgress().length }} in progress
       </span>
       <div class="flex-1"></div>
-      <button class="text-xs flex items-center gap-1 font-medium text-accent border border-border rounded-[8px] py-2 px-3">
+      <button routerLink="/learner/my-progress" class="text-xs flex items-center gap-1 font-medium text-accent border border-border rounded-[8px] py-2 px-3">
         <i class="ph ph-chart-line"></i>
         My Progress
       </button>
     </div>
 
-    <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3">
       @for (progress of inProgress(); track progress.id) {
         <app-progress-long-card [progress]="progress"></app-progress-long-card>
       }
