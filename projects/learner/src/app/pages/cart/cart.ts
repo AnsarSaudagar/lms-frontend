@@ -14,11 +14,13 @@ import { CartCheckoutCard } from './cart-checkout-card/cart-checkout-card';
 export class Cart {
 
   private cartService = inject(CartService);
-  readonly cartItems : any = signal([]);
+  readonly cart = signal<CartModel | null>(null);
+  readonly cartItems = signal<CartModel['items']>([]);
 
   ngOnInit(){
     this.cartService.getCart().subscribe({
       next: (cart: CartModel) => {
+        this.cart.set(cart);
         this.cartItems.set(cart.items);
       }
     })
