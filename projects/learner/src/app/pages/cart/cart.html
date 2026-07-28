@@ -1,6 +1,15 @@
-<div class="px-16 pt-10">
+<div class="px-28 pt-10">
     <div class="flex items-end gap-4">
         <h1 class="text-3xl font-bold">Shopping cart</h1>
         <p class="text-sm text-text-section mb-0.5">2 projects</p>
+    </div>
+
+    <div class="grid grid-cols-4 gap-8 mt-8 ">
+        <div class="col-span-3">
+            <app-cart-items-list></app-cart-items-list>
+        </div>
+        <div class="col-span-1 border border-border-subtle p-2 bg-bg-button h-fit rounded">
+            <app-cart-checkout-card></app-cart-checkout-card>
+        </div>
     </div>
 </div>
