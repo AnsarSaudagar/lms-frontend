@@ -9,15 +9,15 @@ export class CartService {
   private http = inject(HttpClient);
 
   getCart(){
-    return this.http.get<Cart>(`cart`);
+    return this.http.get<Cart>(`cart/items`);
   }
 
-  addItemToCart(){
-
+  addItemToCart(projectId : string){
+    return this.http.post<Cart>(`cart/items`, { projectId });
   }
 
-  removeItemFromCart(){
-
+  removeItemFromCart(projectId: string){
+    return this.http.delete<Cart>(`cart/items/${projectId}`);
   }
 
   moveToWishlist(){

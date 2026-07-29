@@ -1,8 +1,57 @@
 
 <div class="flex flex-col gap-4">
-    @for (item of cartItems(); track $index) {
-        <div class="border border-border-subtle p-2 bg-bg-button max-h-20 h-28 rounded">
-    
+    @for (item of cartItems(); track item.slug) {
+        <div class="flex gap-4 border border-border-subtle p-3 bg-bg-button rounded-xl">
+            <!-- Thumbnail -->
+            <div
+                class="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden grid grid-cols-2 gap-1.5 p-2"
+                >
+                @for (i of [1,2,3,4]; track i) {
+                    <!-- <div class="rounded flex items-center gap-1 px-1.5" [style.background]="(item.color ?? 'var(--blue)') + '1a'">
+                        <span class="w-2 h-2 rounded-full flex-shrink-0" [style.background]="(item.color ?? 'var(--blue)') + '66'"></span>
+                        <span class="h-1 flex-1 rounded-full" [style.background]="(item.color ?? 'var(--blue)') + '4d'"></span>
+                    </div> -->
+                }
+            </div>
+
+            <!-- Details -->
+            <div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                <div>
+                    <h3 class="text-base font-bold text-text mb-0.5 truncate">{{ item.title }}</h3>
+                    <!-- @if (item.authorName) {
+                        <p class="text-sm text-text-section mb-1">By {{ item.authorName }}</p>
+                    } -->
+                    <!-- @if (item.estimatedTime || item.stepCount || item.difficulty) {
+                        <p class="text-[13px] text-text-section">
+                            @if (item.estimatedTime) { {{ item.estimatedTime }} }
+                            @if (item.stepCount) { · {{ item.stepCount }} steps }
+                            @if (item.difficulty) { · {{ item.difficulty }} }
+                        </p>
+                    } -->
+                </div>
+
+                <div class="flex items-center gap-3 text-sm font-medium">
+                    <button
+                        class="bg-transparent border-none p-0 text-blue cursor-pointer hover:underline"
+                        (click)="remove.emit(item)">
+                        Remove
+                    </button>
+                    <span class="text-border-hover">|</span>
+                    <button
+                        class="bg-transparent border-none p-0 text-blue cursor-pointer hover:underline"
+                        (click)="saveToWishlist.emit(item)">
+                        Save to wishlist
+                    </button>
+                </div>
+            </div>
+
+            <!-- Price -->
+            <div class="flex-shrink-0 text-right">
+                <span class="block text-lg font-extrabold text-text">{{ item.price | currency }}</span>
+                @if (item.originalPrice) {
+                    <span class="block text-sm text-text-section line-through">{{ item.originalPrice | currency }}</span>
+                }
+            </div>
         </div>
     }
 </div>
