@@ -1,6 +1,7 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartItems } from '../../../models/cart.model';
+import { CartItem } from '../../../models/cart.model';
+import { CartService } from '../../../services/cart.service';
 
 @Component({
   selector: 'app-cart-items-list',
@@ -9,7 +10,10 @@ import { CartItems } from '../../../models/cart.model';
   styleUrl: './cart-items-list.scss',
 })
 export class CartItemsList {
-  cartItems = input<CartItems[]>();
-  remove = output<CartItems>();
-  saveToWishlist = output<CartItems>();
+  cartItems = input<CartItem[]>();
+  private cartService = inject(CartService);
+
+  onRemoveItem(projectId : string){
+    this.cartService.removeItemFromCart(projectId).subscribe();
+  }
 }
